@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <title>{q} - Lookao</title>
+    <meta name="referrer" content="no-referrer">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/moon.m.9e0268.css' %}" type="text/css">
+    <link rel="shortcut icon" type="image/png" href="//static.lookao.com/img/icon_64.7d8de4.png">
+    <link rel="apple-touch-icon" href="//static.lookao.com/img/icon_512.258b55.png">
+    <link rel="dns-prefetch" href="//static.lookao.com"/>
+    <link title="Lookao" type="application/opensearchdescription+xml" rel="search" href="/opensearch.xml"/>
+</head>
+<body>
+<main id="main_wrapper">
+    <header id="header_wrapper">
+        <div class="header_content">
+            <div class="header_logo">
+                <a class="header_logo_link" href="/"></a>
+            </div>
+            <form class="search_form" method="GET" action="/search">
+                <input class="search_keywords" name="q" value="123" type="search" tabindex="1" autocomplete="off"
+                       autocapitalize="off" autocorrect="off">
+                <span class="search_reset">
+                <svg class="icon"
+                     style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+                     viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6079"><path
+                        d="M877.216 491.808M575.328 510.496 946.784 140.672c17.568-17.504 17.664-45.824 0.192-63.424-17.504-17.632-45.792-17.664-63.36-0.192L512.032 446.944 143.712 77.216C126.304 59.712 97.92 59.648 80.384 77.12 62.848 94.624 62.816 123.008 80.288 140.576l368.224 369.632L77.216 879.808c-17.568 17.504-17.664 45.824-0.192 63.424 8.736 8.8 20.256 13.216 31.776 13.216 11.424 0 22.848-4.352 31.584-13.056l371.36-369.696 371.68 373.088C892.192 955.616 903.68 960 915.168 960c11.456 0 22.912-4.384 31.648-13.088 17.504-17.504 17.568-45.824 0.096-63.392L575.328 510.496 575.328 510.496zM575.328 510.496"
+                        p-id="6080"></path></svg>
+            </span>
+                <button class="search_submit" type="submit">
+                    <svg class="icon"
+                         style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+                         viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1466">
+                        <path d="M995.830324 995.833186c-37.551478 37.555771-98.442595 37.555771-135.998366 0L690.099793 826.096728c-69.778525 44.731805-152.275014 71.438385-241.32652 71.438385C200.92894 897.535113 0.002848 696.614745 0.002848 448.770411 0.002848 200.920354 200.92894-1.4e-05 448.773273-1.4e-05c247.855781 0 448.770426 200.920368 448.770426 448.770426 0 89.047214-26.700857 171.536548-71.439816 241.333675l169.726442 169.725011C1033.386095 897.384867 1033.386095 958.277416 995.830324 995.833186L995.830324 995.833186zM448.773273 128.218472C271.747739 128.218472 128.23135 271.734861 128.23135 448.770411c0 177.031258 143.510665 320.547647 320.541923 320.547647 177.036982 0 320.547647-143.516389 320.547647-320.547647C769.32092 271.734861 625.810255 128.218472 448.773273 128.218472L448.773273 128.218472zM448.773273 128.218472"
+                              p-id="1467"></path>
+                    </svg>
+                </button>
+
+            </form>
+        </div>
+    </header>
+    <article id="content_wrapper" class="general_content_wrapper">
+        <div class="results_container">
+            <!--todo for-->
+            <!--todo 传递多个变量（包含数组）进来-->
+            <!--todo 上一页是否可以点击-->
+            <!--todo 豆瓣请求-->
+            <!--todo 网页右侧添加豆瓣解析部分-->
+            <div class="general_result">
+                <h3 class="general_result_title"><a href="https://www.hao123.com/" target="_blank"
+                                                    rel="noopener noreferrer">hao<span class="highlight">123</span>_上网从这里开始</a>
+                </h3>
+                <span class="general_result_url">https://www.hao123.com/</span>
+                <p class="general_result_desc"> {general_result_desc} </p>
+            </div>
+            ...
+        </div>
+
+        <div class="pagination">
+            <form class="previous_page" method="GET" action="/search">
+                <input type="hidden" name="q" value="123">
+                <!--                <input type="hidden" name="category_general" value="1">-->
+                <input type="hidden" name="pageno" value="0">
+                <button class="turn_page disable" type="button">
+                    <svg class="icon"
+                         style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+                         viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3596">
+                        <path d="M295.237833 463.886654l450.87471 437.617385-47.180772 48.610082-450.87471-437.617385 47.180772-48.610082ZM698.740451 66.210341l47.648176 48.149451-419.911362 415.539746-47.648176-48.149451 419.911362-415.539746Z"
+                              p-id="3597"></path>
+                    </svg>
+                    上一页
+                </button>
+            </form>
+            <form class="next_page" method="GET" action="/search">
+                <input type="hidden" name="q" value="123">
+                <!--                <input type="hidden" name="category_general" value="1">-->
+                <input type="hidden" name="pageno" value="2">
+                <button class="turn_page" type="submit">
+                    下一页
+                    <svg class="icon"
+                         style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+                         viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5558">
+                        <path d="M672 512l-384 384c-12.8 12.8-12.8 32 0 44.8 12.8 12.8 32 12.8 44.8 0l403.2-403.2c6.4-6.4 12.8-19.2 12.8-25.6 0-6.4 0-19.2-6.4-25.6L332.8 83.2C320 70.4 300.8 70.4 288 83.2S275.2 115.2 288 128L672 512z"
+                              p-id="5559"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </article>
+</main>
+
+{% load static %}
+<script src="{% static 'js/script.m.33322e.js' %}"></script>
+</body>
+</html>
