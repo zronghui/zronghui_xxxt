@@ -29,7 +29,9 @@ def search(request):
         'previousPage': pageNo-1,
         'nextPage': pageNo+1,
         'isFirstPage': pageNo == 0,
-        'isLastPage': pageNo == allPageNo
+        'isLastPage': pageNo == allPageNo,
+        'time': search_result['took'],
+        'count': search_result['hits']['total']
     }
     pprint(context)
     return render(request, 'result.html', context=context)

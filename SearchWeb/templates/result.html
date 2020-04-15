@@ -43,12 +43,12 @@
         </div>
     </header>
     <article id="content_wrapper" class="general_content_wrapper">
-        <div class="results_container">
-            <!--todo 豆瓣请求-->
-            <!--todo 网页右侧添加豆瓣解析部分-->
-            {% if not hits %}
-            未查询到数据
-            {% endif %}
+            <p class="results_detail" style="display: flex; margin: 7px 27px 21px 0px; font-size: 14px;">
+                用时 {{time}} ms, 查找到 {{count}} 条相关数据
+            </p>
+        <!--            {% if not hits %}-->
+        <!--            未查询到数据-->
+        <!--            {% endif %}-->
 
             {% for hit in hits %}
             <div class="general_result">
@@ -103,6 +103,45 @@
             </form>
         </div>
     </article>
+
+    <aside>
+        <div class="results_container">
+            <div id="searchbar" class="searchbar"
+                 style="position: fixed; right: 250px; top: 150px; transition: none 0s ease 0s; cursor: move;"
+                 data-selected="true" data-label-id="0">
+                <div id="tab">
+                    <ul>
+                        <li><a href="http://www.google.com/search?q={{q}}" onclick="return false;" target="_blank"><img
+                                src="chrome-extension://kpdkbemdpepjjppbfgeapjienologapa/../style/favicons/google.ico">Google</a>
+                        </li>
+                        <li><a href="https://www.douban.com/search?q={{q}}" onclick="return false;" target="_blank"><img
+                                src="data:null;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAABQElEQVQ4jWO0mOh64tkZBuKAhZQJI0O5IJGqYaBc0GNW8H8igMesYIZyQRYGBoZbr+7Ub28naPKtV3cYGBigThL4z0mMaz4wfmeBsLSldI/k7/j//z8jI+N/VEWMDAwMDAw2Ez2OPj/FwMDAgix3792Dok1lv39+ZWBhZ/jPwPD/N8O/f5NDpyoLK0IUCPznRNHAzsZ58NoxNGd8/fMTmYui4eev7woSSmgauFnYcWpQFla8UHwYm28xNFx9dtljVsiOtDV///8z6rLlYOVkYGD48fv7xfKj337/CJofc/XZZYj3ETacvHv8/ruHcgIyD988QDby5eeXO+/tE2DghAQ9E0T0A+P3D4zf117azMzEHGkaARGEMNZe2gxRADOhXHDy4VnEJI3Jh2dBk8aRByeEOYXw+xWijIGBgZHU5A0Arsa8Mw6SBsUAAAAASUVORK5CYII=">豆瓣</a>
+                        </li>
+                        <li><a href="https://www.19kan.com/vodsearch.html?wd={{q}}" onclick="return false;"
+                               target="_blank"><img
+                                src="data:null;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACP0lEQVQ4jW3Ty4vWZRQH8M/z/N7bWKJMOq0MoQspgUG1KSm7SBAVFrwV6EzvtLC/INpKLaJ1YLSQnGEGgncRSOFSWhS1CEvdtCskqOkiRjEz7+9yWrwXSj2rw+F8v+d8n/N9uCHilDzLn7Erlq3Esmdv7JtGulUx+jrm3N8UrRerujrXaRcPK2NHrfmxqP0u22/LZ2no79ZN4De8onJY9kfuzX/a/XDjUqgve8l8sdN9Ou5swt5cuBcXxyBSUMSy92Pg7Vhyx4zwpPZNQwaObb5mP7SClIhY8o7GpbRifSKjMNTY8kQMVC770kH3/Nn4WavzYO/66DzkRMQJR4UmrViPI1qQhupEDFdd8I9v0rdKLQvzbc8ZjR53u32zDXBU6XSQ7BWTNd/ScazZtiJcjUWNRrdOekXlXT19vJf17ZGET/yUCMMxgeQB2aMp+UDLcbWeykbrrLOu+UrYE31zWdcuXEtEkJ2avpRtpTrVSm3H9TyW1n0dZOdV2FLZmTVKSXcGmxIkSaBwm8pfRr6fyA0PyZKWkTIrbQi7o28uEfoTc4W2OYXkgtKRtDa+Djgwkf256zkNbQpXzXka/DYh2PaRbW+mjz2VVl0Mkv74apLn1a4kmvGwRQuxZDUGds888H9rF9NavOruWHImXrAjjGWmCcnhGDgTE4fdKuKEQ/G6tVh0YOrg9J8kYuAR2UDtisoXCr/alHXtU3hSdpfS6bTmhylm9htj7Mom+jp6XpYcxIIQwi+y76w6Nz33VP+/rnbpsBrGEGMAAAAASUVORK5CYII=">19kan</a>
+                        </li>
+                        <li><a href="https://app.movie/index.php/vod/search.html?wd={{q}}" onclick="return false;"
+                               target="_blank"><img
+                                src="data:null;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACeElEQVQ4jX2TO4xUdRTGf+d/79zdYV+gaHwlW5BYYCRRQ0MMFRWJNGY1xtrEZO3wgRabi0JCDIkJJipWFJsIjJIAiY2Vtj7K7cRCFMW4sGFnhpn7P+ezuDNCxZec7jy+75zvGPdBZ9mBzz5Gt3qYnOZwdcgZZA0efYaDf/mNv+xLBtMaA9C5Xa9TpZcZsJ/QU3QESRBAqI2RYBggXafQT/T9G1sbr5vWH3qVTjqPgG3dAP+RQfyO4h+yjYkIzGYI303BMpn9zPA4WTCI10pG2kdlwW3/hLxZ2yrbPAB6lwWWZk7SZRWPZ0vG5ggjNZdtlW3VJEa8zVzxIpGO21rzs1YoeIaCvbi9wh2d8K+J9BaOJ1DCw5DtAKBGFHYYxUvA9/p4do1lZq1mTG9Cw+niGEFKSCIEjWmyVfHEwoDOzFhByVxxnOX5H/TZ0iHr4a0ORAR4TKaHgHxP6DgqyhKjOcCWf0uy51kov9MXS2+2t8vFpIGVBOBqu04xbESWWOw+TcNuhhmKdBPsxj0GBgElCoFBtJ6YcmCxMjrpK8oMm80Ffh1+YJ9zDYC7BF2BoRJheDtcNYka8eT8HF0q/hxvkHnf6uYKgC5SsIHoQysBS0TrNwJZTRiIkZ/hln9I/85BOzq4ohUKgdEDqwkMTWqiBBJZiZHe0alyyLX8i71x+xJw6X+/T7ffw3WUF3DeI5OAZDo9e5BUXKXLIncD+trEdB3iFmEj3G8y9nWqdJJBnEN8xDw72WIL50j7TKerveR0BHiOYA85HsW1gNMl+d94HAM7wUinEPMEO8lcsE/ZMIEZ950Q0AoVj1BRUfIHI+sxFBTGRMo0D+w/PA1JkB7bh0QAAAAASUVORK5CYII=">appMovie</a>
+                        </li>
+                        <li><a href="http://v.qq.com/x/search/?q={{q}}&amp;stag=9" onclick="return false;"
+                               target="_blank"><img
+                                src="data:null;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADKUlEQVQ4jV2TX2iVdRzGn+/v/b3nPWc7c9I8DcOViGAFsWBzMlFiRURGgtW8EQXxXzeB7iIaIhy6GCHhxW5KLXZRUVhRLMfKosCgGGjBnMqyuRO65tGdnZ1z3vOe3/v+/ny70Gjrc/PcPDw8F89DDBAxAAIfuHr1oVq08XU2smyEOPfVFioBAJgFAH7gXAHdF6aRkf3BJ7mRC6sfw3YoAMbOOdBnxoqzo9toGgBwjj3sJrsigL/Dw9B4f7E1++h76wef/muhD/PVXrYE2dQCuMhEDPFhnIiT4310G2AC49/eIDuOIdGCwYKfiy53k5Qm7RfDHr5+px837r7sYpuRza0AJ3bOOu/tse10BgCQZ4E8OTJf04RH3PX72nXq0pPZdLOtCCfLHJBP5XoPTf59kKeLu40j4WeygIl4XMf0xo87aAZ5FoISdCCCcFanw2RR5Nxz1EnDxKqTpPyFe9cfppee2OWvyUy4UhGwPr0oAr74zJh6HnlyAgoZRCBrtQhVFTmvl5/KHKKdq86jSw6TURu4KRjnFx5/hTrXDXOtxDrW9IjzUqNbvzGvCShKQwEN47RSIGsYjg1SIovO7EH0t12gtdhHlUihp+MtbGj7yF9ago2VSWvDZyQUCJpglKNIOSitwEywrJDymqGdhootGsrAZ0Yj9qASQHgEtq4hEZOG5gARyzDRXNdVeMLjYjRLU5XzuFz+gBXPQCKHb2fewbX5PdoP4DcSEZLDAckKVVg067p0SZISN8q/UmSO82+lL1Czf3AgCXcrO+jSrbwrVjaLdCt8q+2cjfXeuSOZnyQ0FeC4neoiZp0NrjUuiqml7zklgEq0ha7cOco3S68aeL5MBYAKk9E4bAxU3lw9gzwLyQl+RsrbmqupIGPrbG2AheqzmL63jwuLu2ziVskgCyl0XFARnageDT5ePiSZODMsy15Xu3Mdk7PHNhWqO+29Wi8sAs9vghBJWEtC/3S8VHkXQ+3FZVN2y84EnOo/lhnYeGoMbehDoiE4vgWmT52xZ5Fv/RMA0M8ePv//mQAigAGgZeiHthp3H4bzF2CbvkSeFv+rC75vX8k/4uy1kf0oZ6kAAAAASUVORK5CYII=">腾讯视频</a>
+                        </li>
+                        <li><a href="https://search.bilibili.com/all?keyword={{q}}" target="_blank" title="哔哩哔哩"><img
+                                src="data:null;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACaElEQVQ4jY2SP2gUQRSHvzcze5c977jDiBhQTGEngqIBAyIkRYKNIJggYiOCImprJXiWNnYiEaJoIXIKgiBIIImFqGCMQv7YiWIjGjS62c1lb2fGYs0ZG8kPBh7vzbz38XsDqxqZCrg7f47R6V4Ahhq6XVuNR6d7uTt/jpGpYLUk1L2CK7Dt6C4qlXe00gWa8RFO7X7OWo2+O0DHhkcEhU1E0W4+P5yBy0j7wu23NaR4g7B8jJXkO5kdwuvX+Rjbg9EPKJY2srx0H79ylpN7FnOCay9CNtXqoI7jfQWhig7AWbBZAoA2JZQG2wLPT0QicPdYWKwbOqtXqXReIPoB3iV4iXCpQxDAAODsL6z1gEIwIFupdF7ESyjcmY/RgaLVOoxTrwBoWk+HFirWAxBpaecAlNtPEDzGtaxB6RKt9CfdXyfp68tYjyYnJ/m4eQVjqgbwKBE+dIU0GgnLu8bw3rOSHOL03rzhzTeGQvgUpSCcGeBDV4hxAniD9wIIsU5RPQGFrB/vwTY7crOAxlyRNOhHBOKegDhLqToBUH+gPLXE8Kk7JUsnyLJxPreW28jzX5tk2ThZOsGn7pRakpPnrkpulCpp6uII5wZ4MjtIvS8Dcrp6X0ZpdpBwboC6OFSp/UsNIDjvCXfEAAwP2zV2+Xa0Nl94G5Ps9IAYnE0ICkXi9/005l7ypaDYYH17hauKtBBrYUvqiKWXICjisiWD97coV88T/RgjyRKqrXzXy/LPe4yDqoMEj9ElylVYXLiuOXjiGcpqUNuBAHD/PaIsyDeayQ2+L176O2ZkqoQpa9ajbMlyZl8C8BsqkQfT9fYhAwAAAABJRU5ErkJggg==">哔哩哔哩</a>
+                        </li>
+                        <li><a href="http://www.baidu.com/s?wd={{q}}"
+                               target="_blank" title="Baidu"><img
+                                src="chrome-extension://kpdkbemdpepjjppbfgeapjienologapa/../style/favicons/baidu.ico">Baidu</a>
+                        </li>
+                    </ul>
+                </div>
+                <span class="button" title="Customize search engines"></span></div>
+            <div class="clear" style="clear:both;"></div>
+        </div>
+    </aside>
 </main>
 
 {% load static %}
