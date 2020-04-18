@@ -32,7 +32,10 @@ def search(q, _from=0):
     for i in q.split():
         dsl["query"]["bool"]["should"].append({"wildcard": {"book_name": i}})
     result = es.search(index='books', doc_type='books', body=dsl)
-    return result
+    if result['hits']['total'] > 10:
+        return result
+    else:
+        return search(' '.join(q), _from)
 
 
 if __name__ == '__main__':
