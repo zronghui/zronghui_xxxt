@@ -43,6 +43,25 @@
         </div>
     </header>
     <article id="content_wrapper" class="general_content_wrapper">
+        <div class="search_options">
+            <form method="GET" action="/search" autocomplete="off">
+                <input type="hidden" name="q" value='{{q}}'>
+                <div class="options_list">
+                    {% if search_type == 'movies' %}
+                    <button name="search_type" value="movies" class="option_category active" type="button">影视</button>
+                    {% else %}
+                    <button name="search_type" value="movies" class="option_category" type="submit">影视</button>
+                    {% endif %}
+                    {% if search_type == 'books' %}
+                    <button name="search_type" value="books" class="option_category active" type="button">书籍</button>
+                    {% else %}
+                    <button name="search_type" value="books" class="option_category" type="submit">书籍</button>
+                    {% endif %}
+                </div>
+
+            </form>
+        </div>
+
             <p class="results_detail" style="display: flex; margin: 7px 27px 21px 0px; font-size: 14px;">
                 用时 {{time}} ms, 查找到 {{count}} 条相关数据
             </p>
@@ -71,9 +90,9 @@
                 <input type="hidden" name="pageno" value={{previousPage}}>
                 {% if isFirstPage %}
                 <button class="turn_page disable" type="button">
-                    {% else %}
-                    <button class="turn_page" type="submit">
-                        {% endif %}
+                {% else %}
+                <button class="turn_page" type="submit">
+                {% endif %}
                         <svg class="icon"
                              style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
                              viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3596">

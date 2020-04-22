@@ -25,8 +25,13 @@ def build_index():
     result = es.indices.put_mapping(index='books', doc_type='books', body=mapping)
     print(result)
 
+    es.indices.delete(index='movies', ignore=[400, 404])
+    es.indices.create(index='movies', ignore=400)
+    result = es.indices.put_mapping(index='movies', doc_type='movies', body=mapping)
+    print(result)
 
-def bulk_with_json(jsonFile):
+
+def bulk_with_json(jsonFile, doc_type):
     # 批量插入数据
     print(f"============== bulk with {jsonFile} ================")
     count = 0
@@ -44,8 +49,8 @@ def bulk_with_json(jsonFile):
                 # 这里index，doc_type就等于上一步建立索引所用的名称
                 # es.index(index='index_test',doc_type='doc_type',body=triple_dict)
                 action = {
-                    "_index": "books",
-                    "_type": "books",
+                    "_index": doc_type,
+                    "_type": doc_type,
                     # "_id": i,
                     "_source": triple_dict
                 }
@@ -67,9 +72,14 @@ def bulk_with_json(jsonFile):
 
 if __name__ == '__main__':
     # 建立index
-    # build_index()
-    # bulk_with_json('shudan1.json')
-    # bulk_with_json('volmoe1.json')
-    # bulk_with_json('axcs.json')
-    # bulk_with_json('java1234.json')
-    pass
+    build_index()
+    bulk_with_json(jsonFile='axcs.json', doc_type='books')
+    bulk_with_json(jsonFile='bttwo.json', doc_type='movies')
+    bulk_with_json(jsonFile='ddrk.json', doc_type='movies')
+    bulk_with_json(jsonFile='dvdhd.json', doc_type='movies')
+    bulk_with_json(jsonFile='itsck.json', doc_type='movies')
+    bulk_with_json(jsonFile='java1234.json', doc_type='books')
+    bulk_with_json(jsonFile='shudan1.json', doc_type='books')
+    bulk_with_json(jsonFile='volmoe1.json', doc_type='books')
+    bulk_with_json(jsonFile='xiangzhan.json', doc_type='books')
+    bulk_with_json(jsonFile='zhenbuka.json', doc_type='movies')

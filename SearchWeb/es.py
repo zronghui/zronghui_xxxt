@@ -9,7 +9,7 @@ es = Elasticsearch()
 pretty_errors.activate()
 
 
-def search(q, _from=0):
+def search(q, _from=0, doc_type=None):
     dsl = {"query":
                {"bool":
                     {"must": [],
@@ -31,7 +31,10 @@ def search(q, _from=0):
            }
     for i in q.split():
         dsl["query"]["bool"]["should"].append({"wildcard": {"book_name": i}})
-    result = es.search(index='books', doc_type='books', body=dsl)
+    if doc_type == 'books':
+        result = es.search(index='books', doc_type='books', body=dsl)
+    else:
+        result = es.search(index='movies', doc_type='movies', body=dsl)
     if result['hits']['total'] > 10:
         return result
     else:
