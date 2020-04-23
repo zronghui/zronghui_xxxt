@@ -17,7 +17,7 @@ def search(q, _from=0, doc_type=None):
                      "should": []}
                 },
            "from": _from,
-           "size": 10,
+           "size": 20,
            "highlight": {
                "pre_tags": ['<span class="highlight">'],
                "post_tags": ['</span>'],
