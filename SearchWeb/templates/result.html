@@ -121,81 +121,45 @@
                     </button>
             </form>
         </div>
+
+        <div class="search_engines">
+            <div>
+                <ul>
+                    <li><a href="http://www.google.com/search?q={{q}}" target="_blank"><img
+                            src="{% static 'img/google.ico' %}" width="16" height="16">Google</a>
+                    </li>
+                    <li><a href="https://www.douban.com/search?q={{q}}" target="_blank"><img
+                            src="{% static 'img/douban.png' %}" width="16" height="16">豆瓣</a>
+                    </li>
+                    <li><a href="https://book.tstrs.me/find?q={{q}}" target="_blank"><img
+                            src="{% static 'img/iBookIn.png' %}" width="16" height="16">i-Book.in</a>
+                    </li>
+                    <li><a href="https://www.19kan.com/vodsearch.html?wd={{q}}"
+                           target="_blank"><img
+                            src="{% static 'img/19kan.png' %}" width="16" height="16">19kan</a>
+                    </li>
+                    <li><a href="https://app.movie/index.php/vod/search.html?wd={{q}}"
+                           target="_blank"><img
+                            src="{% static 'img/appMovie.ico' %}" width="16" height="16">appMovie</a>
+                    </li>
+                    <li><a href="http://v.qq.com/x/search/?q={{q}}&amp;stag=9"
+                           target="_blank"><img
+                            src="{% static 'img/tencent.ico' %}" width="16" height="16">腾讯视频</a>
+                    </li>
+                    <li><a href="https://search.bilibili.com/all?keyword={{q}}" target="_blank" title="哔哩哔哩"><img
+                            src="{% static 'img/bilibili.ico' %}" width="16" height="16">哔哩哔哩</a>
+                    </li>
+                    <li><a href="http://www.baidu.com/s?wd={{q}}"
+                           target="_blank" title="Baidu"><img
+                            src="{% static 'img/baidu.ico' %}" width="16" height="16">Baidu</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </article>
 
     <aside>
-        <div class="results_container">
-            <div style="position: fixed; right: 250px; top: 150px; transition: none 0s ease 0s; cursor: move;"
-                 data-selected="true" data-label-id="0">
-                <div>
-                    <ul>
-                        <li><a href="http://www.google.com/search?q={{q}}" target="_blank"><img
-                                src="{% static 'img/google.ico' %}" width="16" height="16">Google</a>
-                        </li>
-                        <li><a href="https://www.douban.com/search?q={{q}}" target="_blank"><img
-                                src="{% static 'img/douban.png' %}" width="16" height="16">豆瓣</a>
-                        </li>
-                        <li><a href="https://book.tstrs.me/find?q={{q}}" target="_blank"><img
-                                src="{% static 'img/iBookIn.png' %}" width="16" height="16">i-Book.in</a>
-                        </li>
-                        <li><a href="https://www.19kan.com/vodsearch.html?wd={{q}}"
-                               target="_blank"><img
-                                src="{% static 'img/19kan.png' %}" width="16" height="16">19kan</a>
-                        </li>
-                        <li><a href="https://app.movie/index.php/vod/search.html?wd={{q}}"
-                               target="_blank"><img
-                                src="{% static 'img/appMovie.ico' %}" width="16" height="16">appMovie</a>
-                        </li>
-                        <li><a href="http://v.qq.com/x/search/?q={{q}}&amp;stag=9"
-                               target="_blank"><img
-                                src="{% static 'img/tencent.ico' %}" width="16" height="16">腾讯视频</a>
-                        </li>
-                        <li><a href="https://search.bilibili.com/all?keyword={{q}}" target="_blank" title="哔哩哔哩"><img
-                                src="{% static 'img/bilibili.ico' %}" width="16" height="16">哔哩哔哩</a>
-                        </li>
-                        <li><a href="http://www.baidu.com/s?wd={{q}}"
-                               target="_blank" title="Baidu"><img
-                                src="{% static 'img/baidu.ico' %}" width="16" height="16">Baidu</a>
-                        </li>
-                    </ul>
-                </div>
-                <span class="button" title="Customize search engines"></span></div><div style="position: fixed; right: 250px; top: 150px; transition: none 0s ease 0s; cursor: move;"
-                 data-selected="true" data-label-id="0">
-                <div>
-                    <ul>
-                        <li><a href="http://www.google.com/search?q={{q}}" target="_blank"><img
-                                src="{% static 'img/google.ico' %}" width="16" height="16">Google</a>
-                        </li>
-                        <li><a href="https://www.douban.com/search?q={{q}}" target="_blank"><img
-                                src="{% static 'img/douban.png' %}" width="16" height="16">豆瓣</a>
-                        </li>
-                        <li><a href="https://book.tstrs.me/find?q={{q}}" target="_blank"><img
-                                src="{% static 'img/iBookIn.png' %}" width="16" height="16">i-Book.in</a>
-                        </li>
-                        <li><a href="https://www.19kan.com/vodsearch.html?wd={{q}}"
-                               target="_blank"><img
-                                src="{% static 'img/19kan.png' %}" width="16" height="16">19kan</a>
-                        </li>
-                        <li><a href="https://app.movie/index.php/vod/search.html?wd={{q}}"
-                               target="_blank"><img
-                                src="{% static 'img/appMovie.ico' %}" width="16" height="16">appMovie</a>
-                        </li>
-                        <li><a href="http://v.qq.com/x/search/?q={{q}}&amp;stag=9"
-                               target="_blank"><img
-                                src="{% static 'img/tencent.ico' %}" width="16" height="16">腾讯视频</a>
-                        </li>
-                        <li><a href="https://search.bilibili.com/all?keyword={{q}}" target="_blank" title="哔哩哔哩"><img
-                                src="{% static 'img/bilibili.ico' %}" width="16" height="16">哔哩哔哩</a>
-                        </li>
-                        <li><a href="http://www.baidu.com/s?wd={{q}}"
-                               target="_blank" title="Baidu"><img
-                                src="{% static 'img/baidu.ico' %}" width="16" height="16">Baidu</a>
-                        </li>
-                    </ul>
-                </div>
-                <span class="button" title="Customize search engines"></span></div>
 
-        </div>
     </aside>
 </main>
 

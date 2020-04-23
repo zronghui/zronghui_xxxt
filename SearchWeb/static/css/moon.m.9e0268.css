@@ -1076,3 +1076,13 @@ button, input[type=button], input[type=reset], input[type=submit] {
         font-size: .875rem
     }
 }
+
+@media screen and (min-width: 800px) {
+    .search_engines {
+        position: fixed;
+        right: 25%;
+        top: 20%;
+        display: inline;
+        /*cursor: move;*/
+    }
+}
