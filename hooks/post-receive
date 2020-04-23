@@ -2,4 +2,4 @@
 cd /root/code/zronghui_xxxt || exit
 unset GIT_DIR #还原环境变量
 git pull origin master
-#
+
