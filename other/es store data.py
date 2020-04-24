@@ -81,18 +81,19 @@ def bulk_with_json(jsonFile, doc_type):
 
 
 if __name__ == '__main__':
-    # 建立index
-    build_index()
     bulk_with_json(jsonFile='../helloScrapy/books.json', doc_type='books')
     bulk_with_json(jsonFile='../helloScrapy/movies.json', doc_type='movies')
     os.system('rm ../helloScrapy/books.json; rm ../helloScrapy/movies.json')
-#     bulk_with_json(jsonFile='axcs.json', doc_type='books')
-#     bulk_with_json(jsonFile='bttwo.json', doc_type='movies')
-#     bulk_with_json(jsonFile='ddrk.json', doc_type='movies')
-#     bulk_with_json(jsonFile='dvdhd.json', doc_type='movies')
-#     bulk_with_json(jsonFile='itsck.json', doc_type='movies')
-#     bulk_with_json(jsonFile='java1234.json', doc_type='books')
-#     bulk_with_json(jsonFile='shudan1.json', doc_type='books')
-#     bulk_with_json(jsonFile='volmoe1.json', doc_type='books')
-#     bulk_with_json(jsonFile='xiangzhan.json', doc_type='books')
-#     bulk_with_json(jsonFile='zhenbuka.json', doc_type='movies')
+
+    # 建立index
+    # build_index()
+    # bulk_with_json(jsonFile='axcs.json', doc_type='books')
+    # bulk_with_json(jsonFile='bttwo.json', doc_type='movies')
+    # bulk_with_json(jsonFile='ddrk.json', doc_type='movies')
+    # bulk_with_json(jsonFile='dvdhd.json', doc_type='movies')
+    # bulk_with_json(jsonFile='itsck.json', doc_type='movies')
+    # bulk_with_json(jsonFile='java1234.json', doc_type='books')
+    # bulk_with_json(jsonFile='shudan1.json', doc_type='books')
+    # bulk_with_json(jsonFile='volmoe1.json', doc_type='books')
+    # bulk_with_json(jsonFile='xiangzhan.json', doc_type='books')
+    # bulk_with_json(jsonFile='zhenbuka.json', doc_type='movies')
