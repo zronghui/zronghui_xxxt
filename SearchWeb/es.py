@@ -38,7 +38,7 @@ def search(q, _from=0, doc_type=None):
     if result['hits']['total'] > 10:
         return result
     else:
-        return search(' '.join(q), _from)
+        return search(' '.join(q), _from, doc_type)
 
 
 if __name__ == '__main__':
