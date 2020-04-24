@@ -4,6 +4,15 @@ import json
 
 import pretty_errors
 from elasticsearch import Elasticsearch
+import hashlib
+
+
+# 计算密码的md5值
+def get_md5(s):
+    md = hashlib.md5()
+    md.update(s.encode('utf-8'))
+    return md.hexdigest()
+
 
 es = Elasticsearch()
 mapping = {
@@ -41,11 +50,16 @@ datas = [
         'title': '中国驻洛杉矶领事馆遭亚裔男子枪击 嫌犯已自首',
         'url': 'http://news.ifeng.com/world/detail_2011_12/16/11372558_0.shtml',
         'date': '2011-12-18'
+    },
+    {
+        'title': '中国驻洛杉矶领事馆遭亚裔男子枪击 嫌犯已自首',
+        'url': 'http://news.ifeng.com/world/detail_2011_12/16/11372558_0.shtml',
+        'date': '2011-12-18'
     }
 ]
 
 for data in datas:
-    debug = es.index(index='news', doc_type='politics', body=data)
+    debug = es.index(index='news', doc_type='politics', body=data, id=get_md5(data['url']))
 es.indices.refresh(index="news")
 
 result = es.search(index='news', doc_type='politics')

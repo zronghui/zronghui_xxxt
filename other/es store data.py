@@ -4,6 +4,15 @@ import json
 
 import pretty_errors
 from elasticsearch import Elasticsearch, helpers
+import hashlib
+
+
+# 计算密码的md5值
+def get_md5(s):
+    md = hashlib.md5()
+    md.update(s.encode('utf-8'))
+    return md.hexdigest()
+
 
 pretty_errors.activate()
 
@@ -51,7 +60,7 @@ def bulk_with_json(jsonFile, doc_type):
                 action = {
                     "_index": doc_type,
                     "_type": doc_type,
-                    # "_id": i,
+                    "_id": get_md5(triple_dict['book_url']),
                     "_source": triple_dict
                 }
                 i += 1
