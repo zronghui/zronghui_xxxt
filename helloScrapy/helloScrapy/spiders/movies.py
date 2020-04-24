@@ -9,13 +9,18 @@ class MoviesSpider(scrapy.Spider):
     name = 'movies'
     allowed_domains = ['movies']
     start_urls = [
-        'https://www.bttwo.com/new-movie/page/1',
-        'https://ddrk.me/page/1',
-        *[f'https://dvdhd.me/list/index{i}.html' for i in range(1, 6)],
-        *[f'https://www.itsck.com/type/{i}.html' for i in
-          ['dianying', 'lianxuju', 'zongyi', 'dongman']
-          ],
-        *[f'https://www.zhenbuka.com/vodtype/{i}' for i in range(1, 5)],
+        # 'https://www.bttwo.com/new-movie/page/1',
+        # 'https://ddrk.me/page/1',
+        # *[f'https://dvdhd.me/list/index{i}.html' for i in range(1, 6)],
+        # *[f'https://www.itsck.com/type/{i}.html' for i in
+        #   ['dianying', 'lianxuju', 'zongyi', 'dongman']
+        #   ],
+        # *[f'https://www.zhenbuka.com/vodtype/{i}' for i in range(1, 5)],
+        # *[f'https://app.movie/index.php/vod/type/id/{i}/page/1.html' for i in range(1, 5)],
+        *[f'https://app.movie/index.php/vod/type/id/1/page/{i}.html' for i in range(1, 1298)],
+        *[f'https://app.movie/index.php/vod/type/id/2/page/{i}.html' for i in range(1, 562)],
+        *[f'https://app.movie/index.php/vod/type/id/3/page/{i}.html' for i in range(1, 119)],
+        *[f'https://app.movie/index.php/vod/type/id/4/page/{i}.html' for i in range(1, 229)],
     ]
     ic(start_urls)
 
@@ -42,13 +47,17 @@ class MoviesSpider(scrapy.Spider):
             'urlsXpath': "//h4[@class='title text-overflow']/a/@href",
             'namesXpath': "//h4[@class='title text-overflow']/a/text()"
         },
+        'app.movie': {
+            'urlsXpath': "//h4[@class='stui-vodlist__title']/a/@href",
+            'namesXpath': "//h4[@class='stui-vodlist__title']/a/text()"
+        },
     }
 
     custom_settings = {
         # 'LOG_LEVEL': "WARNING",
-        'CONCURRENT_REQUESTS': 100,
-        'CONCURRENT_REQUESTS_PER_DOMAIN': 100,
-        'CONCURRENT_REQUESTS_PER_IP': 100,
+        'CONCURRENT_REQUESTS': 1,
+        'CONCURRENT_REQUESTS_PER_DOMAIN': 1,
+        'CONCURRENT_REQUESTS_PER_IP': 1,
         'DOWNLOAD_DELAY': 1,
         'ITEM_PIPELINES': {'helloScrapy.pipelines.MoviesPipeline': 300},
         'DEFAULT_REQUEST_HEADERS': {
