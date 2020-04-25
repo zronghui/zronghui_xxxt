@@ -73,7 +73,7 @@ def bulk_with_json(jsonFile, doc_type):
                 count += 1
                 actions.append(action)
             except:
-                print(f"!!! {j} th row insert faied: {line}")
+                print(f"!!! {j} th row insert faied: {triple_dict}")
                 continue
             if count >= max_count:
                 helpers.bulk(es, actions)
