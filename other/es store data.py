@@ -59,7 +59,7 @@ def bulk_with_json(jsonFile, doc_type):
                     triple_dict = d
                 else:
                     triple_dict = d.get('_source')
-                triple_dict['book_name_length'] = len(triple_dict['book_name'])
+                triple_dict['book_name_length'] = triple_dict.get('book_name_length', len(triple_dict['book_name']))
                 # 如果数据量小可以用index的方法一条条插入
                 # 这里index，doc_type就等于上一步建立索引所用的名称
                 # es.index(index='index_test',doc_type='doc_type',body=triple_dict)
@@ -92,7 +92,7 @@ if __name__ == '__main__':
 
     # 建立index
     # build_index()
-    # bulk_with_json(jsonFile='../movies.json', doc_type='books')
+    # bulk_with_json(jsonFile='../movies.json', doc_type='movies')
     # bulk_with_json(jsonFile='../books.json', doc_type='books')
 
     # bulk_with_json(jsonFile='axcs.json', doc_type='books')
