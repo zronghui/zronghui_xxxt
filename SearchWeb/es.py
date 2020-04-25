@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from pprint import pprint
 
+import jieba
 import pretty_errors
 from elasticsearch import Elasticsearch
 
@@ -29,7 +30,10 @@ def search(q, _from=0, doc_type=None):
            "aggs": {},
            "version": True
            }
-    for i in q.split():
+    search_words = list(set(jieba.cut_for_search(q)))
+    if '的' in search_words:
+        search_words.remove('的')
+    for i in search_words:
         dsl["query"]["bool"]["should"].append({"wildcard": {"book_name": i}})
     if doc_type == 'books':
         result = es.search(index='books', doc_type='books', body=dsl)

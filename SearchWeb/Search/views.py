@@ -17,7 +17,14 @@ def search(request):
     pageNo = int(request.GET.get('pageno', 0))
     q = request.GET.get('q')
     search_type = request.GET.get('search_type', 'movies')
-    search_result = es.search(q, _from=20 * pageNo, doc_type=search_type)
+    # 限定搜索词长度在 1~20 之间
+    if not 1 < len(q) < 20:
+        search_result = {
+            'hits': {'total': 0, 'hits': []},
+            'took': 0
+        }
+    else:
+        search_result = es.search(q, _from=20 * pageNo, doc_type=search_type)
     allPageNo = math.ceil(search_result['hits']['total'] / 20)
     context = {
         'q': q,
@@ -30,7 +37,7 @@ def search(request):
         'previousPage': pageNo - 1,
         'nextPage': pageNo + 1,
         'isFirstPage': pageNo == 0,
-        'isLastPage': pageNo == allPageNo-1,
+        'isLastPage': pageNo == allPageNo - 1,
         'time': search_result['took'],
         'count': search_result['hits']['total'],
         'search_type': search_type,
