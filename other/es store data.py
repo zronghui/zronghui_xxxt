@@ -55,6 +55,7 @@ def bulk_with_json(jsonFile, doc_type):
             j += 1
             try:
                 triple_dict = json.loads(line)
+                triple_dict['book_name_length'] = len(triple_dict['book_name'])
                 # 如果数据量小可以用index的方法一条条插入
                 # 这里index，doc_type就等于上一步建立索引所用的名称
                 # es.index(index='index_test',doc_type='doc_type',body=triple_dict)
