@@ -26,7 +26,19 @@ def search(q, _from=0, doc_type=None):
                    "book_name": {}
                }
            },
-           "sort": [],
+           "sort": [
+               {"_score": {"order": "desc"}},  # desc asc
+               {"book_name_length": {'order': 'asc'}},
+               # 为什么用 script 一直不生效？
+               # {
+               #     "_script": {
+               #         "script": "doc['book_name'].value.length()",
+               # # str: length() array: size()
+               #         "type": "number",
+               #         "order": "asc"
+               #     }
+               # }
+           ],
            "aggs": {},
            "version": True
            }
