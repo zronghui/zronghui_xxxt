@@ -28,7 +28,7 @@ def search(q, _from=0, doc_type=None):
            },
            "sort": [
                {"_score": {"order": "desc"}},  # desc asc
-               {"book_name_length": {'order': 'asc'}},
+               {"book_name_length": {'order': 'asc', "missing": "_last", "ignore_unmapped": True}},
                # 为什么用 script 一直不生效？
                # {
                #     "_script": {
