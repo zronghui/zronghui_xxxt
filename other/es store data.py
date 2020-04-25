@@ -66,13 +66,14 @@ def bulk_with_json(jsonFile, doc_type):
                 action = {
                     "_index": doc_type,
                     "_type": doc_type,
-                    "_id": d['_id'] if d['_id'] else get_md5(triple_dict['book_url']),
+                    "_id": d.get('_id') if d.get('_id') else get_md5(triple_dict['book_url']),
                     "_source": triple_dict
                 }
                 i += 1
                 count += 1
                 actions.append(action)
-            except:
+            except Exception as e:
+                print(e)
                 print(f"!!! {j} th row insert faied: {triple_dict}")
                 continue
             if count >= max_count:
