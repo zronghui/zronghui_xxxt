@@ -30,19 +30,27 @@ def search(q, _from=0, doc_type=None):
            "aggs": {},
            "version": True
            }
+    # 1. 包含所有字
+    for i in q.replace(' ', ''):
+        dsl["query"]["bool"]["must"].append({"wildcard": {"book_name": i}})
+    result = es.search(index='movies', doc_type='movies', body=dsl)
+    if result['hits']['total'] != 0:
+        return result
+    dsl["query"]["bool"]["must"] = []
+    # 2. jieba 分词
+    q.replace('的', '')
     search_words = list(set(jieba.cut_for_search(q)))
-    if '的' in search_words:
-        search_words.remove('的')
     for i in search_words:
         dsl["query"]["bool"]["should"].append({"wildcard": {"book_name": i}})
-    if doc_type == 'books':
-        result = es.search(index='books', doc_type='books', body=dsl)
-    else:
-        result = es.search(index='movies', doc_type='movies', body=dsl)
-    if result['hits']['total'] > 10:
+    result = es.search(index=doc_type, doc_type='books', body=dsl)
+    if result['hits']['total'] != 0:
         return result
-    else:
-        return search(' '.join(q), _from, doc_type)
+    # 3. 逐字拆解
+    dsl["query"]["bool"]["should"] = []
+    for i in q:
+        dsl["query"]["bool"]["should"].append({"wildcard": {"book_name": i}})
+    result = es.search(index=doc_type, doc_type='books', body=dsl)
+    return result
 
 
 if __name__ == '__main__':
