@@ -33,7 +33,7 @@ def search(q, _from=0, doc_type=None):
     # 1. 包含所有字
     for i in q.replace(' ', ''):
         dsl["query"]["bool"]["must"].append({"wildcard": {"book_name": i}})
-    result = es.search(index='movies', doc_type='movies', body=dsl)
+    result = es.search(index=doc_type, doc_type=doc_type, body=dsl)
     if result['hits']['total'] != 0:
         return result
     dsl["query"]["bool"]["must"] = []
@@ -42,14 +42,14 @@ def search(q, _from=0, doc_type=None):
     search_words = list(set(jieba.cut_for_search(q)))
     for i in search_words:
         dsl["query"]["bool"]["should"].append({"wildcard": {"book_name": i}})
-    result = es.search(index=doc_type, doc_type='books', body=dsl)
+    result = es.search(index=doc_type, doc_type=doc_type, body=dsl)
     if result['hits']['total'] != 0:
         return result
     # 3. 逐字拆解
     dsl["query"]["bool"]["should"] = []
     for i in q:
         dsl["query"]["bool"]["should"].append({"wildcard": {"book_name": i}})
-    result = es.search(index=doc_type, doc_type='books', body=dsl)
+    result = es.search(index=doc_type, doc_type=doc_type, body=dsl)
     return result
 
 
