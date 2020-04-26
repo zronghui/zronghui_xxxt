@@ -11,6 +11,7 @@ class MoviesSpider(scrapy.Spider):
     name = 'movies'
     allowed_domains = ['movies']
     start_urls = [
+        'https://www.shudan.vip/page/1',
         'https://www.bttwo.com/new-movie/page/1',
         'https://ddrk.me/page/1',
         *[f'https://dvdhd.me/list/index{i}.html' for i in range(1, 6)],
@@ -27,6 +28,10 @@ class MoviesSpider(scrapy.Spider):
     ic(start_urls)
 
     xpath = {
+        'www.shudan.vip': {
+            'urlsXpath': "//h2[@class='block-title']/a/@href",
+            'namesXpath': "//h2[@class='block-title']/a/text()"
+        },
         'www.bttwo.com': {
             'urlsXpath': "//h3[@class='dytit']/a/@href",
             'namesXpath': "//h3[@class='dytit']/a/text()"
