@@ -9,6 +9,7 @@ class BooksSpider(scrapy.Spider):
     name = 'books'
     allowed_domains = ['http://books/']
     start_urls = [
+        'https://www.shudan.vip/page/1',
         *[f'http://www.zxcs.me/sort/{i}' for i in [23, *list(range(25, 30)), *list(range(36, 46)), 55]],
         *[f'http://www.java1234.com{i}' for i in '''/a/javabook/javabase/
             /a/javabook/database/
@@ -22,6 +23,10 @@ class BooksSpider(scrapy.Spider):
     ic(start_urls)
 
     xpath = {
+        'www.shudan.vip': {
+            'urlsXpath': "//h2[@class='block-title']/a/@href",
+            'namesXpath': "//h2[@class='block-title']/a/text()"
+        },
         'www.zxcs.me': {
             'urlsXpath': "//dl[@id='plist']/dt/a/@href",
             'namesXpath': "//dl[@id='plist']/dt/a/text()"
