@@ -1,0 +1,33 @@
+version: "1.0"
+tabs:
+  zronghui-xxxt:
+    title: "zronghui-xxxt"
+    panes:
+        #  左上：启动 es
+      - position: "1/1" 
+        commands:
+          - "elasticsearch"
+        # 左中：启动 web 项目
+      - position: "1/2" 
+        commands:
+          - "cd ~/01Code/zronghui_xxxt/SearchWeb"
+          - "python manage.py runserver"
+        # 左下：ssh 服务器
+      - position: "1/3"
+        commands:
+          - '"/Applications/SSH Config Editor.app/Contents/Resources/connect.sh" "aliyun" 45FB8DC9-87FC-4C6B-AC20-F5377924CC66'
+          - "source ~/.zshrc"
+          - "j xxxt"
+          - "clear"
+        # 右上：xxxt
+      - position: "2/1"
+        commands:
+          - "source ~/.zshrc"
+          - "cd ~/01Code/zronghui_xxxt"
+          - "clear"
+        # 右下
+      - position: "2/2"
+        commands:
+          - "source ~/.zshrc"
+          - "cd ~/01Code/hello/helloScrapy"
+          - "clear"
