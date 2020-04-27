@@ -166,7 +166,47 @@
     </article>
 
     <aside>
-
+        {% if parseSuccess %}
+        <div class="movie border-shadow">
+            <div class="title-wrapper">
+                <div class="title-block">
+                    <div class="movie-title">
+                        <div class="movie-title-text">{{movie_title}}</div>
+                    </div>
+                    <div class="movie-info"><span><a
+                            href="https://movie.douban.com/subject/{{movie_id}}/" target="_blank"
+                            rel="noopener noreferrer"
+                    ><div class="rating-l">豆瓣</div><div
+                            class="rating-r">{{rating_average}}</div></a>{{year_genres}}</span></div>
+                </div>
+                <div class="poster"><a href="https://movie.douban.com/subject/{{movie_id}}/" target="_blank"
+                                       rel="noopener noreferrer"><img
+                        src={{movie_poster}} alt=""
+                        class=""></a></div>
+            </div>
+            <div class="detail-block">
+                <div class="summary">
+                    <div style="">
+                        {{summary}}
+                        <span class="js-shave-char">
+                            <span>...
+                                <span class="show-more-text">
+                                    展示更多
+                                </span>
+                            </span>
+                        </span>
+                        <span class="js-shave" style="display: none;">
+                            {{summary_more}}
+                        </span>
+                    </div>
+                </div>
+                <div class="detail-text">导演：{{directors}}
+                </div>
+                <div class="detail-text">主演：{{casts}}
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </aside>
 </main>
 

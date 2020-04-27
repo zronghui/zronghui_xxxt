@@ -5,7 +5,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
 # Create your views here.
-import es
+from utils import es, douban
 
 
 def index(request):
@@ -26,6 +26,13 @@ def search(request):
     else:
         search_result = es.search(q, _from=20 * pageNo, doc_type=search_type)
     allPageNo = math.ceil(search_result['hits']['total'] / 20)
+
+    parseSuccess = False
+    if search_type == 'movies':
+        movie_detail = douban.getMovieDetailByQuery(q)
+        if "code" not in movie_detail:
+            parseSuccess = True
+
     context = {
         'q': q,
         'hits': [{'book_url': i['_source']['book_url'],
@@ -41,6 +48,27 @@ def search(request):
         'time': search_result['took'],
         'count': search_result['hits']['total'],
         'search_type': search_type,
+        # 豆瓣相关
+        'parseSuccess': parseSuccess,
     }
-    pprint(context)
-    return render(request, 'result.html', context=context)
+    if parseSuccess:
+        movie_title = movie_detail['title']
+        movie_id = movie_detail['id']
+        rating_average = movie_detail['rating']['average']
+        year_genres = f'{movie_detail["year"]} ‧ {"/".join(movie_detail["genres"])}'
+        movie_poster = movie_detail['images']['medium']  # small medium large
+        summary = movie_detail["summary"]
+        directors = '/'.join(i['name'] for i in movie_detail['directors'])
+        casts= '/'.join(i['name'] for i in movie_detail['casts'])
+        context.update({'movie_title': movie_title,
+                        'movie_id': movie_id,
+                        'rating_average': rating_average,
+                        'year_genres': year_genres,
+                        'movie_poster': movie_poster,
+                        'summary': summary[:145],
+                        'summary_more': summary[145:],
+                        'directors': directors,
+                        'casts': casts,
+                        })
+        pprint(context)
+        return render(request, 'result.html', context=context)
