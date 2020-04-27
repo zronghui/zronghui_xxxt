@@ -1,0 +1,9 @@
+jieba==0.42.1
+Django==3.0.5
+requests==2.22.0
+Scrapy==2.0.0
+elasticsearch==5.5.3
+pretty_errors==1.2.7
+icecream==2.0.0
+wget==3.2
+zhconv==1.4.0
