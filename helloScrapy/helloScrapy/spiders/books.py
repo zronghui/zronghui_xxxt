@@ -31,7 +31,6 @@ class BooksSpider(scrapy.Spider):
     else:
         pipeline = 'helloScrapy.pipelines.BooksPipeline'
         start_urls = [
-            *[f'https://obook.cc/index-{i}.htm' for i in range(1, 500)],
             *[f'http://www.mianhuatang.cc/mulu/1-{i}.html' for i in range(1, 1104 + 1)],
             *[f'http://www.mianhuatang.cc/mulu/2-{i}.html' for i in range(1, 330 + 1)],
             *[f'http://www.mianhuatang.cc/mulu/3-{i}.html' for i in range(1, 1202 + 1)],
