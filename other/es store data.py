@@ -70,7 +70,7 @@ def bulk_with_json(jsonFile, doc_type):
                 num += 1
                 logger.debug("Insert " + str(num * max_count) + " records.")
     bulk(actions)
-    logger.debug('finish~~~')
+    logger.info(f'success insert {num} items')
 
 
 def bulk(actions):
