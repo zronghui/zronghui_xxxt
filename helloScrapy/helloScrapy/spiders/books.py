@@ -1,17 +1,24 @@
 # -*- coding: utf-8 -*-
 import scrapy
+from environs import Env
+from helloScrapy.items import BookItem
 from icecream import ic
 
-from helloScrapy.items import BookItem
+env = Env()
+env.read_env()
+
+InCrontab = env.bool("InCrontab", False)
 
 
 class BooksSpider(scrapy.Spider):
     name = 'books'
     allowed_domains = ['http://books/']
-    start_urls = [
-        'https://www.shudan.vip/page/1',
-        *[f'http://www.zxcs.me/sort/{i}' for i in [23, *list(range(25, 30)), *list(range(36, 46)), 55]],
-        *[f'http://www.java1234.com{i}' for i in '''/a/javabook/javabase/
+    if InCrontab:
+        pipeline = 'helloScrapy.pipelines.CrontabBooksPipeline'
+        start_urls = [
+            'https://www.shudan.vip/page/1',
+            *[f'http://www.zxcs.me/sort/{i}' for i in [23, *list(range(25, 30)), *list(range(36, 46)), 55]],
+            *[f'http://www.java1234.com{i}' for i in '''/a/javabook/javabase/
             /a/javabook/database/
             /a/javabook/webbase/
             /a/javabook/javaweb/
@@ -19,7 +26,23 @@ class BooksSpider(scrapy.Spider):
             /a/javabook/yun/
             /a/javabook/blockchain/
             /a/javabook/newBook/'''.split()],
-    ]
+            *[f'http://www.mianhuatang.cc/mulu/{i}-1.html' for i in range(1, 11)]
+        ]
+    else:
+        pipeline = 'helloScrapy.pipelines.BooksPipeline'
+        start_urls = [
+            *[f'https://obook.cc/index-{i}.htm' for i in range(1, 500)],
+            *[f'http://www.mianhuatang.cc/mulu/1-{i}.html' for i in range(1, 1104 + 1)],
+            *[f'http://www.mianhuatang.cc/mulu/2-{i}.html' for i in range(1, 330 + 1)],
+            *[f'http://www.mianhuatang.cc/mulu/3-{i}.html' for i in range(1, 1202 + 1)],
+            *[f'http://www.mianhuatang.cc/mulu/4-{i}.html' for i in range(1, 415 + 1)],
+            *[f'http://www.mianhuatang.cc/mulu/5-{i}.html' for i in range(1, 141 + 1)],
+            *[f'http://www.mianhuatang.cc/mulu/6-{i}.html' for i in range(1, 363 + 1)],
+            *[f'http://www.mianhuatang.cc/mulu/7-{i}.html' for i in range(1, 297 + 1)],
+            *[f'http://www.mianhuatang.cc/mulu/8-{i}.html' for i in range(1, 230 + 1)],
+            *[f'http://www.mianhuatang.cc/mulu/9-{i}.html' for i in range(1, 409 + 1)],
+            *[f'http://www.mianhuatang.cc/mulu/10-{i}.html' for i in range(1, 1455 + 1)],
+        ]
     ic(start_urls)
 
     xpath = {
@@ -34,6 +57,10 @@ class BooksSpider(scrapy.Spider):
         'www.java1234.com': {
             'urlsXpath': "//div[@class='listbox']/ul[@class='e2']/li/a[@class='title']/@href",
             'namesXpath': "//div[@class='listbox']/ul[@class='e2']/li/a[@class='title']/text()"
+        },
+        'www.mianhuatang.cc': {
+            'urlsXpath': "//div[@class='title']/h2/a/@href",
+            'namesXpath': "//div[@class='title']/h2/a/text()"
         }
     }
 
@@ -43,7 +70,7 @@ class BooksSpider(scrapy.Spider):
         'CONCURRENT_REQUESTS_PER_DOMAIN': 100,
         'CONCURRENT_REQUESTS_PER_IP': 100,
         'DOWNLOAD_DELAY': 1,
-        'ITEM_PIPELINES': {'helloScrapy.pipelines.BooksPipeline': 300},
+        'ITEM_PIPELINES': {pipeline: 300},
         'DEFAULT_REQUEST_HEADERS': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
                           'AppleWebKit/537.36 (KHTML, like Gecko) '

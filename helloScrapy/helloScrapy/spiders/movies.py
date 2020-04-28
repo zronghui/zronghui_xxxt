@@ -2,11 +2,9 @@
 import random
 
 import scrapy
-from icecream import ic
-
-from helloScrapy.items import BookItem
-
 from environs import Env
+from helloScrapy.items import BookItem
+from icecream import ic
 
 env = Env()
 env.read_env()
@@ -18,6 +16,7 @@ class MoviesSpider(scrapy.Spider):
     name = 'movies'
     allowed_domains = ['movies']
     if InCrontab:
+        pipeline = 'helloScrapy.pipelines.CrontabMoviesPipeline'
         start_urls = [
             'https://www.bttwo.com/new-movie/page/1',
             'https://ddrk.me/page/1',
@@ -34,15 +33,21 @@ class MoviesSpider(scrapy.Spider):
             'https://www.meijumi.net/usa/page/1',
             'https://www.meijutt.tv/1_______.html',
             *[f'https://www.wanmeikk.me/category/{i}.html' for i in range(1, 5)],
+            *[f'https://www.tcmove.com/list/{i}.html' for i in ["dianying", 'lianxuju', 'zongyi', 'dongman']],
         ]
     else:
+        pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
-            *[f'https://www.meijumi.net/usa/page/{i}/' for i in range(1, 218)],
-            *[f'https://www.meijutt.tv/{i}_______.html' for i in range(1, 326)],
-            *[f'https://www.wanmeikk.me/category/1-{i}.html' for i in range(1, 26)],
-            *[f'https://www.wanmeikk.me/category/2-{i}.html' for i in range(1, 8)],
-            *[f'https://www.wanmeikk.me/category/3-{i}.html' for i in range(1, 3)],
-            *[f'https://www.wanmeikk.me/category/4-{i}.html' for i in range(1, 3)],
+            *[f'https://www.tcmove.com/list/dianying-{i}.html' for i in range(1, 592)],
+            *[f'https://www.tcmove.com/list/lianxuju-{i}.html' for i in range(1, 193)],
+            *[f'https://www.tcmove.com/list/zongyi-{i}.html' for i in range(1, 158)],
+            *[f'https://www.tcmove.com/show/dongman--------{i}---.html' for i in range(1, 198)],
+            # *[f'https://www.meijumi.net/usa/page/{i}/' for i in range(1, 218)],
+            # *[f'https://www.meijutt.tv/{i}_______.html' for i in range(1, 326)],
+            # *[f'https://www.wanmeikk.me/category/1-{i}.html' for i in range(1, 26)],
+            # *[f'https://www.wanmeikk.me/category/2-{i}.html' for i in range(1, 8)],
+            # *[f'https://www.wanmeikk.me/category/3-{i}.html' for i in range(1, 3)],
+            # *[f'https://www.wanmeikk.me/category/4-{i}.html' for i in range(1, 3)],
         ]
     ic(start_urls)
 
@@ -85,6 +90,12 @@ class MoviesSpider(scrapy.Spider):
             'urlsXpath': "//h4[@class='title text-overflow']/a/@href",
             'namesXpath': "//h4[@class='title text-overflow']/a/text()"
         },
+        'www.tcmove.com': {
+            'urlsXpath': "//a[@class='fed-list-title fed-font-xiv fed-text-center "
+                         "fed-text-sm-left fed-visible fed-part-eone']/@href",
+            'namesXpath': "//a[@class='fed-list-title fed-font-xiv fed-text-center "
+                          "fed-text-sm-left fed-visible fed-part-eone']/text()"
+        },
     }
 
     custom_settings = {
@@ -93,7 +104,7 @@ class MoviesSpider(scrapy.Spider):
         'CONCURRENT_REQUESTS_PER_DOMAIN': 100,
         'CONCURRENT_REQUESTS_PER_IP': 100,
         'DOWNLOAD_DELAY': 1,
-        'ITEM_PIPELINES': {'helloScrapy.pipelines.MoviesPipeline': 300},
+        'ITEM_PIPELINES': {pipeline: 300},
         'DEFAULT_REQUEST_HEADERS': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
                           'AppleWebKit/537.36 (KHTML, like Gecko) '

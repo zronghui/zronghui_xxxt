@@ -58,15 +58,16 @@ def search(request):
         year_genres = f'{movie_detail["year"]} ‧ {"/".join(movie_detail["genres"])}'
         movie_poster = movie_detail['images']['medium']  # small medium large
         summary = movie_detail["summary"]
+        summary = summary[:145] + '...' if len(summary) > 145 else summary
         directors = '/'.join(i['name'] for i in movie_detail['directors'])
-        casts= '/'.join(i['name'] for i in movie_detail['casts'])
+        casts = '/'.join(i['name'] for i in movie_detail['casts'])
         context.update({'movie_title': movie_title,
                         'movie_id': movie_id,
                         'rating_average': rating_average,
                         'year_genres': year_genres,
                         'movie_poster': movie_poster,
-                        'summary': summary[:145],
-                        'summary_more': summary[145:],
+                        'summary': summary,
+                        # 'summary_more': summary[145:],
                         'directors': directors,
                         'casts': casts,
                         })

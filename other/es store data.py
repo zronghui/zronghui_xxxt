@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import hashlib
 import json
 import os
 
 import pretty_errors
 from elasticsearch import Elasticsearch, helpers
-import hashlib
-
-# 计算密码的md5值
+from environs import Env
 from loguru import logger
 
 
@@ -108,9 +107,19 @@ def getAction(doc_type, line):
 
 
 if __name__ == '__main__':
-    bulk_with_json(jsonFile='../helloScrapy/books.json', doc_type='books')
-    bulk_with_json(jsonFile='../helloScrapy/movies.json', doc_type='movies')
-    os.system('rm ../helloScrapy/books.json; rm ../helloScrapy/movies.json')
+    env = Env()
+    env.read_env()
+    InCrontab = env.bool("InCrontab", False)
+    if InCrontab:
+        book = 'CrontabBooks.json'
+        movie = 'CrontabMovies.json'
+    else:
+        book = 'books.json'
+        movie = 'movies.json'
+    bulk_with_json(jsonFile='../helloScrapy/' + book, doc_type='books')
+    bulk_with_json(jsonFile='../helloScrapy/' + movie, doc_type='movies')
+    os.system('rm ../helloScrapy/' + book)
+    os.system('rm ../helloScrapy/' + movie)
 
     # 建立index
     # build_index()
