@@ -30,7 +30,7 @@ def search(request):
     parseSuccess = False
     if search_type == 'movies':
         movie_detail = douban.getMovieDetailByQuery(q)
-        if "code" not in movie_detail:
+        if movie_detail and "code" not in movie_detail:
             parseSuccess = True
 
     context = {

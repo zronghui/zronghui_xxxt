@@ -54,21 +54,7 @@ def bulk_with_json(jsonFile, doc_type):
         for line in f:
             j += 1
             try:
-                d = json.loads(line)
-                if not d.get('_source'):
-                    triple_dict = d
-                else:
-                    triple_dict = d.get('_source')
-                triple_dict['book_name_length'] = triple_dict.get('book_name_length', len(triple_dict['book_name']))
-                # 如果数据量小可以用index的方法一条条插入
-                # 这里index，doc_type就等于上一步建立索引所用的名称
-                # es.index(index='index_test',doc_type='doc_type',body=triple_dict)
-                action = {
-                    "_index": doc_type,
-                    "_type": doc_type,
-                    "_id": d.get('_id') if d.get('_id') else get_md5(triple_dict['book_url']),
-                    "_source": triple_dict
-                }
+                action, triple_dict = getAction(doc_type, line)
                 i += 1
                 count += 1
                 actions.append(action)
@@ -82,8 +68,37 @@ def bulk_with_json(jsonFile, doc_type):
                 count = 0
                 num += 1
                 print("Insert " + str(num * max_count) + " records.")
-    helpers.bulk(es, actions)
+    try:
+        helpers.bulk(es, actions)
+    except Exception as e:
+        print(e)
+        for action in actions:
+            try:
+                es.index(index=action['_index'], doc_type=action['_type'],
+                         body=action["_source"],
+                         id=action['_id'])
+            except Exception as e:
+                print(e)
     print('finish~~~')
+
+
+def getAction(doc_type, line):
+    d = json.loads(line)
+    if not d.get('_source'):
+        triple_dict = d
+    else:
+        triple_dict = d.get('_source')
+    triple_dict['book_name_length'] = triple_dict.get('book_name_length', len(triple_dict['book_name']))
+    # 如果数据量小可以用index的方法一条条插入
+    # 这里index，doc_type就等于上一步建立索引所用的名称
+    # es.index(index='index_test',doc_type='doc_type',body=triple_dict)
+    action = {
+        "_index": doc_type,
+        "_type": doc_type,
+        "_id": d.get('_id') if d.get('_id') else get_md5(triple_dict['book_url']),
+        "_source": triple_dict
+    }
+    return action, triple_dict
 
 
 if __name__ == '__main__':
