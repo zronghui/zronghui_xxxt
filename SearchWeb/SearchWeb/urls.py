@@ -23,3 +23,6 @@ urlpatterns = [
     path('', index),
     path('search', search),
 ]
+
+handler404 = error_404
+handler500 = error_500
