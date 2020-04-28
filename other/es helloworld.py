@@ -8,6 +8,9 @@ import hashlib
 
 
 # 计算密码的md5值
+from loguru import logger
+
+
 def get_md5(s):
     md = hashlib.md5()
     md.update(s.encode('utf-8'))
@@ -27,7 +30,7 @@ mapping = {
 es.indices.delete(index='news', ignore=[400, 404])
 es.indices.create(index='news', ignore=400)
 result = es.indices.put_mapping(index='news', doc_type='politics', body=mapping)
-print(result)
+logger.debug(result)
 # {'acknowledged': True}
 
 datas = [
@@ -64,7 +67,7 @@ es.indices.refresh(index="news")
 
 result = es.search(index='news', doc_type='politics')
 
-print(json.dumps(result, indent=2, ensure_ascii=False))
+logger.debug(json.dumps(result, indent=2, ensure_ascii=False))
 
 dsl = {
     'query': {
@@ -78,7 +81,7 @@ es = Elasticsearch()
 # result = es.search(index='news', doc_type='politics', q='中国 领事馆')
 result = es.search(index='news', doc_type='politics', body=dsl)
 
-print(json.dumps(result, indent=2, ensure_ascii=False))
+logger.debug(json.dumps(result, indent=2, ensure_ascii=False))
 
 # {'acknowledged': True}
 # {

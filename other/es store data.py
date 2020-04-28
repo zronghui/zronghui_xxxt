@@ -7,8 +7,10 @@ import pretty_errors
 from elasticsearch import Elasticsearch, helpers
 import hashlib
 
-
 # 计算密码的md5值
+from loguru import logger
+
+
 def get_md5(s):
     md = hashlib.md5()
     md.update(s.encode('utf-8'))
@@ -33,17 +35,17 @@ def build_index():
     es.indices.delete(index='books', ignore=[400, 404])
     es.indices.create(index='books', ignore=400)
     result = es.indices.put_mapping(index='books', doc_type='books', body=mapping)
-    print(result)
+    logger.debug(result)
 
     es.indices.delete(index='movies', ignore=[400, 404])
     es.indices.create(index='movies', ignore=400)
     result = es.indices.put_mapping(index='movies', doc_type='movies', body=mapping)
-    print(result)
+    logger.debug(result)
 
 
 def bulk_with_json(jsonFile, doc_type):
     # 批量插入数据
-    print(f"============== bulk with {jsonFile} ================")
+    logger.debug(f"============== bulk with {jsonFile} ================")
     count = 0
     i = 0
     j = 0
@@ -59,27 +61,31 @@ def bulk_with_json(jsonFile, doc_type):
                 count += 1
                 actions.append(action)
             except Exception as e:
-                print(e)
-                print(f"!!! {j} th row insert faied: {triple_dict}")
+                logger.error(e)
+                logger.debug(f"!!! {j} th row insert faied: {triple_dict}")
                 continue
             if count >= max_count:
-                helpers.bulk(es, actions)
+                bulk(actions)
                 actions = []
                 count = 0
                 num += 1
-                print("Insert " + str(num * max_count) + " records.")
+                logger.debug("Insert " + str(num * max_count) + " records.")
+    bulk(actions)
+    logger.debug('finish~~~')
+
+
+def bulk(actions):
     try:
         helpers.bulk(es, actions)
     except Exception as e:
-        print(e)
+        logger.error(e)
         for action in actions:
             try:
                 es.index(index=action['_index'], doc_type=action['_type'],
                          body=action["_source"],
                          id=action['_id'])
             except Exception as e:
-                print(e)
-    print('finish~~~')
+                logger.error(e)
 
 
 def getAction(doc_type, line):

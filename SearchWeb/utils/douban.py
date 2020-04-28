@@ -3,6 +3,7 @@
 
 import pretty_errors
 import requests
+from loguru import logger
 
 import config
 
@@ -32,14 +33,14 @@ def getMovieDetailByQuery(q):
         movie_id = getMovieId(q, config.doubanApikey)
         return getMovieDetail(movie_id, config.doubanApikey)
     except Exception as e:
-        print(e)
+        logger.error(e)
 
 
 def main():
     q = '余欢水'
     movie_id = getMovieId(q, config.doubanApikey)
-    print(movie_id)
-    print(getMovieDetail(movie_id, config.doubanApikey))
+    logger.debug(movie_id)
+    logger.debug(getMovieDetail(movie_id, config.doubanApikey))
 
 
 if __name__ == '__main__':
