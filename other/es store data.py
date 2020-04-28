@@ -45,7 +45,7 @@ def build_index():
 
 def bulk_with_json(jsonFile, doc_type):
     # 批量插入数据
-    logger.debug(f"============== bulk with {jsonFile} ================")
+    logger.debug(f"bulk with {jsonFile}")
     count = 0
     i = 0
     j = 0

@@ -236,3 +236,4 @@ jobs
 .idea
 
 /SearchWeb/config.py
+/test.py
