@@ -1080,14 +1080,14 @@ button, input[type=button], input[type=reset], input[type=submit] {
 @media screen and (min-width: 800px) {
     .search_engines {
         position: fixed;
-        right: 24%;
+        right: 10%;
         top: 65%;
         display: inline;
         /*cursor: move;*/
     }
 }
 
-.movie{width:100%;}
+.movie{width:95%;margin-bottom: 20px}
 .border-shadow{box-shadow:0 8px 33px 0 rgba(30,35,42,0.08);border-radius:4px;background:#fff;}
 .title-wrapper{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:145px;}
 .title-block{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;width:100%;height:100%;border-bottom:1px solid rgba(30,35,42,0.08);}

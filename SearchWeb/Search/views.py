@@ -70,5 +70,5 @@ def search(request):
                         'directors': directors,
                         'casts': casts,
                         })
-        pprint(context)
-        return render(request, 'result.html', context=context)
+    pprint(context)
+    return render(request, 'result.html', context=context)
