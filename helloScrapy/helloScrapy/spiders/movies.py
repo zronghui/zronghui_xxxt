@@ -6,24 +6,44 @@ from icecream import ic
 
 from helloScrapy.items import BookItem
 
+from environs import Env
+
+env = Env()
+env.read_env()
+
+InCrontab = env.bool("InCrontab", False)
+
 
 class MoviesSpider(scrapy.Spider):
     name = 'movies'
     allowed_domains = ['movies']
-    start_urls = [
-        'https://www.bttwo.com/new-movie/page/1',
-        'https://ddrk.me/page/1',
-        *[f'https://dvdhd.me/list/index{i}.html' for i in range(1, 6)],
-        *[f'https://www.itsck.com/type/{i}.html' for i in
-          ['dianying', 'lianxuju', 'zongyi', 'dongman']
-          ],
-        *[f'https://www.zhenbuka.com/vodtype/{i}' for i in range(1, 5)],
-        *[f'https://app.movie/index.php/vod/type/id/{i}/page/1.html' for i in range(1, 5)],
-        *[f'https://app.movie/index.php/vod/type/id/1/page/{i}.html' for i in random.sample(range(2, 1298), 6)],
-        *[f'https://app.movie/index.php/vod/type/id/2/page/{i}.html' for i in random.sample(range(2, 562), 3)],
-        *[f'https://app.movie/index.php/vod/type/id/3/page/{i}.html' for i in random.sample(range(2, 119), 1)],
-        *[f'https://app.movie/index.php/vod/type/id/4/page/{i}.html' for i in random.sample(range(2, 229), 1)],
-    ]
+    if InCrontab:
+        start_urls = [
+            'https://www.bttwo.com/new-movie/page/1',
+            'https://ddrk.me/page/1',
+            *[f'https://dvdhd.me/list/index{i}.html' for i in range(1, 6)],
+            *[f'https://www.itsck.com/type/{i}.html' for i in
+              ['dianying', 'lianxuju', 'zongyi', 'dongman']
+              ],
+            *[f'https://www.zhenbuka.com/vodtype/{i}' for i in range(1, 5)],
+            *[f'https://app.movie/index.php/vod/type/id/{i}/page/1.html' for i in range(1, 5)],
+            *[f'https://app.movie/index.php/vod/type/id/1/page/{i}.html' for i in random.sample(range(2, 1298), 6)],
+            *[f'https://app.movie/index.php/vod/type/id/2/page/{i}.html' for i in random.sample(range(2, 562), 3)],
+            *[f'https://app.movie/index.php/vod/type/id/3/page/{i}.html' for i in random.sample(range(2, 119), 1)],
+            *[f'https://app.movie/index.php/vod/type/id/4/page/{i}.html' for i in random.sample(range(2, 229), 1)],
+            'https://www.meijumi.net/usa/page/1',
+            'https://www.meijutt.tv/1_______.html',
+            *[f'https://www.wanmeikk.me/category/{i}.html' for i in range(1, 5)],
+        ]
+    else:
+        start_urls = [
+            *[f'https://www.meijumi.net/usa/page/{i}/' for i in range(1, 218)],
+            *[f'https://www.meijutt.tv/{i}_______.html' for i in range(1, 326)],
+            *[f'https://www.wanmeikk.me/category/1-{i}.html' for i in range(1, 26)],
+            *[f'https://www.wanmeikk.me/category/2-{i}.html' for i in range(1, 8)],
+            *[f'https://www.wanmeikk.me/category/3-{i}.html' for i in range(1, 3)],
+            *[f'https://www.wanmeikk.me/category/4-{i}.html' for i in range(1, 3)],
+        ]
     ic(start_urls)
 
     xpath = {
@@ -52,6 +72,18 @@ class MoviesSpider(scrapy.Spider):
         'app.movie': {
             'urlsXpath': "//h4[@class='stui-vodlist__title']/a/@href",
             'namesXpath': "//h4[@class='stui-vodlist__title']/a/text()"
+        },
+        'www.meijumi.net': {
+            'urlsXpath': "//h2[@class='entry-title']/a/@href",
+            'namesXpath': "//h2[@class='entry-title']/a/text()"
+        },
+        'www.meijutt.tv': {
+            'urlsXpath': "//a[@class='B font_14']/@href",
+            'namesXpath': "//a[@class='B font_14']/text()"
+        },
+        'www.wanmeikk.me': {
+            'urlsXpath': "//h4[@class='title text-overflow']/a/@href",
+            'namesXpath': "//h4[@class='title text-overflow']/a/text()"
         },
     }
 
