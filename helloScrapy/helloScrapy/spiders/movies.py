@@ -34,15 +34,15 @@ class MoviesSpider(scrapy.Spider):
             'https://www.meijutt.tv/1_______.html',
             *[f'https://www.wanmeikk.me/category/{i}.html' for i in range(1, 5)],
             *[f'https://www.tcmove.com/list/{i}.html' for i in ["dianying", 'lianxuju', 'zongyi', 'dongman']],
-            *[f'http://www.yhdm.tv/{i}/1.html' for i in ('japan', 'china', 'american', 'movie')],
+            *[f'http://www.yhdm.tv/{i}' for i in ('japan', 'china', 'american', 'movie')],
         ]
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
-            *[f'http://www.yhdm.tv/japan/{i}.html' for i in range(1, 105 + 1)],
-            *[f'http://www.yhdm.tv/china/{i}.html' for i in range(1, 21 + 1)],
-            *[f'http://www.yhdm.tv/american/{i}.html' for i in range(1, 7 + 1)],
-            *[f'http://www.yhdm.tv/movie/{i}.html' for i in range(1, 12 + 1)],
+            *[f'http://www.yhdm.tv/japan/{i}.html' for i in range(2, 105 + 1)],
+            *[f'http://www.yhdm.tv/china/{i}.html' for i in range(2, 21 + 1)],
+            *[f'http://www.yhdm.tv/american/{i}.html' for i in range(2, 7 + 1)],
+            *[f'http://www.yhdm.tv/movie/{i}.html' for i in range(2, 12 + 1)],
 
             # *[f'https://www.tcmove.com/list/dianying-{i}.html' for i in range(1, 592)],
             # *[f'https://www.tcmove.com/list/lianxuju-{i}.html' for i in range(1, 193)],
@@ -110,10 +110,10 @@ class MoviesSpider(scrapy.Spider):
 
     custom_settings = {
         # 'LOG_LEVEL': "WARNING",
-        'CONCURRENT_REQUESTS': 100,
-        'CONCURRENT_REQUESTS_PER_DOMAIN': 100,
-        'CONCURRENT_REQUESTS_PER_IP': 100,
-        'DOWNLOAD_DELAY': 1,
+        'CONCURRENT_REQUESTS': 2,
+        'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
+        'CONCURRENT_REQUESTS_PER_IP': 2,
+        'DOWNLOAD_DELAY': 3,
         'ITEM_PIPELINES': {pipeline: 300},
         'DEFAULT_REQUEST_HEADERS': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
