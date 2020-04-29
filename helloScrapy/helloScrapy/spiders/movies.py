@@ -125,8 +125,8 @@ class MoviesSpider(scrapy.Spider):
             'namesXpath': "//ul[@class='img-list']/li/a/h2/text()"
         },
         'www.yxdm.me': {
-            'urlsXpath': "//div[@class='dhnew search-cnt adj']/ul/li//a/@href",
-            'namesXpath': "//div[@class='dhnew search-cnt adj']/ul/li//a/text()"
+            'urlsXpath': "//ul/li/p[1]//a/@href",
+            'namesXpath': "//ul/li/p[1]//text()"
         },
         # '': {
         #     'urlsXpath': "/@href",
@@ -154,7 +154,9 @@ class MoviesSpider(scrapy.Spider):
         ic(response.url, domain, httpDomain)
         urls = response.xpath(self.xpath[domain]["urlsXpath"]).extract()
         names = response.xpath(self.xpath[domain]["namesXpath"]).extract()
-        ic(len(urls))
+        ic(len(urls) == len(names))
+        ic(urls[0])
+        ic(names[0])
         if len(urls) > 0 and urls[0].startswith('/'):
             urls = [httpDomain + i for i in urls]
         for url, name in zip(urls, names):
