@@ -35,15 +35,25 @@ class MoviesSpider(scrapy.Spider):
             *[f'https://www.wanmeikk.me/category/{i}.html' for i in range(1, 5)],
             *[f'https://www.tcmove.com/list/{i}.html' for i in ["dianying", 'lianxuju', 'zongyi', 'dongman']],
             *[f'http://www.yhdm.tv/{i}' for i in ('japan', 'china', 'american', 'movie')],
+            *[f'http://www.zzzfun.com/vod-type-id-{i}-page-1.html' for i in (1, 3)],
+            *[f'http://www.qimiqimi.co/type/{i}/page/1.html' for i in ('xinfan', 'riman', 'guoman', 'guoman', 'jcdm')],
+            'http://www.yxdm.me/resource/15-1.html',
         ]
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
-            *[f'http://www.yhdm.tv/japan/{i}.html' for i in range(2, 105 + 1)],
-            *[f'http://www.yhdm.tv/china/{i}.html' for i in range(2, 21 + 1)],
-            *[f'http://www.yhdm.tv/american/{i}.html' for i in range(2, 7 + 1)],
-            *[f'http://www.yhdm.tv/movie/{i}.html' for i in range(2, 12 + 1)],
+            *[f'http://www.zzzfun.com/vod-type-id-1-page-{i}.html' for i in range(1, 61 + 1)],
+            *[f'http://www.zzzfun.com/vod-type-id-3-page-{i}.html' for i in range(1, 12 + 1)],
+            *[f'http://www.qimiqimi.co/type/xinfan/page/{i}.html' for i in range(1, 6 + 1)],
+            *[f'http://www.qimiqimi.co/type/riman/page/{i}.html' for i in range(1, 28 + 1)],
+            *[f'http://www.qimiqimi.co/type/guoman/page/{i}.html' for i in range(1, 6 + 1)],
+            *[f'http://www.qimiqimi.co/type/jcdm/page/{i}.html' for i in range(1, 8 + 1)],
+            *[f'http://www.yxdm.me/resource/15-{i}.html' for i in range(1, 129 + 1)],
 
+            # *[f'http://www.yhdm.tv/japan/{i}.html' for i in range(2, 105 + 1)],
+            # *[f'http://www.yhdm.tv/china/{i}.html' for i in range(2, 21 + 1)],
+            # *[f'http://www.yhdm.tv/american/{i}.html' for i in range(2, 7 + 1)],
+            # *[f'http://www.yhdm.tv/movie/{i}.html' for i in range(2, 12 + 1)],
             # *[f'https://www.tcmove.com/list/dianying-{i}.html' for i in range(1, 592)],
             # *[f'https://www.tcmove.com/list/lianxuju-{i}.html' for i in range(1, 193)],
             # *[f'https://www.tcmove.com/list/zongyi-{i}.html' for i in range(1, 158)],
@@ -106,6 +116,22 @@ class MoviesSpider(scrapy.Spider):
             'urlsXpath': "//ul/li/h2/a/@href | //p[@class='tname']/a/@href",
             'namesXpath': "//ul/li/h2/a/text() | //p[@class='tname']/a/text()"
         },
+        'www.zzzfun.com': {
+            'urlsXpath': "//ul[@class='search-result']/a/@href",
+            'namesXpath': "//ul/a//div[@class='title-big']/text()"
+        },
+        'www.qimiqimi.co': {
+            'urlsXpath': "//ul[@class='img-list']/li/a/@href",
+            'namesXpath': "//ul[@class='img-list']/li/a/h2/text()"
+        },
+        'www.yxdm.me': {
+            'urlsXpath': "//div[@class='dhnew search-cnt adj']/ul/li[1]/p[2]/a/@href",
+            'namesXpath': "//div[@class='dhnew search-cnt adj']/ul/li[1]/p[2]/a/text()"
+        },
+        # '': {
+        #     'urlsXpath': "/@href",
+        #     'namesXpath': "/text()"
+        # },
     }
 
     custom_settings = {
