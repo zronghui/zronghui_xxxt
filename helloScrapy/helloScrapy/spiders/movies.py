@@ -38,18 +38,24 @@ class MoviesSpider(scrapy.Spider):
             *[f'http://www.zzzfun.com/vod-type-id-{i}-page-1.html' for i in (1, 3)],
             *[f'http://www.qimiqimi.co/type/{i}/page/1.html' for i in ('xinfan', 'riman', 'guoman', 'guoman', 'jcdm')],
             'http://www.yxdm.me/resource/15-1.html',
+            *[f'https://kkmovie.cf/index.php/vod/type/id/{i}/page/1.html' for i in range(1, 5)],
         ]
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
+
+            *[f'https://kkmovie.cf/index.php/vod/type/id/1/page/{i}.html' for i in range(1, 3947 + 1)],
+            *[f'https://kkmovie.cf/index.php/vod/type/id/2/page/{i}.html' for i in range(1, 1826 + 1)],
+            *[f'https://kkmovie.cf/index.php/vod/type/id/3/page/{i}.html' for i in range(1, 320 + 1)],
+            *[f'https://kkmovie.cf/index.php/vod/type/id/4/page/{i}.html' for i in range(1, 853 + 1)],
+
             # *[f'http://www.zzzfun.com/vod-type-id-1-page-{i}.html' for i in range(1, 61 + 1)],
             # *[f'http://www.zzzfun.com/vod-type-id-3-page-{i}.html' for i in range(1, 12 + 1)],
             # *[f'http://www.qimiqimi.co/type/xinfan/page/{i}.html' for i in range(1, 6 + 1)],
             # *[f'http://www.qimiqimi.co/type/riman/page/{i}.html' for i in range(1, 28 + 1)],
             # *[f'http://www.qimiqimi.co/type/guoman/page/{i}.html' for i in range(1, 6 + 1)],
             # *[f'http://www.qimiqimi.co/type/jcdm/page/{i}.html' for i in range(1, 8 + 1)],
-            *[f'http://www.yxdm.me/resource/15-{i}.html' for i in range(1, 129 + 1)],
-
+            # *[f'http://www.yxdm.me/resource/15-{i}.html' for i in range(1, 129 + 1)],
             # *[f'http://www.yhdm.tv/japan/{i}.html' for i in range(2, 105 + 1)],
             # *[f'http://www.yhdm.tv/china/{i}.html' for i in range(2, 21 + 1)],
             # *[f'http://www.yhdm.tv/american/{i}.html' for i in range(2, 7 + 1)],
@@ -127,6 +133,10 @@ class MoviesSpider(scrapy.Spider):
         'www.yxdm.me': {
             'urlsXpath': "//ul/li/p[1]//a/@href",
             'namesXpath': "//ul/li/p[1]//text()"
+        },
+        'kkmovie.cf': {
+            'urlsXpath': "//div[@class='stui-pannel__bd clearfix']/ul/li//h4/a/@href",
+            'namesXpath': "//div[@class='stui-pannel__bd clearfix']/ul/li//h4/a/text()"
         },
         # '': {
         #     'urlsXpath': "/@href",
