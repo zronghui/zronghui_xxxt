@@ -125,8 +125,8 @@ class MoviesSpider(scrapy.Spider):
             'namesXpath': "//ul[@class='img-list']/li/a/h2/text()"
         },
         'www.yxdm.me': {
-            'urlsXpath': "//div[@class='dhnew search-cnt adj']/ul/li/p[2]/a/@href",
-            'namesXpath': "//div[@class='dhnew search-cnt adj']/ul/li/p[2]/a/text()"
+            'urlsXpath': "//div[@class='dhnew search-cnt adj']/ul/li//a/@href",
+            'namesXpath': "//div[@class='dhnew search-cnt adj']/ul/li//a/text()"
         },
         # '': {
         #     'urlsXpath': "/@href",
