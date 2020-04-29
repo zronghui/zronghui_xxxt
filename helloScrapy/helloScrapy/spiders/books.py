@@ -31,16 +31,16 @@ class BooksSpider(scrapy.Spider):
     else:
         pipeline = 'helloScrapy.pipelines.BooksPipeline'
         start_urls = [
-            *[f'http://www.mianhuatang.cc/mulu/1-{i}.html' for i in range(1, 1104 + 1)],
-            *[f'http://www.mianhuatang.cc/mulu/2-{i}.html' for i in range(1, 330 + 1)],
-            *[f'http://www.mianhuatang.cc/mulu/3-{i}.html' for i in range(1, 1202 + 1)],
-            *[f'http://www.mianhuatang.cc/mulu/4-{i}.html' for i in range(1, 415 + 1)],
-            *[f'http://www.mianhuatang.cc/mulu/5-{i}.html' for i in range(1, 141 + 1)],
-            *[f'http://www.mianhuatang.cc/mulu/6-{i}.html' for i in range(1, 363 + 1)],
-            *[f'http://www.mianhuatang.cc/mulu/7-{i}.html' for i in range(1, 297 + 1)],
-            *[f'http://www.mianhuatang.cc/mulu/8-{i}.html' for i in range(1, 230 + 1)],
-            *[f'http://www.mianhuatang.cc/mulu/9-{i}.html' for i in range(1, 409 + 1)],
-            *[f'http://www.mianhuatang.cc/mulu/10-{i}.html' for i in range(1, 1455 + 1)],
+            # *[f'http://www.mianhuatang.cc/mulu/1-{i}.html' for i in range(1, 1104 + 1)],
+            # *[f'http://www.mianhuatang.cc/mulu/2-{i}.html' for i in range(1, 330 + 1)],
+            # *[f'http://www.mianhuatang.cc/mulu/3-{i}.html' for i in range(1, 1202 + 1)],
+            # *[f'http://www.mianhuatang.cc/mulu/4-{i}.html' for i in range(1, 415 + 1)],
+            # *[f'http://www.mianhuatang.cc/mulu/5-{i}.html' for i in range(1, 141 + 1)],
+            # *[f'http://www.mianhuatang.cc/mulu/6-{i}.html' for i in range(1, 363 + 1)],
+            # *[f'http://www.mianhuatang.cc/mulu/7-{i}.html' for i in range(1, 297 + 1)],
+            # *[f'http://www.mianhuatang.cc/mulu/8-{i}.html' for i in range(1, 230 + 1)],
+            # *[f'http://www.mianhuatang.cc/mulu/9-{i}.html' for i in range(1, 409 + 1)],
+            # *[f'http://www.mianhuatang.cc/mulu/10-{i}.html' for i in range(1, 1455 + 1)],
         ]
     ic(start_urls)
 

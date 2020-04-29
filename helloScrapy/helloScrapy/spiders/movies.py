@@ -34,14 +34,20 @@ class MoviesSpider(scrapy.Spider):
             'https://www.meijutt.tv/1_______.html',
             *[f'https://www.wanmeikk.me/category/{i}.html' for i in range(1, 5)],
             *[f'https://www.tcmove.com/list/{i}.html' for i in ["dianying", 'lianxuju', 'zongyi', 'dongman']],
+            *[f'http://www.yhdm.tv/{i}/1.html' for i in ('japan', 'china', 'american', 'movie')],
         ]
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
-            *[f'https://www.tcmove.com/list/dianying-{i}.html' for i in range(1, 592)],
-            *[f'https://www.tcmove.com/list/lianxuju-{i}.html' for i in range(1, 193)],
-            *[f'https://www.tcmove.com/list/zongyi-{i}.html' for i in range(1, 158)],
-            *[f'https://www.tcmove.com/show/dongman--------{i}---.html' for i in range(1, 198)],
+            *[f'http://www.yhdm.tv/japan/{i}.html' for i in range(1, 105 + 1)],
+            *[f'http://www.yhdm.tv/china/{i}.html' for i in range(1, 21 + 1)],
+            *[f'http://www.yhdm.tv/american/{i}.html' for i in range(1, 7 + 1)],
+            *[f'http://www.yhdm.tv/movie/{i}.html' for i in range(1, 12 + 1)],
+
+            # *[f'https://www.tcmove.com/list/dianying-{i}.html' for i in range(1, 592)],
+            # *[f'https://www.tcmove.com/list/lianxuju-{i}.html' for i in range(1, 193)],
+            # *[f'https://www.tcmove.com/list/zongyi-{i}.html' for i in range(1, 158)],
+            # *[f'https://www.tcmove.com/show/dongman--------{i}---.html' for i in range(1, 198)],
             # *[f'https://www.meijumi.net/usa/page/{i}/' for i in range(1, 218)],
             # *[f'https://www.meijutt.tv/{i}_______.html' for i in range(1, 326)],
             # *[f'https://www.wanmeikk.me/category/1-{i}.html' for i in range(1, 26)],
@@ -95,6 +101,10 @@ class MoviesSpider(scrapy.Spider):
                          "fed-text-sm-left fed-visible fed-part-eone']/@href",
             'namesXpath': "//a[@class='fed-list-title fed-font-xiv fed-text-center "
                           "fed-text-sm-left fed-visible fed-part-eone']/text()"
+        },
+        'www.yhdm.tv': {
+            'urlsXpath': "//p[@class='tname']/a/@href",
+            'namesXpath': "//p[@class='tname']/a/text()"
         },
     }
 
