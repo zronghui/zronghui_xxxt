@@ -42,12 +42,12 @@ class MoviesSpider(scrapy.Spider):
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
-            *[f'http://www.zzzfun.com/vod-type-id-1-page-{i}.html' for i in range(1, 61 + 1)],
-            *[f'http://www.zzzfun.com/vod-type-id-3-page-{i}.html' for i in range(1, 12 + 1)],
-            *[f'http://www.qimiqimi.co/type/xinfan/page/{i}.html' for i in range(1, 6 + 1)],
-            *[f'http://www.qimiqimi.co/type/riman/page/{i}.html' for i in range(1, 28 + 1)],
-            *[f'http://www.qimiqimi.co/type/guoman/page/{i}.html' for i in range(1, 6 + 1)],
-            *[f'http://www.qimiqimi.co/type/jcdm/page/{i}.html' for i in range(1, 8 + 1)],
+            # *[f'http://www.zzzfun.com/vod-type-id-1-page-{i}.html' for i in range(1, 61 + 1)],
+            # *[f'http://www.zzzfun.com/vod-type-id-3-page-{i}.html' for i in range(1, 12 + 1)],
+            # *[f'http://www.qimiqimi.co/type/xinfan/page/{i}.html' for i in range(1, 6 + 1)],
+            # *[f'http://www.qimiqimi.co/type/riman/page/{i}.html' for i in range(1, 28 + 1)],
+            # *[f'http://www.qimiqimi.co/type/guoman/page/{i}.html' for i in range(1, 6 + 1)],
+            # *[f'http://www.qimiqimi.co/type/jcdm/page/{i}.html' for i in range(1, 8 + 1)],
             *[f'http://www.yxdm.me/resource/15-{i}.html' for i in range(1, 129 + 1)],
 
             # *[f'http://www.yhdm.tv/japan/{i}.html' for i in range(2, 105 + 1)],
@@ -125,8 +125,8 @@ class MoviesSpider(scrapy.Spider):
             'namesXpath': "//ul[@class='img-list']/li/a/h2/text()"
         },
         'www.yxdm.me': {
-            'urlsXpath': "//div[@class='dhnew search-cnt adj']/ul/li[1]/p[2]/a/@href",
-            'namesXpath': "//div[@class='dhnew search-cnt adj']/ul/li[1]/p[2]/a/text()"
+            'urlsXpath': "//div[@class='dhnew search-cnt adj']/ul/li/p[2]/a/@href",
+            'namesXpath': "//div[@class='dhnew search-cnt adj']/ul/li/p[2]/a/text()"
         },
         # '': {
         #     'urlsXpath': "/@href",
