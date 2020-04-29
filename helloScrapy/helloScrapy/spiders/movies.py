@@ -103,17 +103,17 @@ class MoviesSpider(scrapy.Spider):
                           "fed-text-sm-left fed-visible fed-part-eone']/text()"
         },
         'www.yhdm.tv': {
-            'urlsXpath': "//p[@class='tname']/a/@href",
-            'namesXpath': "//p[@class='tname']/a/text()"
+            'urlsXpath': "//ul/li/h2/a/@href | //p[@class='tname']/a/@href",
+            'namesXpath': "//ul/li/h2/a/text() | //p[@class='tname']/a/text()"
         },
     }
 
     custom_settings = {
         # 'LOG_LEVEL': "WARNING",
-        'CONCURRENT_REQUESTS': 2,
-        'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
-        'CONCURRENT_REQUESTS_PER_IP': 2,
-        'DOWNLOAD_DELAY': 3,
+        'CONCURRENT_REQUESTS': 100,
+        'CONCURRENT_REQUESTS_PER_DOMAIN': 100,
+        'CONCURRENT_REQUESTS_PER_IP': 100,
+        'DOWNLOAD_DELAY': 1,
         'ITEM_PIPELINES': {pipeline: 300},
         'DEFAULT_REQUEST_HEADERS': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
