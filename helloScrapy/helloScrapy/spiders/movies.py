@@ -39,11 +39,19 @@ class MoviesSpider(scrapy.Spider):
             *[f'http://www.qimiqimi.co/type/{i}/page/1.html' for i in ('xinfan', 'riman', 'guoman', 'guoman', 'jcdm')],
             'http://www.yxdm.me/resource/15-1.html',
             *[f'https://kkmovie.cf/index.php/vod/type/id/{i}/page/1.html' for i in range(1, 5)],
+            'https://miao101.com/page/1',
+            *[f'https://www.kpkuang.com/vodshow/{i}-------------.html' for i in range(1, 5)],
         ]
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
 
+            *[f'https://www.kpkuang.com/vodshow/1--------{i}-----.html' for i in range(1, 2581 + 1)],
+            *[f'https://www.kpkuang.com/vodshow/2--------{i}-----.html' for i in range(1, 618 + 1)],
+            *[f'https://www.kpkuang.com/vodshow/3--------{i}-----.html' for i in range(1, 155 + 1)],
+            *[f'https://www.kpkuang.com/vodshow/4--------{i}-----.html' for i in range(1, 316 + 1)],
+
+            *[f'https://miao101.com/page/{i}' for i in range(1, 2290 + 1)],
             *[f'https://kkmovie.cf/index.php/vod/type/id/1/page/{i}.html' for i in range(1, 3947 + 1)],
             *[f'https://kkmovie.cf/index.php/vod/type/id/2/page/{i}.html' for i in range(1, 1826 + 1)],
             *[f'https://kkmovie.cf/index.php/vod/type/id/3/page/{i}.html' for i in range(1, 320 + 1)],
@@ -137,6 +145,14 @@ class MoviesSpider(scrapy.Spider):
         'kkmovie.cf': {
             'urlsXpath': "//div[@class='stui-pannel__bd clearfix']/ul/li//h4/a/@href",
             'namesXpath': "//div[@class='stui-pannel__bd clearfix']/ul/li//h4/a/text()"
+        },
+        'miao101.com': {
+            'urlsXpath': "//p/a/@href",
+            'namesXpath': "//p/a/text()"
+        },
+        'www.kpkuang.com': {
+            'urlsXpath': "//ul[@class='fed-list-info fed-part-rows']/li/a/@href",
+            'namesXpath': "//ul[@class='fed-list-info fed-part-rows']/li/a/text()"
         },
         # '': {
         #     'urlsXpath': "/@href",
