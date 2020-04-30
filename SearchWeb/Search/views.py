@@ -12,6 +12,13 @@ def index(request):
     return render(request, 'index.html')
 
 
+def search_sort(i):
+    # 值越大，越靠前
+    if 'zhenbuka' in i['_source']['book_url']:
+        return 1
+    return 0
+
+
 def search(request):
     # https://lookao.com/search?q=123&pageno=1
     pageNo = int(request.GET.get('pageno', 0))
@@ -25,6 +32,7 @@ def search(request):
         }
     else:
         search_result = es.search(q, _from=20 * pageNo, doc_type=search_type)
+    search_result['hits']['hits'].sort(key=search_sort, reverse=True)
     allPageNo = math.ceil(search_result['hits']['total'] / 20)
 
     parseSuccess = False

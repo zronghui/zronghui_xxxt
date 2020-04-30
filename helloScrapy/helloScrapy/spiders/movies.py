@@ -45,18 +45,15 @@ class MoviesSpider(scrapy.Spider):
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
-
-            *[f'https://www.kpkuang.com/vodshow/1--------{i}-----.html' for i in range(1, 2581 + 1)],
-            *[f'https://www.kpkuang.com/vodshow/2--------{i}-----.html' for i in range(1, 618 + 1)],
-            *[f'https://www.kpkuang.com/vodshow/3--------{i}-----.html' for i in range(1, 155 + 1)],
-            *[f'https://www.kpkuang.com/vodshow/4--------{i}-----.html' for i in range(1, 316 + 1)],
-
-            *[f'https://miao101.com/page/{i}' for i in range(1, 2290 + 1)],
-            *[f'https://kkmovie.cf/index.php/vod/type/id/1/page/{i}.html' for i in range(1, 3947 + 1)],
-            *[f'https://kkmovie.cf/index.php/vod/type/id/2/page/{i}.html' for i in range(1, 1826 + 1)],
-            *[f'https://kkmovie.cf/index.php/vod/type/id/3/page/{i}.html' for i in range(1, 320 + 1)],
-            *[f'https://kkmovie.cf/index.php/vod/type/id/4/page/{i}.html' for i in range(1, 853 + 1)],
-
+            # *[f'https://www.kpkuang.com/vodshow/1--------{i}-----.html' for i in range(1, 2581 + 1)],
+            # *[f'https://www.kpkuang.com/vodshow/2--------{i}-----.html' for i in range(1, 618 + 1)],
+            # *[f'https://www.kpkuang.com/vodshow/3--------{i}-----.html' for i in range(1, 155 + 1)],
+            # *[f'https://www.kpkuang.com/vodshow/4--------{i}-----.html' for i in range(1, 316 + 1)],
+            # *[f'https://miao101.com/page/{i}' for i in range(1, 2290 + 1)],
+            # *[f'https://kkmovie.cf/index.php/vod/type/id/1/page/{i}.html' for i in range(1, 3947 + 1)],
+            # *[f'https://kkmovie.cf/index.php/vod/type/id/2/page/{i}.html' for i in range(1, 1826 + 1)],
+            # *[f'https://kkmovie.cf/index.php/vod/type/id/3/page/{i}.html' for i in range(1, 320 + 1)],
+            # *[f'https://kkmovie.cf/index.php/vod/type/id/4/page/{i}.html' for i in range(1, 853 + 1)],
             # *[f'http://www.zzzfun.com/vod-type-id-1-page-{i}.html' for i in range(1, 61 + 1)],
             # *[f'http://www.zzzfun.com/vod-type-id-3-page-{i}.html' for i in range(1, 12 + 1)],
             # *[f'http://www.qimiqimi.co/type/xinfan/page/{i}.html' for i in range(1, 6 + 1)],
