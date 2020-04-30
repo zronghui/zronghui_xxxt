@@ -41,10 +41,12 @@ class MoviesSpider(scrapy.Spider):
             *[f'https://kkmovie.cf/index.php/vod/type/id/{i}/page/1.html' for i in range(1, 5)],
             'https://miao101.com/page/1',
             *[f'https://www.kpkuang.com/vodshow/{i}-------------.html' for i in range(1, 5)],
+            'http://agefans.org/catalog?page=1',
         ]
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
+            *[f'http://agefans.org/catalog?page={i}' for i in range(136 + 1)],
             # *[f'https://www.kpkuang.com/vodshow/1--------{i}-----.html' for i in range(1, 2581 + 1)],
             # *[f'https://www.kpkuang.com/vodshow/2--------{i}-----.html' for i in range(1, 618 + 1)],
             # *[f'https://www.kpkuang.com/vodshow/3--------{i}-----.html' for i in range(1, 155 + 1)],
@@ -150,6 +152,10 @@ class MoviesSpider(scrapy.Spider):
         'www.kpkuang.com': {
             'urlsXpath': "//ul[@class='fed-list-info fed-part-rows']/li/a/@href",
             'namesXpath': "//ul[@class='fed-list-info fed-part-rows']/li/a/text()"
+        },
+        'agefans.org': {
+            'urlsXpath': '//*[@id="catalog_list"]/ul/li/div/div[2]/div/a/@href',
+            'namesXpath': "//ul/li//a[@class='stretched-link-']/h5/text()"
         },
         # '': {
         #     'urlsXpath': "/@href",
