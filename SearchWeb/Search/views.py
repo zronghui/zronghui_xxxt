@@ -14,6 +14,12 @@ def index(request):
 
 def search_sort(i):
     # 值越大，越靠前
+    if 'agefans.org' in i['_source']['book_url']:
+        return 3
+    if 'www.qimiqimi.co' in i['_source']['book_url']:
+        return 2
+    if 'www.yhdm.tv' in i['_source']['book_url']:
+        return 2
     if 'zhenbuka' in i['_source']['book_url']:
         return 1
     return 0
