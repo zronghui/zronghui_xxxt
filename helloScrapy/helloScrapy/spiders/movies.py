@@ -46,7 +46,7 @@ class MoviesSpider(scrapy.Spider):
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
-            *[f'http://agefans.org/catalog?page={i}' for i in range(136 + 1)],
+            # *[f'http://agefans.org/catalog?page={i}' for i in range(136 + 1)],
             # *[f'https://www.kpkuang.com/vodshow/1--------{i}-----.html' for i in range(1, 2581 + 1)],
             # *[f'https://www.kpkuang.com/vodshow/2--------{i}-----.html' for i in range(1, 618 + 1)],
             # *[f'https://www.kpkuang.com/vodshow/3--------{i}-----.html' for i in range(1, 155 + 1)],

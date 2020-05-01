@@ -25,6 +25,40 @@ def search_sort(i):
     return 0
 
 
+domainSiteNameMap = {
+    'www.bttwo.com': "两个BT",
+    'ddrk.me': "低端影视",
+    'dvdhd.me': "碟影世界",
+    'www.itsck.com': "sck电影网",
+    'www.zhenbuka.com': "真不卡影院",
+    'app.movie': "APP影院",
+    'www.meijumi.net': "美剧迷",
+    'www.meijutt.tv': "美剧天堂",
+    'www.wanmeikk.me': "完美看看",
+    'www.tcmove.com': "太初电影",
+    'www.yhdm.tv': "樱花动漫",
+    'www.zzzfun.com': "zzzfun动漫视频网",
+    'www.qimiqimi.co': "奇米奇米",
+    'www.yxdm.me': "怡萱动漫",
+    'kkmovie.cf': "KK电影网",
+    'miao101.com': "旋风视频",
+    'www.kpkuang.com': "看片狂人",
+    'agefans.org': "AGE动漫",
+    # '': {
+    #     'urlsXpath': "/@href",
+    #     'namesXpath': "/text()"
+    # },
+}
+
+
+def addSiteName(hits):
+    for hit in hits:
+        domain = hit['_source']['book_url'].split('/', 3)[2]
+        siteName = domainSiteNameMap.get(domain)
+        if siteName:
+            hit['highlight']['book_name'][0] = hit['highlight']['book_name'][0] + ' - ' + siteName
+
+
 def search(request):
     # https://lookao.com/search?q=123&pageno=1
     pageNo = int(request.GET.get('pageno', 0))
@@ -38,6 +72,7 @@ def search(request):
         }
     else:
         search_result = es.search(q, _from=20 * pageNo, doc_type=search_type)
+    addSiteName(search_result['hits']['hits'])
     search_result['hits']['hits'].sort(key=search_sort, reverse=True)
     allPageNo = math.ceil(search_result['hits']['total'] / 20)
 
