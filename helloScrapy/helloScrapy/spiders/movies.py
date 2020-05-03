@@ -42,10 +42,12 @@ class MoviesSpider(scrapy.Spider):
             'https://miao101.com/page/1',
             *[f'https://www.kpkuang.com/vodshow/{i}-------------.html' for i in range(1, 5)],
             'http://agefans.org/catalog?page=1',
+            'https://www.juqingba.cn/dianshiju/list_25_1.html'
         ]
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
+            *[f'https://www.juqingba.cn/dianshiju/list_25_{i}.html' for i in range(1, 338 + 1)],
             # *[f'http://agefans.org/catalog?page={i}' for i in range(136 + 1)],
             # *[f'https://www.kpkuang.com/vodshow/1--------{i}-----.html' for i in range(1, 2581 + 1)],
             # *[f'https://www.kpkuang.com/vodshow/2--------{i}-----.html' for i in range(1, 618 + 1)],
@@ -156,6 +158,10 @@ class MoviesSpider(scrapy.Spider):
         'agefans.org': {
             'urlsXpath': '//*[@id="catalog_list"]/ul/li/div/div[2]/div/a/@href',
             'namesXpath': "//ul/li//a[@class='stretched-link-']/h5/text()"
+        },
+        'www.juqingba.cn': {
+            'urlsXpath': "//ul[@class='m_Box8 w110 FL']/li/a/@href",
+            'namesXpath': "//ul[@class='m_Box8 w110 FL']/li/a/img/@alt"
         },
         # '': {
         #     'urlsXpath': "/@href",

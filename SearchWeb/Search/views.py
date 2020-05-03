@@ -14,6 +14,8 @@ def index(request):
 
 def search_sort(i):
     # 值越大，越靠前
+    if 'www.juqingba.cn' in i['_source']['book_url']:
+        return 4
     if 'agefans.org' in i['_source']['book_url']:
         return 3
     if 'www.qimiqimi.co' in i['_source']['book_url']:
@@ -44,6 +46,7 @@ domainSiteNameMap = {
     'miao101.com': "旋风视频",
     'www.kpkuang.com': "看片狂人",
     'agefans.org': "AGE动漫",
+    'www.juqingba.cn': "剧情吧",
     # '': {
     #     'urlsXpath': "/@href",
     #     'namesXpath': "/text()"
