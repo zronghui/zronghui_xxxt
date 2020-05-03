@@ -14,16 +14,17 @@ def index(request):
 
 def search_sort(i):
     # 值越大，越靠前
-    if 'www.juqingba.cn' in i['_source']['book_url']:
-        return 4
-    if 'agefans.org' in i['_source']['book_url']:
-        return 3
-    if 'www.qimiqimi.co' in i['_source']['book_url']:
-        return 2
-    if 'www.yhdm.tv' in i['_source']['book_url']:
-        return 2
-    if 'zhenbuka' in i['_source']['book_url']:
-        return 1
+    m = {
+        'www.juqingba.cn': 4,
+        'agefans.org': 3,
+        'www.qimiqimi.co': 2,
+        'www.yhdm.tv': 2,
+        'zhenbuka': 1,
+        'www.tcmove.com': 0.9,
+    }
+    for key in m:
+        if key in i['_source']['book_url']:
+            return m[key]
     return 0
 
 
