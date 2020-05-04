@@ -42,12 +42,17 @@ class MoviesSpider(scrapy.Spider):
             'https://miao101.com/page/1',
             *[f'https://www.kpkuang.com/vodshow/{i}-------------.html' for i in range(1, 5)],
             'http://agefans.org/catalog?page=1',
-            'https://www.juqingba.cn/dianshiju/list_25_1.html'
+            'https://www.juqingba.cn/dianshiju/list_25_1.html',
+            *[f'http://www.bubulai.com/zv/{i}.html' for i in [10, 11]],
         ]
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
-            *[f'http://www.66zhibo.net/{i}/' for i in [1, 2]],
+
+            *[f'http://www.bubulai.com/zv/10_{i}.html' for i in range(2, 92 + 1)],
+            *[f'http://www.bubulai.com/zv/11_{i}.html' for i in range(2, 102 + 1)],
+
+            # *[f'http://www.66zhibo.net/{i}/' for i in [1, 2]],
             # *[f'https://www.juqingba.cn/dianshiju/list_25_{i}.html' for i in range(1, 338 + 1)],
             # *[f'http://agefans.org/catalog?page={i}' for i in range(136 + 1)],
             # *[f'https://www.kpkuang.com/vodshow/1--------{i}-----.html' for i in range(1, 2581 + 1)],
@@ -167,6 +172,10 @@ class MoviesSpider(scrapy.Spider):
         'www.66zhibo.net': {
             'urlsXpath': "//ul/li[@class='p-item']/a/@href",
             'namesXpath': "//ul/li[@class='p-item']/a//strong/text()"
+        },
+        'www.bubulai.com': {
+            'urlsXpath': "//ul/li/dl/p[1]/a/@href",
+            'namesXpath': "//ul/li/dl/p[1]/a/text()"
         },
         # '': {
         #     'urlsXpath': "/@href",

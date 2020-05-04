@@ -24,6 +24,7 @@ def search_sort(i):
         'www.qimiqimi.co': 2.1,
         'www.yhdm.tv': 2,
         # 高清
+        'www.bubulai.com': 1.2,
         'zhenbuka': 1.1,
         'www.tcmove.com': 1,
     }
@@ -54,10 +55,7 @@ domainSiteNameMap = {
     'agefans.org': "AGE动漫",
     'www.juqingba.cn': "剧情吧",
     'www.66zhibo.net': "66直播网",
-    # '': {
-    #     'urlsXpath': "/@href",
-    #     'namesXpath': "/text()"
-    # },
+    'www.bubulai.com': "部部来",
 }
 
 
