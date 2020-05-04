@@ -47,7 +47,8 @@ class MoviesSpider(scrapy.Spider):
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
-            *[f'https://www.juqingba.cn/dianshiju/list_25_{i}.html' for i in range(1, 338 + 1)],
+            *[f'http://www.66zhibo.net/{i}/' for i in [1, 2]],
+            # *[f'https://www.juqingba.cn/dianshiju/list_25_{i}.html' for i in range(1, 338 + 1)],
             # *[f'http://agefans.org/catalog?page={i}' for i in range(136 + 1)],
             # *[f'https://www.kpkuang.com/vodshow/1--------{i}-----.html' for i in range(1, 2581 + 1)],
             # *[f'https://www.kpkuang.com/vodshow/2--------{i}-----.html' for i in range(1, 618 + 1)],
@@ -162,6 +163,10 @@ class MoviesSpider(scrapy.Spider):
         'www.juqingba.cn': {
             'urlsXpath': "//ul[@class='m_Box8 w110 FL']/li/a/@href",
             'namesXpath': "//ul[@class='m_Box8 w110 FL']/li/a/img/@alt"
+        },
+        'www.66zhibo.net': {
+            'urlsXpath': "//ul/li[@class='p-item']/a/@href",
+            'namesXpath': "//ul/li[@class='p-item']/a//strong/text()"
         },
         # '': {
         #     'urlsXpath': "/@href",
