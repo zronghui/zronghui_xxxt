@@ -15,12 +15,17 @@ def index(request):
 def search_sort(i):
     # 值越大，越靠前
     m = {
-        'www.juqingba.cn': 4,
-        'agefans.org': 3,
-        'www.qimiqimi.co': 2,
+        # 直播
+        'www.66zhibo.net': 4,
+        # 剧情
+        'www.juqingba.cn': 3,
+        # 动漫
+        'agefans.org': 2.2,
+        'www.qimiqimi.co': 2.1,
         'www.yhdm.tv': 2,
-        'zhenbuka': 1,
-        'www.tcmove.com': 0.9,
+        # 高清
+        'zhenbuka': 1.1,
+        'www.tcmove.com': 1,
     }
     for key in m:
         if key in i['_source']['book_url']:
@@ -48,6 +53,7 @@ domainSiteNameMap = {
     'www.kpkuang.com': "看片狂人",
     'agefans.org': "AGE动漫",
     'www.juqingba.cn': "剧情吧",
+    'www.66zhibo.net': "66直播网",
     # '': {
     #     'urlsXpath': "/@href",
     #     'namesXpath': "/text()"
