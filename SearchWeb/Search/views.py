@@ -24,6 +24,7 @@ def search_sort(i):
         'www.qimiqimi.co': 2.1,
         'www.yhdm.tv': 2,
         # 高清
+        'www.novipnoad.com': 1.3,
         'www.bubulai.com': 1.2,
         'zhenbuka': 1.1,
         'www.tcmove.com': 1,
@@ -56,6 +57,7 @@ domainSiteNameMap = {
     'www.juqingba.cn': "剧情吧",
     'www.66zhibo.net': "66直播网",
     'www.bubulai.com': "部部来",
+    'www.novipnoad.com': "no vip no ad",
 }
 
 
