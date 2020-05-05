@@ -15,6 +15,9 @@ def index(request):
 def search_sort(i):
     # 值越大，越靠前
     m = {
+        # 美剧
+        'www.meijumi.net': 5,
+        'www.meijutt.tv': 5,
         # 直播
         'www.66zhibo.net': 4,
         # 剧情
@@ -42,26 +45,26 @@ domainSiteNameMap = {
     'ddrk.me': "低端影视",
     'dvdhd.me': "碟影世界",
     'www.itsck.com': "sck电影网",
-    'www.zhenbuka.com': "真不卡影院",
+    'www.zhenbuka.com': "真不卡影院 - 高清",
     'app.movie': "APP影院",
-    'www.meijumi.net': "美剧迷",
-    'www.meijutt.tv': "美剧天堂",
+    'www.meijumi.net': "美剧迷 - 美剧",
+    'www.meijutt.tv': "美剧天堂 - 美剧",
     'www.wanmeikk.me': "完美看看",
-    'www.tcmove.com': "太初电影",
-    'www.yhdm.tv': "樱花动漫",
+    'www.tcmove.com': "太初电影 - 高清",
+    'www.yhdm.tv': "樱花动漫 - 动漫",
     'www.zzzfun.com': "zzzfun动漫视频网",
-    'www.qimiqimi.co': "奇米奇米",
-    'www.yxdm.me': "怡萱动漫",
+    'www.qimiqimi.co': "奇米奇米 - 动漫",
+    'www.yxdm.me': "怡萱动漫 - 动漫",
     'kkmovie.cf': "KK电影网",
     'miao101.com': "旋风视频",
     'www.kpkuang.com': "看片狂人",
-    'agefans.org': "AGE动漫",
-    'www.juqingba.cn': "剧情吧",
-    'www.66zhibo.net': "66直播网",
-    'www.bubulai.com': "部部来",
-    'www.novipnoad.com': "no vip no ad",
-    'www.bimibimi.me': "哔咪哔咪",
-    'www.duomimh.com': "哆咪动漫",
+    'agefans.org': "AGE动漫 - 动漫",
+    'www.juqingba.cn': "剧情吧 - 剧情、播放平台、播放时间",
+    'www.66zhibo.net': "66直播网 - 直播",
+    'www.bubulai.com': "部部来 - 高清",
+    'www.novipnoad.com': "no vip no ad - 高清",
+    'www.bimibimi.me': "哔咪哔咪 - 动漫",
+    'www.duomimh.com': "哆咪动漫 - 动漫",
 }
 
 
