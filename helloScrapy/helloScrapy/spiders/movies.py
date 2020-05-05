@@ -44,14 +44,25 @@ class MoviesSpider(scrapy.Spider):
             'http://agefans.org/catalog?page=1',
             'https://www.juqingba.cn/dianshiju/list_25_1.html',
             *[f'http://www.bubulai.com/zv/{i}.html' for i in [10, 11]],
+            *[f'https://www.novipnoad.com/tv/{i}/' for i in
+              ['hongkong', 'taiwan', 'western', 'japan', 'korea',
+               'other', 'anime', 'shows', 'life', 'movie']],
         ]
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
 
-            *[f'http://www.bubulai.com/zv/10_{i}.html' for i in range(2, 92 + 1)],
-            *[f'http://www.bubulai.com/zv/11_{i}.html' for i in range(2, 102 + 1)],
+            *[f'https://www.novipnoad.com/tv/hongkong/page/{i}/' for i in range(2, 4 + 1)],
+            *[f'https://www.novipnoad.com/tv/western/page/{i}/' for i in range(2, 93 + 1)],
+            *[f'https://www.novipnoad.com/tv/japan/page/{i}/' for i in range(2, 418 + 1)],
+            *[f'https://www.novipnoad.com/tv/korea/page/{i}/' for i in range(2, 119 + 1)],
+            *[f'https://www.novipnoad.com/anime/page/{i}/' for i in range(2, 15 + 1)],
+            *[f'https://www.novipnoad.com/shows/page/{i}/' for i in range(2, 3 + 1)],
+            *[f'https://www.novipnoad.com/life/page/{i}/' for i in range(2, 2 + 1)],
+            *[f'https://www.novipnoad.com/movie/page/{i}/' for i in range(2, 63 + 1)],
 
+            # * [f'http://www.bubulai.com/zv/10_{i}.html' for i in range(2, 92 + 1)],
+            # *[f'http://www.bubulai.com/zv/11_{i}.html' for i in range(2, 102 + 1)],
             # *[f'http://www.66zhibo.net/{i}/' for i in [1, 2]],
             # *[f'https://www.juqingba.cn/dianshiju/list_25_{i}.html' for i in range(1, 338 + 1)],
             # *[f'http://agefans.org/catalog?page={i}' for i in range(136 + 1)],
@@ -176,6 +187,10 @@ class MoviesSpider(scrapy.Spider):
         'www.bubulai.com': {
             'urlsXpath': "//ul/li/dl/p[1]/a/@href",
             'namesXpath': "//ul/li/dl/p[1]/a/text()"
+        },
+        'www.novipnoad.com': {
+            'urlsXpath': "//div[@class='col-md-3 col-sm-6 col-xs-6 ']//h3/a/@href",
+            'namesXpath': "//div[@class='col-md-3 col-sm-6 col-xs-6 ']//h3/a/text()"
         },
         # '': {
         #     'urlsXpath': "/@href",
