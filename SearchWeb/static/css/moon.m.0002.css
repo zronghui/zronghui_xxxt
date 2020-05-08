@@ -1115,3 +1115,23 @@ aside{
     float: right;
     margin-right: 200px;
 }
+
+.list {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    background-color: #F2F2F2;
+    z-index: 11;
+    max-height: 500%;
+    overflow: auto;
+    border: none;
+}
+
+#suggestList li {
+    left: 13px;
+    margin-right: 2px;
+    margin-left: 15px;
+    outline-width: 0px !important;
+    user-select: text !important;
+}

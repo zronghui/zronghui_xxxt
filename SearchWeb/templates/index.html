@@ -7,6 +7,7 @@
     <title>Lookao</title>
     <meta name="referrer" content="no-referrer">
 
+    <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/moon.m.0002.css' %}" type="text/css">
 
@@ -22,7 +23,7 @@
             <span class="hero_logo_link"></span>
         </div>
         <form class="search_form" method="GET" action="/search">
-            <input class="search_keywords" name="q" type="search" tabindex="1" autocomplete="off" autocapitalize="off"
+            <input id="searchMsg" class="search_keywords" name="q" type="search" tabindex="1" autocomplete="off" autocapitalize="off"
                    autocorrect="off">
             <span class="search_reset">
                 <svg class="icon"
@@ -31,7 +32,7 @@
                         d="M877.216 491.808M575.328 510.496 946.784 140.672c17.568-17.504 17.664-45.824 0.192-63.424-17.504-17.632-45.792-17.664-63.36-0.192L512.032 446.944 143.712 77.216C126.304 59.712 97.92 59.648 80.384 77.12 62.848 94.624 62.816 123.008 80.288 140.576l368.224 369.632L77.216 879.808c-17.568 17.504-17.664 45.824-0.192 63.424 8.736 8.8 20.256 13.216 31.776 13.216 11.424 0 22.848-4.352 31.584-13.056l371.36-369.696 371.68 373.088C892.192 955.616 903.68 960 915.168 960c11.456 0 22.912-4.384 31.648-13.088 17.504-17.504 17.568-45.824 0.096-63.392L575.328 510.496 575.328 510.496zM575.328 510.496"
                         p-id="6080"></path></svg>
             </span>
-            <button class="search_submit" type="submit">
+            <button id='btn' class="search_submit" type="submit">
                 <svg class="icon"
                      style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
                      viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1466">
@@ -39,12 +40,85 @@
                           p-id="1467"></path>
                 </svg>
             </button>
+            <div class="list  list-1">
+                <ul id="suggestList">
+
+                </ul>
+            </div>
+            <div style="display:none;" id="load">正在加载...</div>
         </form>
         <p class="hero_tagline">
             本来无一物，何处惹尘埃。
         </p>
     </section>
 </main>
+
+<script>
+    var searchMsg = document.getElementById("searchMsg");
+    var list = document.getElementById("suggestList");
+    var btn = document.getElementById("btn");
+    var load = document.getElementById("load");
+
+
+    //监听输入框的keuup事件，
+    searchMsg.onkeyup = function () {
+        if (this.value) {
+            show(list);
+            // 动态创建script标签，使用百度提供的接口，将查询字符串编码后，写到src当中
+            var s = document.createElement('script');
+            s.src = 'https://s.video.qq.com/smartbox?callback=fn&plat=2&ver=0&num=5&otype=json&query=' + encodeURI(this.value.trim());
+            // 插入到文档后获取jsonp格式的数据，然后调用callback函数，将data数据以参数的形式传入
+            document.body.appendChild(s);
+        } else {
+            hide(list);
+        }
+    }
+
+    //点击li标签后把输入框的信息填入到文本框
+    list.onclick = function (e) {
+        var e = e || window.event;
+        var target = e.target || e.srcElement;
+        if (target.nodeName == "LI") {
+            searchMsg.value = target.innerHTML;
+            $('#btn').click();
+        }
+        hide(list)
+    }
+
+    function fn(data) {
+        var lihtml = "";
+        //这时候遍历查询到的信息，放到li标签当中
+        data.item.forEach(function (item, index) {
+            lihtml = lihtml + '<li>' + item['word'] + '</li>';
+        });
+        $("ul#suggestList").html(lihtml);
+        show(list);
+
+        // 获取到数据后，把脚本删除
+        var s = document.querySelectorAll('script');
+        for (var i = 1, len = s.length; i < len; i++) {
+            document.body.removeChild(s[i]);
+        }
+    }
+
+    function hide(obj) {
+        obj.style.display = "none"
+    }
+
+    function show(obj) {
+        obj.style.display = "block"
+    }
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6e6864329584f7a5856<i class="chrome-extension-mutihighlight chrome-extension-mutihighlight-style-1">180</i>ee10a89f4a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
 {% load static %}
 <script src="{% static 'js/script.m.33322e.js' %}"></script>
 </body>

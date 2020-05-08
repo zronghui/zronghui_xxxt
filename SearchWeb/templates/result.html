@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <title>{{q}} - Lookao</title>
     <meta name="referrer" content="no-referrer">
+    <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/moon.m.0002.css' %}" type="text/css">
     <link rel="shortcut icon" type="image/png" href="//static.lookao.com/img/icon_64.7d8de4.png">
@@ -21,7 +22,7 @@
                 <a class="header_logo_link" href="/"></a>
             </div>
             <form class="search_form" method="GET" action="/search">
-                <input class="search_keywords" name="q" value='{{q}}' type="search" tabindex="1" autocomplete="off"
+                <input id="searchMsg" class="search_keywords" name="q" value='{{q}}' type="search" tabindex="1" autocomplete="off"
                        autocapitalize="off" autocorrect="off">
                 <input type="hidden" name="search_type" value={{search_type}}>
                 <span class="search_reset">
@@ -32,7 +33,7 @@
                             p-id="6080"></path>
                     </svg>
                 </span>
-                <button class="search_submit" type="submit">
+                <button id='btn' class="search_submit" type="submit">
                     <svg class="icon"
                          style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
                          viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1466">
@@ -40,6 +41,12 @@
                               p-id="1467"></path>
                     </svg>
                 </button>
+                <div class="list  list-1">
+                    <ul id="suggestList">
+
+                    </ul>
+                </div>
+                <div style="display:none;" id="load">正在加载...</div>
 
             </form>
         </div>
@@ -215,6 +222,72 @@
 
     </aside>
 </main>
+
+<script>
+    var searchMsg = document.getElementById("searchMsg");
+    var list = document.getElementById("suggestList");
+    var btn = document.getElementById("btn");
+    var load = document.getElementById("load");
+
+
+    //监听输入框的keuup事件，
+    searchMsg.onkeyup = function () {
+        if (this.value) {
+            show(list);
+            // 动态创建script标签，使用百度提供的接口，将查询字符串编码后，写到src当中
+            var s = document.createElement('script');
+            s.src = 'https://s.video.qq.com/smartbox?callback=fn&plat=2&ver=0&num=5&otype=json&query=' + encodeURI(this.value.trim());
+            // 插入到文档后获取jsonp格式的数据，然后调用callback函数，将data数据以参数的形式传入
+            document.body.appendChild(s);
+        } else {
+            hide(list);
+        }
+    }
+
+    //点击li标签后把输入框的信息填入到文本框
+    list.onclick = function (e) {
+        var e = e || window.event;
+        var target = e.target || e.srcElement;
+        if (target.nodeName == "LI") {
+            searchMsg.value = target.innerHTML;
+            $('#btn').click();
+        }
+        hide(list)
+    }
+
+    function fn(data) {
+        var lihtml = "";
+        //这时候遍历查询到的信息，放到li标签当中
+        data.item.forEach(function (item, index) {
+            lihtml = lihtml + '<li>' + item['word'] + '</li>';
+        });
+        $("ul#suggestList").html(lihtml);
+        show(list);
+
+        // 获取到数据后，把脚本删除
+        var s = document.querySelectorAll('script');
+        for (var i = 1, len = s.length; i < len; i++) {
+            document.body.removeChild(s[i]);
+        }
+    }
+
+    function hide(obj) {
+        obj.style.display = "none"
+    }
+
+    function show(obj) {
+        obj.style.display = "block"
+    }
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6e6864329584f7a5856<i class="chrome-extension-mutihighlight chrome-extension-mutihighlight-style-1">180</i>ee10a89f4a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 {% load static %}
 <script src="{% static 'js/script.m.33322e.js' %}"></script>
