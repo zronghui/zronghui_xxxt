@@ -176,42 +176,52 @@
                 <ul>
                     <li><a href="http://www.google.com/search?q={{q}}" target="_blank"><img
                             src="{% static 'img/google.ico' %}" width="16" height="16"> Google</a>
+                        <!--                            src="https://zronghui.imfast.io/SearchWeb/static/img/google.ico" width="16" height="16"> Google</a>-->
                     </li>
                     <li><a href="https://www.douban.com/search?q={{q}}" target="_blank"><img
                             src="{% static 'img/douban.png' %}" width="16" height="16"> 豆瓣</a>
+                        <!--                            src="https://zronghui.imfast.io/SearchWeb/static/img/douban.png" width="16" height="16"> 豆瓣</a>-->
                     </li>
                     {% if search_type == 'books' %}
-                        <li><a href="https://b-ok.cc/s/?q={{q}}" target="_blank"><img
-                                src="{% static 'img/ZLibrary.png' %}" width="16" height="16"> ZLibrary</a>
-                        </li>
-                        <li><a href="https://book.tstrs.me/find?q={{q}}" target="_blank"><img
-                                src="{% static 'img/iBookIn.png' %}" width="16" height="16"> i-Book.in</a>
-                        </li>
+                    <li><a href="https://b-ok.cc/s/?q={{q}}" target="_blank"><img
+                            src="{% static 'img/ZLibrary.png' %}" width="16" height="16"> ZLibrary</a>
+                        <!--                                src="https://zronghui.imfast.io/SearchWeb/static/img/ZLibrary.png" width="16" height="16"> ZLibrary</a>-->
+                    </li>
+                    <li><a href="https://book.tstrs.me/find?q={{q}}" target="_blank"><img
+                            src="{% static 'img/iBookIn.png' %}" width="16" height="16"> i-Book.in</a>
+                        <!--                                src="https://zronghui.imfast.io/SearchWeb/static/img/iBookIn.png" width="16" height="16"> i-Book.in</a>-->
+                    </li>
                     {% endif %}
                     {% if search_type == 'movies' %}
-                        <li><a href="http://v.qq.com/x/search/?q={{q}}&amp;stag=9"
-                               target="_blank"><img
-                                src="{% static 'img/tencent.ico' %}" width="16" height="16"> 腾讯视频</a>
-                        </li>
-                        <li><a href="https://search.bilibili.com/all?keyword={{q}}" target="_blank" title="哔哩哔哩"><img
-                                src="{% static 'img/bilibili.ico' %}" width="16" height="16"> 哔哩哔哩</a>
-                        </li>
-<!--                        <li><a href="http://agefans.org/search?q={{q}}"-->
-<!--                               target="_blank"><img-->
-<!--                                src="{% static 'img/acgfans.ico' %}" width="16" height="16"> acgfans</a>-->
-<!--                        </li>-->
-                        <li><a href="https://www.cupfox.com/search?key={{q}}"
-                               target="_blank"><img
-                                src="{% static 'img/cupfox.png' %}" width="16" height="16"> cupfox</a>
-                        </li>
-                        <li><a href="https://www.19kan.com/vodsearch.html?wd={{q}}"
-                               target="_blank"><img
-                                src="{% static 'img/19kan.png' %}" width="16" height="16"> 19kan</a>
-                        </li>
-                        <li><a href="https://www.soopian.com/index.php?mode=search&wd={{q}}"
-                               target="_blank"><img
-                                src="{% static 'img/soopian.ico' %}" width="16" height="16"> soopian</a>
-                        </li>
+                    <li><a href="http://v.qq.com/x/search/?q={{q}}&amp;stag=9"
+                           target="_blank"><img
+                            src="{% static 'img/tencent.ico' %}" width="16" height="16"> 腾讯视频</a>
+                        <!--                                src="https://zronghui.imfast.io/SearchWeb/static/img/tencent.ico" width="16" height="16"> 腾讯视频</a>-->
+                    </li>
+                    <li><a href="https://search.bilibili.com/all?keyword={{q}}" target="_blank" title="哔哩哔哩"><img
+                            src="{% static 'img/bilibili.ico' %}" width="16" height="16"> 哔哩哔哩</a>
+                        <!--                                src="https://zronghui.imfast.io/SearchWeb/static/img/bilibili.ico" width="16" height="16"> 哔哩哔哩</a>-->
+                    </li>
+                    <!--                        <li><a href="http://agefans.org/search?q={{q}}"-->
+                    <!--                               target="_blank"><img-->
+                    <!--                                src="{% static 'img/acgfans.ico' %}" width="16" height="16"> acgfans</a>-->
+                    <!--                        </li>-->
+                    <li><a href="https://www.cupfox.com/search?key={{q}}"
+                           target="_blank"><img
+                            src="{% static 'img/cupfox.png' %}" width="16" height="16"> cupfox</a>
+                        <!--                                src="https://zronghui.imfast.io/SearchWeb/static/img/cupfox.png" width="16" height="16"> cupfox</a>-->
+
+                    </li>
+                    <li><a href="https://www.19kan.com/vodsearch.html?wd={{q}}"
+                           target="_blank"><img
+                            src="{% static 'img/19kan.png' %}" width="16" height="16"> 19kan</a>
+                        <!--                                src="https://zronghui.imfast.io/SearchWeb/static/img/19kan.png" width="16" height="16"> 19kan</a>-->
+                    </li>
+                    <li><a href="https://www.soopian.com/index.php?mode=search&wd={{q}}"
+                           target="_blank"><img
+                            src="{% static 'img/soopian.ico' %}" width="16" height="16"> soopian</a>
+                        <!--                                src="https://zronghui.imfast.io/SearchWeb/static/img/soopian.ico" width="16" height="16"> soopian</a>-->
+                    </li>
                     {% endif %}
                 </ul>
             </div>
