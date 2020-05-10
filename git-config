@@ -1,0 +1,15 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = https://github.com/zronghui/zronghui_xxxt
+	url=git@codehub.devcloud.cn-north-4.huaweicloud.com:zrhz-xxxtsx-UI00001/zronghui_xxxt.git
+	url = root@47.93.53.47:/root/code/xxxtbare.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
