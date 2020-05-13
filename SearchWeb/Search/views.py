@@ -36,9 +36,9 @@ def search_sort(i):
         'www.kpkuang.com': 1,
         'miao101.com': 1,
     }
-    for key in m:
+    for key, value in m.items():
         if key in i['_source']['book_url']:
-            return m[key]
+            return value
     return 0
 
 

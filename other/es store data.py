@@ -46,12 +46,12 @@ def bulk_with_json(jsonFile, doc_type):
     # 批量插入数据
     logger.debug(f"bulk with {jsonFile}")
     count = 0
-    i = 0
-    j = 0
     num = 0
     actions = []
     max_count = 2000
     with open(jsonFile, 'r', encoding='utf-8') as f:
+        i = 0
+        j = 0
         for line in f:
             j += 1
             try:
@@ -89,10 +89,7 @@ def bulk(actions):
 
 def getAction(doc_type, line):
     d = json.loads(line)
-    if not d.get('_source'):
-        triple_dict = d
-    else:
-        triple_dict = d.get('_source')
+    triple_dict = d if not d.get('_source') else d.get('_source')
     triple_dict['book_name_length'] = triple_dict.get('book_name_length', len(triple_dict['book_name']))
     # 如果数据量小可以用index的方法一条条插入
     # 这里index，doc_type就等于上一步建立索引所用的名称

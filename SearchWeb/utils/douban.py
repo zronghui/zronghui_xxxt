@@ -17,8 +17,7 @@ def getMovieId(q, apikey):
     r = requests.get('https://api.douban.com/v2/movie/search?q={q}&apikey={apikey}'.
                      format(q=q, apikey=apikey),
                      headers=headers)
-    movie_id = r.json()['subjects'][0]['id']
-    return movie_id
+    return r.json()['subjects'][0]['id']
 
 
 def getMovieDetail(movie_id, apikey):
