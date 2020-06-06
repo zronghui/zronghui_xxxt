@@ -33,7 +33,7 @@ class MoviesSpider(scrapy.Spider):
             *[f'https://www.wanmeikk.me/category/{i}.html' for i in range(1, 5)],
             *[f'https://www.tcmove.com/list/{i}.html' for i in ["dianying", 'lianxuju', 'zongyi', 'dongman']],
             *[f'http://www.yhdm.tv/{i}' for i in ('japan', 'china', 'american', 'movie')],
-            *[f'http://www.zzzfun.com/vod-type-id-{i}-page-1.html' for i in (1, 3)],
+            # *[f'http://www.zzzfun.com/vod-type-id-{i}-page-1.html' for i in (1, 3)],
             *[f'http://www.qimiqimi.co/type/{i}/page/1.html' for i in ('xinfan', 'riman', 'guoman', 'guoman', 'jcdm')],
             'http://www.yxdm.me/resource/15-1.html',
             *[f'https://kkmovie.cf/index.php/vod/type/id/{i}/page/1.html' for i in range(1, 5)],
@@ -171,7 +171,8 @@ class MoviesSpider(scrapy.Spider):
         'CONCURRENT_REQUESTS': 100,
         'CONCURRENT_REQUESTS_PER_DOMAIN': 100,
         'CONCURRENT_REQUESTS_PER_IP': 100,
-        'DOWNLOAD_DELAY': 1,
+        'DOWNLOAD_DELAY': 0,
+        'DOWNLOAD_TIMEOUT': 10,
         'ITEM_PIPELINES': {pipeline: 300},
         'DEFAULT_REQUEST_HEADERS': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '

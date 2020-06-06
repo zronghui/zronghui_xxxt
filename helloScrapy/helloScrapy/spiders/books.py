@@ -17,7 +17,7 @@ class BooksSpider(scrapy.Spider):
         pipeline = 'helloScrapy.pipelines.CrontabBooksPipeline'
         start_urls = [
             'https://www.shudan.vip/page/1',
-            *[f'http://www.zxcs.me/sort/{i}' for i in [23, *list(range(25, 30)), *list(range(36, 46)), 55]],
+            # *[f'http://www.zxcs.me/sort/{i}' for i in [23, *list(range(25, 30)), *list(range(36, 46)), 55]],
             *[f'http://www.java1234.com{i}' for i in '''/a/javabook/javabase/
             /a/javabook/database/
             /a/javabook/webbase/
@@ -68,7 +68,8 @@ class BooksSpider(scrapy.Spider):
         'CONCURRENT_REQUESTS': 100,
         'CONCURRENT_REQUESTS_PER_DOMAIN': 100,
         'CONCURRENT_REQUESTS_PER_IP': 100,
-        'DOWNLOAD_DELAY': 1,
+        'DOWNLOAD_DELAY': 0,
+        'DOWNLOAD_TIMEOUT': 10,
         'ITEM_PIPELINES': {pipeline: 300},
         'DEFAULT_REQUEST_HEADERS': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
