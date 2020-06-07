@@ -5,7 +5,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
 # Create your views here.
-from utils import es, douban
+from utils import es, douban, redis_search_words
 
 
 def index(request):
@@ -82,6 +82,7 @@ def search(request):
     # https://lookao.com/search?q=123&pageno=1
     pageNo = int(request.GET.get('pageno', 0))
     q = request.GET.get('q')
+    redis_search_words.search(q)
     search_type = request.GET.get('search_type', 'movies')
     # 限定搜索词长度在 1~40 之间
     if not 1 < len(q) < 40 or search_type not in ['movies', 'books']:
@@ -116,6 +117,7 @@ def search(request):
         'time': search_result['took'],
         'count': search_result['hits']['total'],
         'search_type': search_type,
+        'hot_search_words': redis_search_words.get_hot_search_words(),
         # 豆瓣相关
         'parseSuccess': parseSuccess,
     }

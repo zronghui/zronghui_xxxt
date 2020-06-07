@@ -1,3 +1,4 @@
+redis
 environs
 requests==2.22.0
 zhconv==1.4.0
