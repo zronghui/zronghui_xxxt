@@ -12,7 +12,7 @@ r = redis.StrictRedis(host=host, port=port)
 
 def get_hot_search_words():
     q = r.zrangebyscore(name='search_rank', min=0, max=100, withscores=True)
-    return [{'word': i[0].decode("utf-8"), 'hot': i[1]} for i in reversed(q)][:10]
+    return [{'word': i[0].decode("utf-8")[:10], 'hot': i[1]} for i in reversed(q)][:10]
 
 
 def search(w):
