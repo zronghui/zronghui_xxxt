@@ -31,10 +31,12 @@ def search_sort(i):
         # 高清
         'www.novipnoad.com': 1.3,
         'www.bubulai.com': 1.2,
-        'zhenbuka': 1.1,
         'kkmovie.cf': 1,
         'www.kpkuang.com': 1,
         'miao101.com': 1,
+        # 广告(不给屏蔽的那种)
+        'zhenbuka': -1,
+        'nfmovies.com': -1,
     }
     for key, value in m.items():
         if key in i['_source']['book_url']:
@@ -47,7 +49,7 @@ domainSiteNameMap = {
     'ddrk.me': "低端影视",
     'dvdhd.me': "碟影世界",
     'www.itsck.com': "sck电影网",
-    'www.zhenbuka.com': "真不卡影院 - 高清",
+    'www.zhenbuka.com': "真不卡影院 - 广告",
     'app.movie': "APP影院",
     'www.meijumi.net': "美剧迷 - 美剧",
     'www.meijutt.tv': "美剧天堂 - 美剧",
