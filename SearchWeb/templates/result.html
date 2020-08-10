@@ -203,6 +203,10 @@
                                target="_blank"><img
                                 src="{% static 'img/tencent.ico' %}" width="16" height="16"> 腾讯视频</a>
                         </li>
+                        <li><a href="https://so.iqiyi.com/so/q_{{q}}"
+                               target="_blank"><img
+                                src="{% static 'img/iqiyi.png' %}" width="16" height="16"> 爱奇艺</a>
+                        </li>
                         <li><a href="https://search.bilibili.com/all?keyword={{q}}" target="_blank" title="哔哩哔哩"><img
                                 src="{% static 'img/bilibili.ico' %}" width="16" height="16"> 哔哩哔哩</a>
                         </li>
@@ -214,14 +218,14 @@
                                target="_blank"><img
                                 src="{% static 'img/cupfox.png' %}" width="16" height="16"> cupfox</a>
                         </li>
-                        <li><a href="https://www.19kan.com/vodsearch.html?wd={{q}}"
+                        {% comment %} <li><a href="https://www.19kan.com/vodsearch.html?wd={{q}}"
                                target="_blank"><img
                                 src="{% static 'img/19kan.png' %}" width="16" height="16"> 19kan</a>
                         </li>
                         <li><a href="https://www.soopian.com/index.php?mode=search&wd={{q}}"
                                target="_blank"><img
                                 src="{% static 'img/soopian.ico' %}" width="16" height="16"> soopian</a>
-                        </li>
+                        </li> {% endcomment %}
                     {% endif %}
                 </ul>
             </div>
