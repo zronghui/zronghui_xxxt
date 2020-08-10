@@ -15,6 +15,10 @@ def index(request):
 def search_sort(i):
     # 值越大，越靠前
     m = {
+        # 超清快速
+        'www.wanmeikk.me': 9.1,
+        'www.mengmiandaxia.com': 9.2,
+        'www.fenggoudy1.com': 9.3,
         # 美剧
         'www.meijumi.net': 5,
         'www.meijutt.tv': 5,
@@ -45,6 +49,9 @@ def search_sort(i):
 
 
 domainSiteNameMap = {
+    'www.wanmeikk.me': "完美看看 - 超清|快速",
+    'www.mengmiandaxia.com': "蒙面大侠 - 超清|快速",
+    'www.fenggoudy1.com': "疯狗电影 - 超清|快速",
     'www.bttwo.com': "两个BT",
     'ddrk.me': "低端影视",
     'dvdhd.me': "碟影世界",
@@ -53,7 +60,6 @@ domainSiteNameMap = {
     'app.movie': "APP影院",
     'www.meijumi.net': "美剧迷 - 美剧",
     'www.meijutt.tv': "美剧天堂 - 美剧",
-    'www.wanmeikk.me': "完美看看",
     'www.tcmove.com': "太初电影",
     'www.yhdm.tv': "樱花动漫 - 动漫",
     'www.zzzfun.com': "zzzfun动漫视频网",

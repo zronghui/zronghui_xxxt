@@ -20,7 +20,7 @@ class MoviesSpider(scrapy.Spider):
         start_urls = [
             'https://www.bttwo.com/new-movie/page/1',
             'https://ddrk.me/page/1',
-            *[f'https://dvdhd.me/list/index{i}.html' for i in range(1, 6)],
+            # *[f'https://dvdhd.me/list/index{i}.html' for i in range(1, 6)],
             *[f'https://www.itsck.com/type/{i}.html' for i in ['dianying', 'lianxuju', 'zongyi', 'dongman']],
             *[f'https://www.zhenbuka.com/vodtype/{i}' for i in range(1, 5)],
             *[f'https://app.movie/index.php/vod/type/id/{i}/page/1.html' for i in range(1, 5)],
@@ -30,7 +30,7 @@ class MoviesSpider(scrapy.Spider):
             # *[f'https://app.movie/index.php/vod/type/id/4/page/{i}.html' for i in random.sample(range(2, 229), 1)],
             'https://www.meijumi.net/usa/page/1',
             'https://www.meijutt.tv/1_______.html',
-            *[f'https://www.wanmeikk.me/category/{i}.html' for i in range(1, 5)],
+            *[f'https://www.wanmeikk.me/category/{i}.html' for i in range(1, 11)],
             *[f'https://www.tcmove.com/list/{i}.html' for i in ["dianying", 'lianxuju', 'zongyi', 'dongman']],
             *[f'http://www.yhdm.tv/{i}' for i in ('japan', 'china', 'american', 'movie')],
             # *[f'http://www.zzzfun.com/vod-type-id-{i}-page-1.html' for i in (1, 3)],
@@ -47,15 +47,30 @@ class MoviesSpider(scrapy.Spider):
                'other', 'anime', 'shows', 'life', 'movie']],
             *[f'http://www.duomimh.com/dongmantype/{i}.html' for i in [20, 21]],
             *[f'http://www.bimibimi.me/type/{i}-1/' for i in ['juchang', 'fanzu', 'guoman', 'riman']],
+            *[f'http://www.fenggoudy1.com/list-select-id-{i}-type--area--year--star--state--order-addtime.html' for i in range(1, 5)],
+            *[f'https://www.mengmiandaxia.com/cate/{i}?sort=4' for i in range(1, 5)],
         ]
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
-            *[f'http://www.bimibimi.me/type/{_type}-{i}/' for _type, n in
-              zip(['juchang', 'fanzu', 'guoman', 'riman'],
-                  [13, 55, 4, 4])
-              for i in range(2, n + 1)],
-            *[f'http://www.duomimh.com/dongmantype/20/page/{i}.html' for i in range(2, 12 + 1)],
+            # *[f'http://www.bimibimi.me/type/{_type}-{i}/' for _type, n in
+            #   zip(['juchang', 'fanzu', 'guoman', 'riman'],
+            #       [13, 55, 4, 4])
+            #   for i in range(2, n + 1)],
+            # *[f'http://www.duomimh.com/dongmantype/20/page/{i}.html' for i in range(2, 12 + 1)],
+            *[f'https://www.wanmeikk.me/category/{_type}-{pageNo}.html' for _type, n in
+              zip(range(1, 11),
+                  [27, 9, 3, 2, 9, 6, 1, 1, 1, 1])
+              for pageNo in range(2, n + 1)],
+            # ↓暂时爬取失败的网站
+            # *[f'http://www.fenggoudy1.com/list-select-id-{_type}-type--area--year--star--state--order-addtime-p-{pageNo}.html' for _type, n in
+            #   zip(range(1, 5),
+            #       [1216, 551, 399, 610])
+            #   for pageNo in range(2, n + 1)],
+            # *[f'https://www.mengmiandaxia.com/cate/{_type}?sort=4&page={pageNo}' for _type, n in
+            #   zip(range(1, 5),
+            #       [370, 182, 35, 24])
+            #   for pageNo in range(2, n + 1)],
         ]
     ic(start_urls)
 
@@ -64,6 +79,14 @@ class MoviesSpider(scrapy.Spider):
         #     'urlsXpath': "/@href",
         #     'namesXpath': "/text()"
         # },
+        'www.fenggoudy1.com': {
+            'urlsXpath': "//h4/a[contains(@target, '_blank')]/@href",
+            'namesXpath': "//h4/a[contains(@target, '_blank')]/text()"
+        },
+        'www.mengmiandaxia.com': {
+            'urlsXpath': "//ul/li/div/span/a[contains(@target, '_blank')]/@href",
+            'namesXpath': "//ul/li/div/span/a[contains(@target, '_blank')]/text()"
+        },
         'www.bttwo.com': {
             'urlsXpath': "//h3[@class='dytit']/a/@href",
             'namesXpath': "//h3[@class='dytit']/a/text()"
@@ -168,16 +191,16 @@ class MoviesSpider(scrapy.Spider):
 
     custom_settings = {
         # 'LOG_LEVEL': "WARNING",
-        'CONCURRENT_REQUESTS': 100,
-        'CONCURRENT_REQUESTS_PER_DOMAIN': 100,
-        'CONCURRENT_REQUESTS_PER_IP': 100,
-        'DOWNLOAD_DELAY': 0,
-        'DOWNLOAD_TIMEOUT': 10,
+        'CONCURRENT_REQUESTS': 30,
+        'CONCURRENT_REQUESTS_PER_DOMAIN': 3,
+        'CONCURRENT_REQUESTS_PER_IP': 3,
+        'DOWNLOAD_DELAY': 1,
+        'DOWNLOAD_TIMEOUT': 5,
         'ITEM_PIPELINES': {pipeline: 300},
         'DEFAULT_REQUEST_HEADERS': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
                           'AppleWebKit/537.36 (KHTML, like Gecko) '
-                          'Chrome/55.0.2883.87 Safari/537.36'
+                          'Chrome/55.0.2883.87 Safari/537.36',
         },
     }
 
