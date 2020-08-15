@@ -260,10 +260,11 @@
         } else {
             let zrhSearchedItems = JSON.parse(localStorage.getItem("zrhSearchedItems"));
             if (zrhSearchedItems != null) {
+                zrhSearchedItems.reverse()
                 show(list);
                 let lihtml = "";
                 //这时候遍历历史搜索记录，放到li标签当中
-                zrhSearchedItems.forEach(function (item, index) {
+                zrhSearchedItems.slice(0, 10).forEach(function (item, index) {
                     lihtml = lihtml + '<li>' + item + '</li>';
                 });
                 $("ul#suggestList").html(lihtml);
