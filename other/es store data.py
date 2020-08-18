@@ -3,6 +3,7 @@
 import hashlib
 import json
 import os
+from os.path import exists
 
 import pretty_errors
 from elasticsearch import Elasticsearch, helpers
@@ -33,16 +34,21 @@ def build_index():
     }
     es.indices.delete(index='books', ignore=[400, 404])
     es.indices.create(index='books', ignore=400)
-    result = es.indices.put_mapping(index='books', doc_type='books', body=mapping)
+    result = es.indices.put_mapping(
+        index='books', doc_type='books', body=mapping)
     logger.debug(result)
 
     es.indices.delete(index='movies', ignore=[400, 404])
     es.indices.create(index='movies', ignore=400)
-    result = es.indices.put_mapping(index='movies', doc_type='movies', body=mapping)
+    result = es.indices.put_mapping(
+        index='movies', doc_type='movies', body=mapping)
     logger.debug(result)
 
 
 def bulk_with_json(jsonFile, doc_type):
+    if not exists(jsonFile):
+        logger.debug('不存在'+jsonFile)
+        return
     # 批量插入数据
     logger.debug(f"bulk with {jsonFile}")
     count = 0
@@ -90,7 +96,8 @@ def bulk(actions):
 def getAction(doc_type, line):
     d = json.loads(line)
     triple_dict = d if not d.get('_source') else d.get('_source')
-    triple_dict['book_name_length'] = triple_dict.get('book_name_length', len(triple_dict['book_name']))
+    triple_dict['book_name_length'] = triple_dict.get(
+        'book_name_length', len(triple_dict['book_name']))
     # 如果数据量小可以用index的方法一条条插入
     # 这里index，doc_type就等于上一步建立索引所用的名称
     # es.index(index='index_test',doc_type='doc_type',body=triple_dict)
