@@ -49,19 +49,21 @@ class MoviesSpider(scrapy.Spider):
             *[f'http://www.bimibimi.me/type/{i}-1/' for i in ['juchang', 'fanzu', 'guoman', 'riman']],
             *[f'http://www.fenggoudy1.com/list-select-id-{i}-type--area--year--star--state--order-addtime.html' for i in range(1, 5)],
             *[f'https://www.mengmiandaxia.com/cate/{i}?sort=4' for i in range(1, 5)],
+            'https://www.mdoutv.com/movie_bt/page/1',
         ]
     else:
         pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
+            *[f'https://www.mdoutv.com/movie_bt/page/{i}' for i in range(1, 49)],
             # *[f'http://www.bimibimi.me/type/{_type}-{i}/' for _type, n in
             #   zip(['juchang', 'fanzu', 'guoman', 'riman'],
             #       [13, 55, 4, 4])
             #   for i in range(2, n + 1)],
             # *[f'http://www.duomimh.com/dongmantype/20/page/{i}.html' for i in range(2, 12 + 1)],
-            *[f'https://www.wanmeikk.me/category/{_type}-{pageNo}.html' for _type, n in
-              zip(range(1, 11),
-                  [27, 9, 3, 2, 9, 6, 1, 1, 1, 1])
-              for pageNo in range(2, n + 1)],
+            # *[f'https://www.wanmeikk.me/category/{_type}-{pageNo}.html' for _type, n in
+            #   zip(range(1, 11),
+            #       [27, 9, 3, 2, 9, 6, 1, 1, 1, 1])
+            #   for pageNo in range(2, n + 1)],
             # ↓暂时爬取失败的网站
             # *[f'http://www.fenggoudy1.com/list-select-id-{_type}-type--area--year--star--state--order-addtime-p-{pageNo}.html' for _type, n in
             #   zip(range(1, 5),
@@ -79,6 +81,10 @@ class MoviesSpider(scrapy.Spider):
         #     'urlsXpath': "/@href",
         #     'namesXpath': "/text()"
         # },
+        'www.mdoutv.com': {
+            'urlsXpath': "//h3/a/@href",
+            'namesXpath': "//h3/a/text()"
+        },
         'www.fenggoudy1.com': {
             'urlsXpath': "//h4/a[contains(@target, '_blank')]/@href",
             'namesXpath': "//h4/a[contains(@target, '_blank')]/text()"
