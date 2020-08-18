@@ -50,7 +50,7 @@ def search_sort(i):
 
 
 domainSiteNameMap = {
-    'www.mdoutv.com': '麦豆TV',
+    'www.mdoutv.com': '麦豆TV - 超清|快速',
     'www.wanmeikk.me': "完美看看 - 超清|快速",
     'www.mengmiandaxia.com': "蒙面大侠 - 超清|快速",
     'www.fenggoudy1.com': "疯狗电影 - 超清|快速",
