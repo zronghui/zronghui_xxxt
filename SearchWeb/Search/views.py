@@ -19,6 +19,7 @@ def search_sort(i):
         'www.wanmeikk.me': 9.1,
         'www.mengmiandaxia.com': 9.2,
         'www.fenggoudy1.com': 9.3,
+        'www.mdoutv.com': 9.1,
         # 美剧
         'www.meijumi.net': 5,
         'www.meijutt.tv': 5,
@@ -49,6 +50,7 @@ def search_sort(i):
 
 
 domainSiteNameMap = {
+    'www.mdoutv.com': '麦豆TV',
     'www.wanmeikk.me': "完美看看 - 超清|快速",
     'www.mengmiandaxia.com': "蒙面大侠 - 超清|快速",
     'www.fenggoudy1.com': "疯狗电影 - 超清|快速",
