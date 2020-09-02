@@ -42,8 +42,7 @@ def getMovieDetail(movie_id, apikey):
                               r.text.replace('\n', ''))[0])
     # print(json.dumps(r, ensure_ascii=False, indent=2))
     for i in itertools.chain(r['director'], r['actor']):
-        for j in i:
-            i['name'] = i['name'].split()[0]
+        i['name'] = i['name'].split()[0]
     res = {
         'title': r['name'],
         'id': str(movie_id),
