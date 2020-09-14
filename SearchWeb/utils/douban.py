@@ -7,6 +7,7 @@ from loguru import logger
 import re
 import json
 import itertools
+import functools
 
 import config
 
@@ -16,6 +17,7 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) '
                          '1.0.4044.122 Safari/537.36'}
 
 
+@functools.lru_cache
 def getMovieId(q, apikey):
     try:
         r = requests.get('https://api.douban.com/v2/movie/search?q={q}&apikey={apikey}'.
@@ -29,6 +31,7 @@ def getMovieId(q, apikey):
         return re.findall(r'com%2Fsubject%2F(.*?)%2F', r.text)[0]
 
 
+@functools.lru_cache
 def getMovieDetail(movie_id, apikey):
     r = requests.get('https://api.douban.com/v2/movie/subject/{movie_id}?apikey={apikey}'.
                      format(movie_id=movie_id, apikey=apikey),

@@ -75,4 +75,5 @@ InCrontab=true
 ag lookao
 ```
 
-获取豆瓣信息失败了
+存储每次请求的豆瓣信息
+

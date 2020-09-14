@@ -93,6 +93,8 @@ def search(request):
     pageNo = int(request.GET.get('pageno', 0))
     q = request.GET.get('q')
     search_type = request.GET.get('search_type', 'movies')
+    if not q:
+        return render(request, 'index.html')
     # 限定搜索词长度在 1~40 之间
     if not 1 < len(q) < 40 or search_type not in ['movies', 'books']:
         search_result = {
