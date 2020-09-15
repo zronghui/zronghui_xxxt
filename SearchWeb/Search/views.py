@@ -1,5 +1,4 @@
 import math
-from pprint import pprint
 
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
@@ -153,7 +152,6 @@ def search(request):
                         'directors': directors,
                         'casts': casts,
                         })
-    pprint(context)
     return render(request, 'result.html', context=context)
 
 
