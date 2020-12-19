@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+#python other/checkService.py
 cd helloScrapy || exit
 scrapy crawl books
 scrapy crawl movies
