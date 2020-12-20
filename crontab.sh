@@ -2,9 +2,9 @@
 
 #python other/checkService.py
 cd helloScrapy || exit
-scrapy crawl movies
-cd ../other || exit
-python3 es\ store\ data.py
+scrapy crawl movies./
+#cd ../other || exit
+#python3 es\ store\ data.py
 
 # crontab -e
 # xxxt=/root/code/zronghui_xxxt
