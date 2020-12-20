@@ -155,12 +155,12 @@
                 <input type="hidden" name="q" value="{{q}}">
                 <input type="hidden" name="search_type" value={{search_type}}>
                 <input type="hidden" name="pageno" value="{{nextPage}}">
-{#  不知道是否有下一页，默认有              #}
-{#                {% if isLastPage %}#}
-{#                <button class="turn_page disable" type="button">#}
-{#                    {% else %}#}
+
+                {% if isLastPage %}
+                    <button class="turn_page disable" type="button">
+                {% else %}
                     <button class="turn_page" type="submit">
-{#                        {% endif %}#}
+                {% endif %}
                         下一页
                         <svg class="icon"
                              style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"

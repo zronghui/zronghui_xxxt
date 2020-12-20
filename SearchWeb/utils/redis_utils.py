@@ -20,6 +20,7 @@ r = redis.StrictRedis(host=host, port=port, password='redispassword')
 # def search(w):
 #     r.zincrby(name='search_rank', amount=1, value=w)
 def getMoviesByUrls(urls):
+    if not urls: return []
     n = len(urls)
     res = [{} for _ in range(n)]
     names = [name.decode("utf-8") for name in r.hmget('movies', urls)]

@@ -129,7 +129,7 @@ def search(request):
         'previousPage': pageNo - 1,
         'nextPage': pageNo + 1,
         'isFirstPage': pageNo == 0,
-        # 'isLastPage': pageNo == allPageNo - 1,
+        'isLastPage': len(search_result) != 20,
         # 'time': search_result['took'],
         # 'count': search_result['hits']['total'],
         'search_type': search_type,
