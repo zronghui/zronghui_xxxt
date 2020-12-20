@@ -61,12 +61,12 @@ def getMovieDetail(movie_id):
     return res
 
 
-# def getMovieDetailByQuery(q):
-#     try:
-#         movie_id = getMovieId(q, config.doubanApikey)
-#         return getMovieDetail(movie_id, config.doubanApikey)
-#     except Exception as e:
-#         logger.error(e)
+def getMovieDetailByQuery(q):
+    try:
+        movie_id = getMovieId(q)
+        return getMovieDetail(movie_id)
+    except Exception as e:
+        logger.error(e)
 
 
 # def main():
@@ -77,3 +77,4 @@ def getMovieDetail(movie_id):
 
 if __name__ == '__main__':
     print(getMovieDetail(getMovieId('摩天大楼')))
+    print(getMovieDetailByQuery("斗罗大陆"))
