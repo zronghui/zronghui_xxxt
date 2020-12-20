@@ -109,7 +109,7 @@ def search(request):
         }
     else:
         # redis_search_words.search(q)
-        urls = sonic.search(q, _from=20 * pageNo, doc_type=search_type)
+        urls = sonic_utils.search(q, _from=20 * pageNo, doc_type=search_type)
         search_result = redis_utils.getMoviesByUrls(urls)
     addSiteName(search_result)
     search_result.sort(key=search_sort, reverse=True)
