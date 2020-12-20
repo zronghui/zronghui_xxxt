@@ -4,7 +4,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
 # Create your views here.
-from utils import sonic, douban, redis_utils
+from utils import sonic_utils, douban, redis_utils
 
 
 def index(request):
