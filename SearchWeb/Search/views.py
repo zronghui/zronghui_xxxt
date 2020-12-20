@@ -15,12 +15,12 @@ def search_sort(i):
     # 值越大，越靠前
     m = {
         # 超清快速
-        'www.wanmeikk.me': 9.1,
-        'www.mengmiandaxia.com': 9.2,
-        'www.fenggoudy1.com': 9.3,
-        'www.mdoutv.com': 9.4,
-        'www.jpysvip.net': 9.5,
-        'hanmiys.com': 9.5,
+        'www.wanmeikk.me': 9,
+        'www.mengmiandaxia.com': 9,
+        'www.fenggoudy1.com': 9,
+        'www.mdoutv.com': 9,
+        'www.jpysvip.net': 9,
+        'hanmiys.com': 9,
 
         # 美剧
         'www.meijumi.net': 5,
@@ -31,8 +31,8 @@ def search_sort(i):
         'www.juqingba.cn': 3,
         'www.yue365.com': 3.1,
         # 动漫
-        'agefans.org': 2.2,
-        'www.qimiqimi.co': 2.1,
+        'agefans.org': 2,
+        'www.qimiqimi.co': 2,
         'www.yhdm.tv': 2,
         'www.duomimh.com': 2,
         'www.bimibimi.me': 2,
