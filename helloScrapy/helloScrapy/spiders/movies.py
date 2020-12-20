@@ -30,7 +30,7 @@ class MoviesSpider(scrapy.Spider):
 
             # 动漫
             'http://agefans.org/catalog?page=1',
-            *[f'http://www.bimibimi.me/type/{i}-1/' for i in ['juchang', 'fanzu', 'guoman', 'riman']],
+            *[f'http://www.bimibimi.me/type/{i}/' for i in ['juchang', 'fanzu', 'guoman', 'riman']],
             *[f'http://www.dmdm2020.com/dongmantype/{i}.html' for i in [20, 21]],
             *[f'http://www.yhdm.tv/{i}' for i in ('japan', 'china', 'american', 'movie')],
             'http://www.yxdm.me/resource/15-1.html',
