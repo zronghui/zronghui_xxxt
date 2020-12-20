@@ -70,10 +70,10 @@
 
             </form>
         </div>
-
-            <p class="results_detail" style="display: flex; margin: 7px 27px 21px 0px; font-size: 14px;">
-                用时 {{time}} ms, 查找到 {{count}} 条相关数据
-            </p>
+{# sonic 的查询没有那么多信息 #}
+{#            <p class="results_detail" style="display: flex; margin: 7px 27px 21px 0px; font-size: 14px;">#}
+{#                用时 {{time}} ms, 查找到 {{count}} 条相关数据#}
+{#            </p>#}
         <!--            {% if not hits %}-->
         <!--            未查询到数据-->
         <!--            {% endif %}-->
@@ -155,11 +155,12 @@
                 <input type="hidden" name="q" value="{{q}}">
                 <input type="hidden" name="search_type" value={{search_type}}>
                 <input type="hidden" name="pageno" value="{{nextPage}}">
-                {% if isLastPage %}
-                <button class="turn_page disable" type="button">
-                    {% else %}
+{#  不知道是否有下一页，默认有              #}
+{#                {% if isLastPage %}#}
+{#                <button class="turn_page disable" type="button">#}
+{#                    {% else %}#}
                     <button class="turn_page" type="submit">
-                        {% endif %}
+{#                        {% endif %}#}
                         下一页
                         <svg class="icon"
                              style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
@@ -174,15 +175,15 @@
         <div class="search_engines">
             <div>
                 <ul>
-                    <li>热门搜索</li>
-                    {% for word in hot_search_words %}
-                        <li>
-                            <a href="{{request.path}}?q={{word.word}}" target="_blank">
-                                {{word.word}}
-                            </a>
-                            热度：{{word.hot}}
-                        </li>
-                    {% endfor %}
+{#                    <li>热门搜索</li>#}
+{#                    {% for word in hot_search_words %}#}
+{#                        <li>#}
+{#                            <a href="{{request.path}}?q={{word.word}}" target="_blank">#}
+{#                                {{word.word}}#}
+{#                            </a>#}
+{#                            热度：{{word.hot}}#}
+{#                        </li>#}
+{#                    {% endfor %}#}
                     <li>搜索引擎跳转</li>
                     <li><a href="http://www.google.com/search?q={{q}}" target="_blank"><img
                             src="{% static 'img/google.ico' %}" width="16" height="16"> Google</a>

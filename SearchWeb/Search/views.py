@@ -4,7 +4,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
 # Create your views here.
-from utils import es, douban, redis_search_words
+from utils import sonic, douban, redis_utils
 
 
 def index(request):
@@ -18,7 +18,10 @@ def search_sort(i):
         'www.wanmeikk.me': 9.1,
         'www.mengmiandaxia.com': 9.2,
         'www.fenggoudy1.com': 9.3,
-        'www.mdoutv.com': 9.1,
+        'www.mdoutv.com': 9.4,
+        'www.jpysvip.net': 9.5,
+        'hanmiys.com': 9.5,
+
         # 美剧
         'www.meijumi.net': 5,
         'www.meijutt.tv': 5,
@@ -26,6 +29,7 @@ def search_sort(i):
         'www.66zhibo.net': 4,
         # 剧情
         'www.juqingba.cn': 3,
+        'www.yue365.com': 3.1,
         # 动漫
         'agefans.org': 2.2,
         'www.qimiqimi.co': 2.1,
@@ -43,12 +47,14 @@ def search_sort(i):
         'nfmovies.com': -1,
     }
     for key, value in m.items():
-        if key in i['_source']['book_url']:
+        if key in i['book_url']:
             return value
     return 0
 
 
 domainSiteNameMap = {
+    'www.jpysvip.net': '极品影视 - 超清|快速',
+    'hanmiys.com': '孤单影院 - 超清|快速',
     'www.mdoutv.com': '麦豆TV - 超清|快速',
     'www.wanmeikk.me': "完美看看 - 超清|快速",
     'www.mengmiandaxia.com': "蒙面大侠 - 超清|快速",
@@ -70,25 +76,26 @@ domainSiteNameMap = {
     'miao101.com': "旋风视频 - 高清",
     'www.kpkuang.com': "看片狂人 - 高清 多线路",
     'agefans.org': "AGE动漫 - 动漫",
-    'www.juqingba.cn': "剧情吧 - 剧情、播放平台、播放时间",
+    'www.juqingba.cn': "剧情吧 - 剧情",
+    'www.yue365.com': "365 - 播放平台、播放时间表",
     'www.66zhibo.net': "66直播网 - 直播",
     'www.bubulai.com': "部部来 - 高清",
     'www.novipnoad.com': "no vip no ad - 高清",
     'www.bimibimi.me': "哔咪哔咪 - 动漫",
-    'www.duomimh.com': "哆咪动漫 - 动漫",
+    'www.dmdm2020.com': "哆咪动漫 - 动漫",
 }
 
 
 def addSiteName(hits):
     for hit in hits:
-        domain = hit['_source']['book_url'].split('/', 3)[2]
+        domain = hit['book_url'].split('/', 3)[2]
         siteName = domainSiteNameMap.get(domain)
         if siteName:
-            hit['highlight']['book_name'][0] = hit['highlight']['book_name'][0] + ' - ' + siteName
+            hit['book_name'] = hit['book_name'] + ' - ' + siteName
 
 
 def search(request):
-    # https://lookao.com/search?q=123&pageno=1
+    # /search?q=123&pageno=1
     pageNo = int(request.GET.get('pageno', 0))
     q = request.GET.get('q')
     search_type = request.GET.get('search_type', 'movies')
@@ -101,11 +108,12 @@ def search(request):
             'took': 0
         }
     else:
-        redis_search_words.search(q)
-        search_result = es.search(q, _from=20 * pageNo, doc_type=search_type)
-    addSiteName(search_result['hits']['hits'])
-    search_result['hits']['hits'].sort(key=search_sort, reverse=True)
-    allPageNo = math.ceil(search_result['hits']['total'] / 20)
+        # redis_search_words.search(q)
+        urls = sonic.search(q, _from=20 * pageNo, doc_type=search_type)
+        search_result = redis_utils.getMoviesByUrls(urls)
+    addSiteName(search_result)
+    search_result.sort(key=search_sort, reverse=True)
+    # allPageNo = math.ceil(search_result['hits']['total'] / 20)
 
     parseSuccess = False
     if search_type == 'movies':
@@ -115,20 +123,18 @@ def search(request):
 
     context = {
         'q': q,
-        'hits': [{'book_url': i['_source']['book_url'],
-                  'book_name': i['highlight']['book_name'][0],
-                  'book_desc': i['_source'].get('book_desc')
-                  } for i in search_result['hits']['hits']],
+        'hits': search_result,
         'pageNo': pageNo,
-        'allPageNo': allPageNo,
+        # 'allPageNo': allPageNo,
         'previousPage': pageNo - 1,
         'nextPage': pageNo + 1,
         'isFirstPage': pageNo == 0,
-        'isLastPage': pageNo == allPageNo - 1,
-        'time': search_result['took'],
-        'count': search_result['hits']['total'],
+        # 'isLastPage': pageNo == allPageNo - 1,
+        # 'time': search_result['took'],
+        # 'count': search_result['hits']['total'],
         'search_type': search_type,
-        'hot_search_words': redis_search_words.get_hot_search_words(),
+        # todo: 改进月排行榜
+        # 'hot_search_words': redis_search_words.get_hot_search_words(),
         # 豆瓣相关
         'parseSuccess': parseSuccess,
     }

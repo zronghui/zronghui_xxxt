@@ -15,64 +15,82 @@ InCrontab = env.bool("InCrontab", False)
 class MoviesSpider(scrapy.Spider):
     name = 'movies'
     allowed_domains = ['movies']
+    pipeline = 'helloScrapy.pipelines.MoviesPipeline'
     if InCrontab:
-        pipeline = 'helloScrapy.pipelines.CrontabMoviesPipeline'
         start_urls = [
-            'https://www.bttwo.com/new-movie/page/1',
-            'https://ddrk.me/page/1',
-            # *[f'https://dvdhd.me/list/index{i}.html' for i in range(1, 6)],
-            *[f'https://www.itsck.com/type/{i}.html' for i in ['dianying', 'lianxuju', 'zongyi', 'dongman']],
-            *[f'https://www.zhenbuka.com/vodtype/{i}' for i in range(1, 5)],
-            *[f'https://app.movie/index.php/vod/type/id/{i}/page/1.html' for i in range(1, 5)],
-            # *[f'https://app.movie/index.php/vod/type/id/1/page/{i}.html' for i in random.sample(range(2, 1298), 6)],
-            # *[f'https://app.movie/index.php/vod/type/id/2/page/{i}.html' for i in random.sample(range(2, 562), 3)],
-            # *[f'https://app.movie/index.php/vod/type/id/3/page/{i}.html' for i in random.sample(range(2, 119), 1)],
-            # *[f'https://app.movie/index.php/vod/type/id/4/page/{i}.html' for i in random.sample(range(2, 229), 1)],
+            # 超清
+            'https://www.mdoutv.com/movie_bt/page/1',
+            *[f'https://www.wanmeikk.me/category/{i}.html' for i in range(1, 11)],
+            *[f'https://www.jpysvip.net/vodtype/{i}-1.html' for i in range(1, 5)],
+            *[f'https://hanmiys.com/vodtype/{i}-1.html' for i in range(1, 5)],
+
+            # 美剧
             'https://www.meijumi.net/usa/page/1',
             'https://www.meijutt.tv/1_______.html',
-            *[f'https://www.wanmeikk.me/category/{i}.html' for i in range(1, 11)],
-            *[f'https://www.tcmove.com/list/{i}.html' for i in ["dianying", 'lianxuju', 'zongyi', 'dongman']],
-            *[f'http://www.yhdm.tv/{i}' for i in ('japan', 'china', 'american', 'movie')],
-            # *[f'http://www.zzzfun.com/vod-type-id-{i}-page-1.html' for i in (1, 3)],
-            *[f'http://www.qimiqimi.co/type/{i}/page/1.html' for i in ('xinfan', 'riman', 'guoman', 'guoman', 'jcdm')],
-            'http://www.yxdm.me/resource/15-1.html',
-            *[f'https://kkmovie.cf/index.php/vod/type/id/{i}/page/1.html' for i in range(1, 5)],
-            'https://miao101.com/page/1',
-            *[f'https://www.kpkuang.com/vodshow/{i}-------------.html' for i in range(1, 5)],
+
+            # 动漫
             'http://agefans.org/catalog?page=1',
-            'https://www.juqingba.cn/dianshiju/list_25_1.html',
-            *[f'http://www.bubulai.com/zv/{i}.html' for i in [10, 11]],
-            *[f'https://www.novipnoad.com/tv/{i}/' for i in
-              ['hongkong', 'taiwan', 'western', 'japan', 'korea',
-               'other', 'anime', 'shows', 'life', 'movie']],
-            *[f'http://www.duomimh.com/dongmantype/{i}.html' for i in [20, 21]],
             *[f'http://www.bimibimi.me/type/{i}-1/' for i in ['juchang', 'fanzu', 'guoman', 'riman']],
-            *[f'http://www.fenggoudy1.com/list-select-id-{i}-type--area--year--star--state--order-addtime.html' for i in range(1, 5)],
-            *[f'https://www.mengmiandaxia.com/cate/{i}?sort=4' for i in range(1, 5)],
-            'https://www.mdoutv.com/movie_bt/page/1',
+            *[f'http://www.dmdm2020.com/dongmantype/{i}.html' for i in [20, 21]],
+            *[f'http://www.yhdm.tv/{i}' for i in ('japan', 'china', 'american', 'movie')],
+            'http://www.yxdm.me/resource/15-1.html',
+            # *[f'http://www.qimiqimi.co/type/{i}/page/1.html' for i in ('xinfan', 'riman', 'guoman', 'guoman', 'jcdm')],
+            # *[f'http://www.zzzfun.com/vod-type-id-{i}-page-1.html' for i in (1, 3)],
+
+            # 低质量
+            # 'https://www.bttwo.com/new-movie/page/1',
+            # 'https://ddrk.me/page/1',
+            # *[f'https://www.itsck.com/type/{i}.html' for i in ['dianying', 'lianxuju', 'zongyi', 'dongman']],
+            # *[f'https://www.zhenbuka.com/vodtype/{i}' for i in range(1, 5)],
+            # *[f'https://www.tcmove.com/list/{i}.html' for i in ["dianying", 'lianxuju', 'zongyi', 'dongman']],
+            # *[f'https://kkmovie.cf/index.php/vod/type/id/{i}/page/1.html' for i in range(1, 5)],
+            # 'https://miao101.com/page/1',
+            # *[f'https://www.kpkuang.com/vodshow/{i}-------------.html' for i in range(1, 5)],
+            # *[f'http://www.bubulai.com/zv/{i}.html' for i in [10, 11]],
+            # *[f'https://www.novipnoad.com/tv/{i}/' for i in
+            #   ['hongkong', 'taiwan', 'western', 'japan', 'korea',
+            #    'other', 'anime', 'shows', 'life', 'movie']],
+
+            # 剧情、播放平台等
+            'https://www.juqingba.cn/dianshiju/list_25_1.html',
+            'http://www.yue365.com/tv/neidi/',
+
+            # 反爬
+            # *[f'http://www.fenggoudy1.com/list-select-id-{i}-type--area--year--star--state--order-addtime.html'
+            #   for i in range(1, 5)],
+            # *[f'https://www.mengmiandaxia.com/cate/{i}?sort=4' for i in range(1, 5)],
         ]
     else:
-        pipeline = 'helloScrapy.pipelines.MoviesPipeline'
         start_urls = [
-            *[f'https://www.mdoutv.com/movie_bt/page/{i}' for i in range(1, 49)],
-            # *[f'http://www.bimibimi.me/type/{_type}-{i}/' for _type, n in
-            #   zip(['juchang', 'fanzu', 'guoman', 'riman'],
-            #       [13, 55, 4, 4])
-            #   for i in range(2, n + 1)],
-            # *[f'http://www.duomimh.com/dongmantype/20/page/{i}.html' for i in range(2, 12 + 1)],
-            # *[f'https://www.wanmeikk.me/category/{_type}-{pageNo}.html' for _type, n in
-            #   zip(range(1, 11),
-            #       [27, 9, 3, 2, 9, 6, 1, 1, 1, 1])
-            #   for pageNo in range(2, n + 1)],
-            # ↓暂时爬取失败的网站
-            # *[f'http://www.fenggoudy1.com/list-select-id-{_type}-type--area--year--star--state--order-addtime-p-{pageNo}.html' for _type, n in
-            #   zip(range(1, 5),
-            #       [1216, 551, 399, 610])
-            #   for pageNo in range(2, n + 1)],
-            # *[f'https://www.mengmiandaxia.com/cate/{_type}?sort=4&page={pageNo}' for _type, n in
-            #   zip(range(1, 5),
-            #       [370, 182, 35, 24])
-            #   for pageNo in range(2, n + 1)],
+            # 超清
+            *[f'https://www.mdoutv.com/movie_bt/page/{i}' for i in range(1, 188)],
+            *[f'https://www.wanmeikk.me/category/{_type}-{pageNo}.html'
+              for _type, n in [(1, 30), (2, 10), (3, 3), (4, 3), (5, 12), (6, 8), (7, 1), (8, 1), (9, 1), (10, 1)]
+              for pageNo in range(n + 1)],
+            *[f'https://www.jpysvip.net/vodtype/{_type}-{i}.html'
+              for _type, n in [(1, 676), (2, 217), (3, 30), (4, 102)]
+              for i in range(n + 1)],
+            *[f'https://hanmiys.com/vodtype/{_type}-{i}.html'
+              for _type, n in [(1, 764), (2, 333), (3, 77), (4, 183)]
+              for i in range(n + 1)],
+            # 动漫
+            *[f'http://agefans.org/catalog?page={i}' for i in range(1, 208)],
+            *[f'http://www.bimibimi.me/type/{_type}-{i}/'
+              for _type, n in [('juchang', 15), ('fanzu', 65), ('guoman', 6), ('riman', 6)]
+              for i in range(n + 1)],
+            *[f'http://www.dmdm2020.com/dongmantype/{_type}/page/{i}.html'
+              for _type, n in [(20, 31), (21, 3)]
+              for i in range(n + 1)],
+            *[f'http://www.yhdm.io/{_type}/{i}.html'
+              for _type, n in [('japan', 108), ('china', 22), ('american', 7), ('movie', 12)]
+              for i in range(n + 1)],
+            *[f'http://www.yxdm.me/resource/15-{i}.html' for i in range(1, 134)],
+            # 美剧
+            *[f'https://www.meijumi.net/usa/page/{i}' for i in range(1, 259)],
+            *[f'https://www.meijutt.tv/{i}_______.html' for i in range(1, 360)],
+            # 剧情
+            *[f'https://www.juqingba.cn/dianshiju/list_25_{i}.html' for i in range(1, 100)],  # omg 总共 1739页
+            *[f'http://www.yue365.com/tv/neidi/index_{i}.shtml' for i in range(1, 100)],
         ]
     ic(start_urls)
 
@@ -81,6 +99,18 @@ class MoviesSpider(scrapy.Spider):
         #     'urlsXpath': "/@href",
         #     'namesXpath': "/text()"
         # },
+        'www.yue365.com': {
+            'urlsXpath': "//ul/li/div[@class='mv_name']/a/@href",
+            'namesXpath': "//ul/li/div[@class='mv_name']/a/text()"
+        },
+        'www.jpysvip.net': {
+            'urlsXpath': "//ul/li//h4[@class='title text-overflow']/a/@href",
+            'namesXpath': "//ul/li//h4[@class='title text-overflow']/a/text()"
+        },
+        'hanmiys.com': {
+            'urlsXpath': "//ul/li//h4[@class='title text-overflow']/a/@href",
+            'namesXpath': "//ul/li//h4[@class='title text-overflow']/a/text()"
+        },
         'www.mdoutv.com': {
             'urlsXpath': "//h3/a/@href",
             'namesXpath': "//h3/a/text()"
@@ -189,7 +219,7 @@ class MoviesSpider(scrapy.Spider):
             'urlsXpath': "//ul/li/div[@class='info']/a/@href",
             'namesXpath': "//ul/li/div[@class='info']/a/text()"
         },
-        'www.duomimh.com': {
+        'www.dmdm2020.com': {
             'urlsXpath': "//ul/li//h4/a/@href",
             'namesXpath': "//ul/li//h4/a/text()"
         },
@@ -197,9 +227,9 @@ class MoviesSpider(scrapy.Spider):
 
     custom_settings = {
         # 'LOG_LEVEL': "WARNING",
-        'CONCURRENT_REQUESTS': 30,
-        'CONCURRENT_REQUESTS_PER_DOMAIN': 3,
-        'CONCURRENT_REQUESTS_PER_IP': 3,
+        'CONCURRENT_REQUESTS': 100,
+        'CONCURRENT_REQUESTS_PER_DOMAIN': 100,
+        'CONCURRENT_REQUESTS_PER_IP': 100,
         'DOWNLOAD_DELAY': 1,
         'DOWNLOAD_TIMEOUT': 5,
         'ITEM_PIPELINES': {pipeline: 300},
