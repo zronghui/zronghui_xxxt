@@ -9,7 +9,7 @@ import json
 import itertools
 import functools
 import funcy
-import redis_utils
+from utils import redis_utils
 
 # import config
 
@@ -62,7 +62,6 @@ def getMovieDetail(movie_id):
     # print(json.dumps(r, ensure_ascii=False, indent=2))
     for i in itertools.chain(r['director'], r['actor']):
         i['name'] = ' '.join(i['name'].split()[:1])
-        print(i['name'])
     res = {
         'title': r['name'],
         'id': str(movie_id),
