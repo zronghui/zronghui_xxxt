@@ -175,15 +175,15 @@
         <div class="search_engines">
             <div>
                 <ul>
-{#                    <li>热门搜索</li>#}
-{#                    {% for word in hot_search_words %}#}
-{#                        <li>#}
-{#                            <a href="{{request.path}}?q={{word.word}}" target="_blank">#}
-{#                                {{word.word}}#}
-{#                            </a>#}
-{#                            热度：{{word.hot}}#}
-{#                        </li>#}
-{#                    {% endfor %}#}
+                    <li>最近 30 天热门搜索</li>
+                    {% for word in hot_search_words %}
+                        <li>
+                            <a href="{{request.path}}?q={{word.word}}" target="_blank">
+                                {{word.word}}
+                            </a>
+                            热度：{{word.hot}}
+                        </li>
+                    {% endfor %}
                     <li>搜索引擎跳转</li>
                     <li><a href="http://www.google.com/search?q={{q}}" target="_blank"><img
                             src="{% static 'img/google.ico' %}" width="16" height="16"> Google</a>

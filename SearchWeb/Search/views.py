@@ -105,7 +105,7 @@ def search(request):
     if not 1 < len(q) < 40 or search_type not in ['movies', 'books']:
         search_result = []
     else:
-        # redis_search_words.search(q)
+        redis_utils.search(q)
         urls = sonic_utils.search(q, _from=20 * pageNo, doc_type=search_type)
         search_result = redis_utils.getMoviesByUrls(urls)
     addSiteName(search_result)
@@ -130,8 +130,7 @@ def search(request):
         # 'time': search_result['took'],
         # 'count': search_result['hits']['total'],
         'search_type': search_type,
-        # todo: 改进月排行榜
-        # 'hot_search_words': redis_search_words.get_hot_search_words(),
+        'hot_search_words': redis_utils.get_hot_search_words(),
         # 豆瓣相关
         'parseSuccess': parseSuccess,
     }
