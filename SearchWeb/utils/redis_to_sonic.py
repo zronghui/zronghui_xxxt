@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from sonic import IngestClient
-
-import redis_utils, sonic_utils
 import pretty_errors
 from alive_progress import alive_bar
+from sonic import IngestClient
 from tenacity import retry, stop_after_attempt
+
+import redis_utils
 
 pretty_errors.activate()
 
@@ -22,9 +22,6 @@ def push_to_sonic(url, name):
 
 with alive_bar(total=len(hash)) as bar:
     for url in hash:
-        name = str(hash.get(url).decode("utf-8"))
-        url = str(url.decode("utf-8"))
-        # print(url, type(url))
-        # print(name, type(name))
+        name = hash.get(url)
         push_to_sonic(url, name)
         bar()

@@ -13,3 +13,4 @@ Scrapy==2.0.0
 sonic-client
 alive_progress
 tenacity
+funcy

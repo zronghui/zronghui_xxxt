@@ -9,7 +9,7 @@ pretty_errors.activate()
 
 host = '127.0.0.1'
 port = 6379
-r = redis.StrictRedis(host=host, port=port, password='redispassword')
+r = redis.StrictRedis(host=host, port=port, password='redispassword', decode_responses=True, charset='utf-8')
 
 
 # def get_hot_search_words():
@@ -23,7 +23,7 @@ def getMoviesByUrls(urls):
     if not urls: return []
     n = len(urls)
     res = [{} for _ in range(n)]
-    names = [name.decode("utf-8") for name in r.hmget('movies', urls)]
+    names = [name for name in r.hmget('movies', urls)]
     for i in range(n):
         res[i]['book_url'] = urls[i]
         res[i]['book_name'] = names[i]
@@ -32,6 +32,6 @@ def getMoviesByUrls(urls):
 
 if __name__ == '__main__':
     res = r.hget('movies', 'https://hanmiys.com/voddetail/119280.html')
-    print(str(res.decode("utf-8")))
+    print(res)
     res = r.hmget('movies', ['https://hanmiys.com/voddetail/119280.html', 'https://www.wanmeikk.me/project/1985.html'])
-    print([str(i.decode("utf-8")) for i in res])
+    print(res)

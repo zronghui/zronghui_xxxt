@@ -8,6 +8,8 @@ import re
 import json
 import itertools
 import functools
+import funcy
+import redis_utils
 
 # import config
 
@@ -17,6 +19,8 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) '
                          '1.0.4044.122 Safari/537.36'}
 
 
+@funcy.print_durations
+@funcy.print_exits
 @functools.lru_cache(maxsize=128)
 def getMovieId(q):
     # try:
@@ -27,10 +31,16 @@ def getMovieId(q):
     # except Exception as e:
     # # api 请求失败，直接发送请求
     # logger.error(e)
+    res = redis_utils.r.hget('movieQueryToMovieId', q)
+    if res:
+        return res
     r = requests.get('https://www.douban.com/search?q=' + q, headers=headers)
-    return re.findall(r'com%2Fsubject%2F(.*?)%2F', r.text)[0]
+    res = re.findall(r'com%2Fsubject%2F(.*?)%2F', r.text)[0]
+    redis_utils.r.hset('movieQueryToMovieId', q, res)
+    return res
 
 
+@funcy.print_durations
 @functools.lru_cache(maxsize=128)
 def getMovieDetail(movie_id):
     # r = requests.get('https://api.douban.com/v2/movie/subject/{movie_id}?apikey={apikey}'.
@@ -39,6 +49,12 @@ def getMovieDetail(movie_id):
     # if 'id' in r.json():
     #     return r.json()
     # # api 请求失败，直接发送请求
+
+    res = redis_utils.r.hget('movieDesc', movie_id)
+    if res:
+        res = json.loads(res)
+        return res
+
     r = requests.get('https://movie.douban.com/subject/' +
                      str(movie_id), headers=headers)
     r = json.loads(re.findall(r'<script type="application/ld\+json">(.*?)</script>',
@@ -58,6 +74,7 @@ def getMovieDetail(movie_id):
         'directors': r['director'],
         'casts': r['actor']
     }
+    redis_utils.r.hset('movieDesc', movie_id, json.dumps(res))
     return res
 
 
