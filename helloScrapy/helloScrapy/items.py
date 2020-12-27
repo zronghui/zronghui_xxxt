@@ -28,5 +28,7 @@ class BookItem(scrapy.Item):
 
 
 class MovieItem(scrapy.Item):
-    movie_name = scrapy.Field()
-    movie_url = scrapy.Field()
+    name = scrapy.Field()
+    url = scrapy.Field()
+    img = scrapy.Field()
+    desc = scrapy.Field()

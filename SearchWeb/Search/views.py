@@ -14,6 +14,9 @@ def index(request):
 def search_sort(i):
     # 值越大，越靠前
     m = {
+        # 剧情
+        'www.yue365.com': 10.1,
+        'www.juqingba.cn': 10,
         # 超清快速
         'www.wanmeikk.me': 9,
         'www.mengmiandaxia.com': 9,
@@ -21,15 +24,12 @@ def search_sort(i):
         'www.mdoutv.com': 9,
         'www.jpysvip.net': 9,
         'hanmiys.com': 9,
-
+        'zhenbuka': 9,
         # 美剧
         'www.meijumi.net': 5,
         'www.meijutt.tv': 5,
         # 直播
         'www.66zhibo.net': 4,
-        # 剧情
-        'www.juqingba.cn': 3,
-        'www.yue365.com': 3.1,
         # 动漫
         'agefans.org': 2,
         'www.qimiqimi.co': 2,
@@ -43,11 +43,10 @@ def search_sort(i):
         'www.kpkuang.com': 1,
         'miao101.com': 1,
         # 广告(不给屏蔽的那种)
-        'zhenbuka': -1,
         'nfmovies.com': -1,
     }
     for key, value in m.items():
-        if key in i['book_url']:
+        if key in i['url']:
             return value
     return 0
 
@@ -63,7 +62,7 @@ domainSiteNameMap = {
     'ddrk.me': "低端影视",
     'dvdhd.me': "碟影世界",
     'www.itsck.com': "sck电影网",
-    'www.zhenbuka.com': "真不卡影院 - 广告",
+    'www.zhenbuka.com': "真不卡影院 - 超清|快速",
     'app.movie': "APP影院",
     'www.meijumi.net': "美剧迷 - 美剧",
     'www.meijutt.tv': "美剧天堂 - 美剧",
@@ -88,10 +87,10 @@ domainSiteNameMap = {
 
 def addSiteName(hits):
     for hit in hits:
-        domain = hit['book_url'].split('/', 3)[2]
+        domain = hit['url'].split('/', 3)[2]
         siteName = domainSiteNameMap.get(domain)
         if siteName:
-            hit['book_name'] = hit['book_name'] + ' - ' + siteName
+            hit['name'] = hit['name'] + ' - ' + siteName
 
 
 def search(request):

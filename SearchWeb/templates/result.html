@@ -120,12 +120,12 @@
         {% endif %}
             {% for hit in hits %}
             <div class="general_result">
-                <h3 class="general_result_title"><a href={{hit.book_url}} target="_blank"
-                                                    rel="noopener noreferrer">{{hit.book_name|safe}}</a>
+                <h3 class="general_result_title"><a href={{hit.url}} target="_blank"
+                                                    rel="noopener noreferrer">{{hit.name|safe}}</a>
                 </h3>
-                <span class="general_result_url">{{hit.book_url}}</span>
-                {% if hit.book_desc %}
-                <p class="general_result_desc"> {{hit.book_desc}} </p>
+                <span class="general_result_url">{{hit.url}}</span>
+                {% if hit.desc %}
+                <p class="general_result_desc"> {{hit.desc}} </p>
                 {% endif %}
 
             </div>

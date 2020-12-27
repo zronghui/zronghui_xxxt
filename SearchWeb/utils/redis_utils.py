@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import json
+
 import pretty_errors
 import redis
 import datetime
@@ -80,14 +82,18 @@ def getMoviesByUrls(urls):
     if not urls: return []
     n = len(urls)
     res = [{} for _ in range(n)]
-    names = [name for name in r.hmget('movies', urls)]
+    values = [name for name in r.hmget('movies', urls)]
     for i in range(n):
-        res[i]['book_url'] = urls[i]
-        res[i]['book_name'] = names[i]
+        res[i]['url'] = urls[i]
+        if values[i].startswith('{'):
+            res[i]['name'] = json.loads(values[i])
+        else:
+            res[i]['name'] = values[i]
     return res
 
 
 if __name__ == '__main__':
+    getMoviesByUrls(['https://www.jpysvip.net/voddetail/63064.html'])
     res = r.hget('movies', 'https://hanmiys.com/voddetail/119280.html')
     print(res)
     res = r.hmget('movies', ['https://hanmiys.com/voddetail/119280.html', 'https://www.wanmeikk.me/project/1985.html'])

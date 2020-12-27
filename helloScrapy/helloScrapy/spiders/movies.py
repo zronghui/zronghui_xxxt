@@ -3,7 +3,7 @@ import random
 
 import scrapy
 from environs import Env
-from helloScrapy.items import BookItem
+from helloScrapy.items import MovieItem
 from icecream import ic
 
 env = Env()
@@ -19,13 +19,16 @@ class MoviesSpider(scrapy.Spider):
     if InCrontab:
         start_urls = [
             # 超清
-            'https://www.mdoutv.com/movie_bt/page/1',
+            # 'https://www.mdoutv.com/movie_bt/page/1',
+            # 按照分类来，这样每一页要不全都有更新情况，要不全部没有，不会出现 len(desc)!=len(urls) 的情况
+            *[f'https://www.mdoutv.com/movie_bt_series/{i}' for i in
+              ['en', 'guocanju', 'gangtai', 'hanju', 'riju', 'movie', 'ac']],
             *[f'https://www.wanmeikk.me/category/{i}.html' for i in range(1, 11)],
             *[f'https://www.jpysvip.net/vodtype/{i}-1.html' for i in range(1, 5)],
             *[f'https://hanmiys.com/vodtype/{i}-1.html' for i in range(1, 5)],
-
+            *[f'https://www.zhenbuka.com/vodtype/{i}-1.html' for i in range(1, 5)],
             # 美剧
-            'https://www.meijumi.net/usa/page/1',
+            # 'https://www.meijumi.net/usa/page/1',
             'https://www.meijutt.tv/1_______.html',
 
             # 动漫
@@ -63,7 +66,7 @@ class MoviesSpider(scrapy.Spider):
     else:
         start_urls = [
             # 超清
-            *[f'https://www.mdoutv.com/movie_bt/page/{i}' for i in range(1, 188)],
+            # *[f'https://www.mdoutv.com/movie_bt/page/{i}' for i in range(1, 188)],
             *[f'https://www.wanmeikk.me/category/{_type}-{pageNo}.html'
               for _type, n in [(1, 30), (2, 10), (3, 3), (4, 3), (5, 12), (6, 8), (7, 1), (8, 1), (9, 1), (10, 1)]
               for pageNo in range(n + 1)],
@@ -72,6 +75,9 @@ class MoviesSpider(scrapy.Spider):
               for i in range(n + 1)],
             *[f'https://hanmiys.com/vodtype/{_type}-{i}.html'
               for _type, n in [(1, 764), (2, 333), (3, 77), (4, 183)]
+              for i in range(n + 1)],
+            *[f'https://www.zhenbuka.com/vodtype/{_type}-{i}.html'
+              for _type, n in [(1, 774), (2, 363), (3, 46), (4, 100)]
               for i in range(n + 1)],
             # 动漫
             *[f'http://agefans.org/catalog?page={i}' for i in range(1, 208)],
@@ -86,7 +92,7 @@ class MoviesSpider(scrapy.Spider):
               for i in range(n + 1)],
             *[f'http://www.yxdm.me/resource/15-{i}.html' for i in range(1, 134)],
             # 美剧
-            *[f'https://www.meijumi.net/usa/page/{i}' for i in range(1, 259)],
+            # *[f'https://www.meijumi.net/usa/page/{i}' for i in range(1, 259)],
             *[f'https://www.meijutt.tv/{i}_______.html' for i in range(1, 360)],
             # 剧情
             *[f'https://www.juqingba.cn/dianshiju/list_25_{i}.html' for i in range(1, 100)],  # omg 总共 1739页
@@ -99,22 +105,96 @@ class MoviesSpider(scrapy.Spider):
         #     'urlsXpath': "/@href",
         #     'namesXpath': "/text()"
         # },
-        'www.yue365.com': {
-            'urlsXpath': "//ul/li/div[@class='mv_name']/a/@href",
-            'namesXpath': "//ul/li/div[@class='mv_name']/a/text()"
+        # 超清
+        'www.mdoutv.com': {
+            'urlsXpath': "//h3/a/@href",
+            'namesXpath': "//h3/a/text()",
+            'imgXpath': "//ul/li/a/img/@data-original",
+            'descXpath': "//ul/li/a/div/span/text()",
         },
+        'www.wanmeikk.me': {
+            'urlsXpath': "//h4[@class='title text-overflow']/a/@href",
+            'namesXpath': "//h4[@class='title text-overflow']/a/text()",
+            # 'imgXpath': "/@data-original",
+            # 'descXpath': "/text()",
+        },
+        # 下面这三个网站格式都一样
         'www.jpysvip.net': {
             'urlsXpath': "//ul/li//h4[@class='title text-overflow']/a/@href",
-            'namesXpath': "//ul/li//h4[@class='title text-overflow']/a/text()"
+            'namesXpath': "//ul/li//h4[@class='title text-overflow']/a/text()",
+            'imgXpath': "//ul/li/div/a/@data-original",
+            'descXpath': "//ul/li//span[@class='pic-text text-right']/text()",
         },
         'hanmiys.com': {
             'urlsXpath': "//ul/li//h4[@class='title text-overflow']/a/@href",
-            'namesXpath': "//ul/li//h4[@class='title text-overflow']/a/text()"
+            'namesXpath': "//ul/li//h4[@class='title text-overflow']/a/text()",
+            'imgXpath': "//ul/li/div/a/@data-original",
+            'descXpath': "//ul/li//span[@class='pic-text text-right']/text()",
         },
-        'www.mdoutv.com': {
-            'urlsXpath': "//h3/a/@href",
-            'namesXpath': "//h3/a/text()"
+        'www.zhenbuka.com': {
+            'urlsXpath': "//h4[@class='title text-overflow']/a/@href",
+            'namesXpath': "//h4[@class='title text-overflow']/a/text()",
+            'imgXpath': "//ul/li/div/a/@data-original",
+            'descXpath': "//ul/li//span[@class='pic-text text-right']/text()",
         },
+        # 美剧
+        # 'www.meijumi.net': {
+        #     'urlsXpath': "//h2[@class='entry-title']/a/@href",
+        #     'namesXpath': "//h2[@class='entry-title']/a/text()",
+        #     'imgXpath': "/@data-original",
+        #     'descXpath': "/text()",
+        # },
+        'www.meijutt.tv': {
+            'urlsXpath': "//a[@class='B font_14']/@href",
+            'namesXpath': "//a[@class='B font_14']/text()",
+            'imgXpath': "//div[@class='bor_img3_right']/a/img[@class='list_pic']/@src",
+            'descXpath': "//ul[@class='list_20']/li/span/font/text()",
+        },
+        # 动漫
+        'agefans.org': {
+            'urlsXpath': '//*[@id="catalog_list"]/ul/li/div/div[2]/div/a/@href',
+            'namesXpath': "//ul/li//a[@class='stretched-link-']/h5/text()",
+            'imgXpath': "//li/div//img[@class='card-img- ']/@src",
+            # 'descXpath': "/text()",
+        },
+        'www.bimibimi.me': {
+            'urlsXpath': "//ul/li/div[@class='info']/a/@href",
+            'namesXpath': "//ul/li/div[@class='info']/a/text()",
+            'imgXpath': "//ul/li/a[@class='img']/img/@data-original",
+            'descXpath': "//ul/li/div[@class='info']/p/span[@class='fl']/text()",
+        },
+        'www.dmdm2020.com': {
+            'urlsXpath': "//ul/li//h4/a/@href",
+            'namesXpath': "//ul/li//h4/a/text()",
+            'imgXpath': "//ul/li/div/a/@data-original",
+            'descXpath': "//ul/li//span[@class='pic-text text-right']/text()",
+        },
+        'www.yhdm.tv': {
+            'urlsXpath': "//ul/li/h2/a/@href | //p[@class='tname']/a/@href",
+            'namesXpath': "//ul/li/h2/a/text() | //p[@class='tname']/a/text()",
+            'imgXpath': "//ul/li/a/img/@src",
+            'descXpath': "//ul/li/span[1]/font/text()",
+        },
+        'www.yxdm.me': {
+            'urlsXpath': "//ul/li/p[1]//a/@href",
+            'namesXpath': "//ul/li/p[1]//text()",
+            'imgXpath': "//ul/li/p[1]/a/img/@src",
+            'descXpath': "//ul/li/p[4]/text()",
+        },
+        # 剧情、播放平台等
+        'www.yue365.com': {
+            'urlsXpath': "//ul/li/div[@class='mv_name']/a/@href",
+            'namesXpath': "//ul/li/div[@class='mv_name']/a/text()",
+            # 'imgXpath': "/@data-original",
+            # 'descXpath': "/text()",
+        },
+        'www.juqingba.cn': {
+            'urlsXpath': "//ul[@class='m_Box8 w110 FL']/li/a/@href",
+            'namesXpath': "//ul[@class='m_Box8 w110 FL']/li/a/img/@alt",
+            'imgXpath': "//ul/li/div[@class='a_img']/a/img/@src",
+            # 'descXpath': "/text()",
+        },
+        # 其他
         'www.fenggoudy1.com': {
             'urlsXpath': "//h4/a[contains(@target, '_blank')]/@href",
             'namesXpath': "//h4/a[contains(@target, '_blank')]/text()"
@@ -141,35 +221,15 @@ class MoviesSpider(scrapy.Spider):
             'namesXpath': "//a[@class='fed-list-title fed-font-xiv fed-text-center "
                           "fed-text-sm-left fed-visible fed-part-eone']/text()"
         },
-        'www.zhenbuka.com': {
-            'urlsXpath': "//h4[@class='title text-overflow']/a/@href",
-            'namesXpath': "//h4[@class='title text-overflow']/a/text()"
-        },
         'app.movie': {
             'urlsXpath': "//h4[@class='stui-vodlist__title']/a/@href",
             'namesXpath': "//h4[@class='stui-vodlist__title']/a/text()"
-        },
-        'www.meijumi.net': {
-            'urlsXpath': "//h2[@class='entry-title']/a/@href",
-            'namesXpath': "//h2[@class='entry-title']/a/text()"
-        },
-        'www.meijutt.tv': {
-            'urlsXpath': "//a[@class='B font_14']/@href",
-            'namesXpath': "//a[@class='B font_14']/text()"
-        },
-        'www.wanmeikk.me': {
-            'urlsXpath': "//h4[@class='title text-overflow']/a/@href",
-            'namesXpath': "//h4[@class='title text-overflow']/a/text()"
         },
         'www.tcmove.com': {
             'urlsXpath': "//a[@class='fed-list-title fed-font-xiv fed-text-center "
                          "fed-text-sm-left fed-visible fed-part-eone']/@href",
             'namesXpath': "//a[@class='fed-list-title fed-font-xiv fed-text-center "
                           "fed-text-sm-left fed-visible fed-part-eone']/text()"
-        },
-        'www.yhdm.tv': {
-            'urlsXpath': "//ul/li/h2/a/@href | //p[@class='tname']/a/@href",
-            'namesXpath': "//ul/li/h2/a/text() | //p[@class='tname']/a/text()"
         },
         'www.zzzfun.com': {
             'urlsXpath': "//ul[@class='search-result']/a/@href",
@@ -178,10 +238,6 @@ class MoviesSpider(scrapy.Spider):
         'www.qimiqimi.co': {
             'urlsXpath': "//ul[@class='img-list']/li/a/@href",
             'namesXpath': "//ul[@class='img-list']/li/a/h2/text()"
-        },
-        'www.yxdm.me': {
-            'urlsXpath': "//ul/li/p[1]//a/@href",
-            'namesXpath': "//ul/li/p[1]//text()"
         },
         'kkmovie.cf': {
             'urlsXpath': "//div[@class='stui-pannel__bd clearfix']/ul/li//h4/a/@href",
@@ -195,14 +251,6 @@ class MoviesSpider(scrapy.Spider):
             'urlsXpath': "//ul[@class='fed-list-info fed-part-rows']/li/a/@href",
             'namesXpath': "//ul[@class='fed-list-info fed-part-rows']/li/a/text()"
         },
-        'agefans.org': {
-            'urlsXpath': '//*[@id="catalog_list"]/ul/li/div/div[2]/div/a/@href',
-            'namesXpath': "//ul/li//a[@class='stretched-link-']/h5/text()"
-        },
-        'www.juqingba.cn': {
-            'urlsXpath': "//ul[@class='m_Box8 w110 FL']/li/a/@href",
-            'namesXpath': "//ul[@class='m_Box8 w110 FL']/li/a/img/@alt"
-        },
         'www.66zhibo.net': {
             'urlsXpath': "//ul/li[@class='p-item']/a/@href",
             'namesXpath': "//ul/li[@class='p-item']/a//strong/text()"
@@ -214,14 +262,6 @@ class MoviesSpider(scrapy.Spider):
         'www.novipnoad.com': {
             'urlsXpath': "//div[@class='col-md-3 col-sm-6 col-xs-6 ']//h3/a/@href",
             'namesXpath': "//div[@class='col-md-3 col-sm-6 col-xs-6 ']//h3/a/text()"
-        },
-        'www.bimibimi.me': {
-            'urlsXpath': "//ul/li/div[@class='info']/a/@href",
-            'namesXpath': "//ul/li/div[@class='info']/a/text()"
-        },
-        'www.dmdm2020.com': {
-            'urlsXpath': "//ul/li//h4/a/@href",
-            'namesXpath': "//ul/li//h4/a/text()"
         },
     }
 
@@ -246,13 +286,34 @@ class MoviesSpider(scrapy.Spider):
         ic(response.url, domain, httpDomain)
         urls = response.xpath(self.xpath[domain]["urlsXpath"]).extract()
         names = response.xpath(self.xpath[domain]["namesXpath"]).extract()
-        ic(len(urls) == len(names))
-        ic(urls[0])
-        ic(names[0])
-        if len(urls) > 0 and urls[0].startswith('/'):
-            urls = [httpDomain + i for i in urls]
-        for url, name in zip(urls, names):
-            item = BookItem()
-            item['book_url'] = url
-            item['book_name'] = name
+        if not urls or len(urls) != len(names): return
+
+        imgs = ['' for _ in range(len(urls))]
+        descs = ['' for _ in range(len(urls))]
+        if 'imgXpath' in self.xpath[domain] and self.xpath[domain]["imgXpath"]:
+            t = response.xpath(self.xpath[domain]["imgXpath"]).extract()
+            if len(t) == len(urls):
+                imgs = t
+        if 'descXpath' in self.xpath[domain] and self.xpath[domain]["descXpath"]:
+            t = response.xpath(self.xpath[domain]["descXpath"]).extract()
+            if len(t) == len(urls):
+                descs = t
+
+        ic(urls[0], names[0], imgs[0], descs[0])
+        complete(urls, httpDomain)
+        complete(imgs, httpDomain)
+        for i in range(len(urls)):
+            item = MovieItem()
+            item['url'] = urls[i]
+            item['name'] = names[i]
+            if imgs[i]:
+                item['img'] = imgs[i]
+            if descs[i]:
+                item['desc'] = descs[i]
             yield item
+
+
+def complete(urls, httpDomain):
+    for i in range(len(urls)):
+        if urls[i].startswith('/'):
+            urls[i] = httpDomain + urls[i]
