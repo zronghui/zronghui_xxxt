@@ -309,7 +309,7 @@ class MoviesSpider(scrapy.Spider):
             if imgs[i]:
                 item['img'] = imgs[i]
             if descs[i]:
-                item['desc'] = descs[i]
+                item['desc'] = descs[i].strip()
             yield item
 
 
