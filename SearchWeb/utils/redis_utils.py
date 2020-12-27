@@ -86,7 +86,7 @@ def getMoviesByUrls(urls):
     for i in range(n):
         res[i]['url'] = urls[i]
         if values[i].startswith('{'):
-            res[i]['name'] = json.loads(values[i])
+            res[i] = json.loads(values[i])
         else:
             res[i]['name'] = values[i]
     return res
