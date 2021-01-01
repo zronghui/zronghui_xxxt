@@ -316,10 +316,10 @@
         show(list);
 
         // 获取到数据后，把脚本删除
-        var s = document.querySelectorAll('script');
-        for (var i = 1, len = s.length; i < len; i++) {
-            document.body.removeChild(s[i]);
-        }
+        // var s = document.body.querySelectorAll('script');
+        // for (var i = 1, len = s.length; i < len; i++) {
+        //     document.body.removeChild(s[i]);
+        // }
     }
 
     function hide(obj) {
@@ -329,15 +329,6 @@
     function show(obj) {
         obj.style.display = "block"
     }
-</script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?6e6864329584f7a5856<i class="chrome-extension-mutihighlight chrome-extension-mutihighlight-style-1">180</i>ee10a89f4a";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
 </script>
 
 {% load static %}

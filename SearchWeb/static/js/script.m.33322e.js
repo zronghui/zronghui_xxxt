@@ -18,7 +18,7 @@ A && (e = document.querySelector(".header_dropdown_modal"), A.onclick = function
     }), document.querySelector(".search_reset").addEventListener("mousedown", function (e) {
         e.preventDefault(), T.value = "", x.setAttribute("data-filled", !1)
     })
-}(), n = x.querySelector(".search_autocomplete.engine"), t = x.querySelector(".engine_list_wrap"), r = x.querySelector(".suggest_tips"), o = x.querySelector(".active_tips"), i = x.querySelector(".active_engine"), a = {}, c = {}, d = l = s = u = "", p = f = !(m = []), y = function (e) {
+}(), n = x.querySelector("ul#suggestList"), t = x.querySelector(".engine_list_wrap"), r = x.querySelector(".suggest_tips"), o = x.querySelector(".active_tips"), i = x.querySelector(".active_engine"), a = {}, c = {}, d = l = s = u = "", p = f = !(m = []), y = function (e) {
     var n = !!e.match(/[一-龥]/), t = [];
     for (var r in a) a[r].grade = distance(n ? a[r].name : r, e), a[r].grade && t.push(a[r]);
     return t.sort(function (e, n) {

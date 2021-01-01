@@ -82,10 +82,12 @@ def getMoviesByUrls(urls):
     if not urls: return []
     n = len(urls)
     res = [{} for _ in range(n)]
-    values = [name for name in r.hmget('movies', urls)]
+    values = list(r.hmget('movies', urls))
     for i in range(n):
         res[i]['url'] = urls[i]
-        if values[i].startswith('{'):
+        if not values[i]:
+            res[i]['name'] = ''
+        elif values[i].startswith('{'):
             res[i].update(json.loads(values[i]))
         else:
             res[i]['name'] = values[i]
