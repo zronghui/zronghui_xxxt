@@ -104,7 +104,6 @@ def search(request):
     if not 1 < len(q) < 40 or search_type not in ['movies', 'books']:
         search_result = []
     else:
-        redis_utils.search(q)
         urls = sonic_utils.search(q, _from=20 * pageNo, doc_type=search_type)
         search_result = redis_utils.getMoviesByUrls(urls)
     addSiteName(search_result)
@@ -116,6 +115,10 @@ def search(request):
         movie_detail = douban.getMovieDetailByQuery(q)
         if movie_detail and "code" not in movie_detail:
             parseSuccess = True
+    if parseSuccess:
+        redis_utils.search(movie_detail.get('title', q))
+    else:
+        redis_utils.search(q)
 
     context = {
         'q': q,
