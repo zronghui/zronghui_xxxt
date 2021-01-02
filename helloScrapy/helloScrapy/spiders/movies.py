@@ -27,6 +27,9 @@ class MoviesSpider(scrapy.Spider):
             *[f'https://www.jpysvip.net/vodtype/{i}-1.html' for i in range(1, 5)],
             *[f'https://hanmiys.com/vodtype/{i}-1.html' for i in range(1, 5)],
             *[f'https://www.zhenbuka.com/vodtype/{i}-1.html' for i in range(1, 5)],
+            *[f'https://www.mengmiandaxia.com/cate/{i}?sort=4' for i in range(1, 5)],
+            *[f'http://www.fenggoudy1.com/list-select-id-{i}-type--area--year--star--state--order-addtime.html'
+              for i in range(1, 5)],
             # 美剧
             # 'https://www.meijumi.net/usa/page/1',
             'https://www.meijutt.tv/1_______.html',
@@ -57,11 +60,6 @@ class MoviesSpider(scrapy.Spider):
             # 剧情、播放平台等
             'https://www.juqingba.cn/dianshiju/list_25_1.html',
             'http://www.yue365.com/tv/neidi/',
-
-            # 反爬
-            # *[f'http://www.fenggoudy1.com/list-select-id-{i}-type--area--year--star--state--order-addtime.html'
-            #   for i in range(1, 5)],
-            # *[f'https://www.mengmiandaxia.com/cate/{i}?sort=4' for i in range(1, 5)],
         ]
     else:
         start_urls = [
@@ -106,6 +104,18 @@ class MoviesSpider(scrapy.Spider):
         #     'namesXpath': "/text()"
         # },
         # 超清
+        'www.mengmiandaxia.com': {
+            'urlsXpath': "//ul/li//h4[@class='title text-overflow']/a/@href",
+            'namesXpath': "//ul/li//h4[@class='title text-overflow']/a/text()",
+            'imgXpath': "//img[@class='cover-image']/@src",
+            'descXpath': "//ul/li//span[@class='pic-text text-right']/text()",
+        },
+        'www.fenggoudy1.com': {
+            'urlsXpath': "//ul/li//span[@class='s_tit']/a/@href",
+            'namesXpath': "//ul/li//span[@class='s_tit']/a/text()",
+            'imgXpath': "//ul/li//div[@class='v_pic']/img/@src",
+            'descXpath': "//ul/li//div[@class='v_pic']/span//text()",
+        },
         'www.mdoutv.com': {
             'urlsXpath': "//h3/a/@href",
             'namesXpath': "//h3/a/text()",
@@ -195,14 +205,6 @@ class MoviesSpider(scrapy.Spider):
             # 'descXpath': "/text()",
         },
         # 其他
-        'www.fenggoudy1.com': {
-            'urlsXpath': "//h4/a[contains(@target, '_blank')]/@href",
-            'namesXpath': "//h4/a[contains(@target, '_blank')]/text()"
-        },
-        'www.mengmiandaxia.com': {
-            'urlsXpath': "//ul/li/div/span/a[contains(@target, '_blank')]/@href",
-            'namesXpath': "//ul/li/div/span/a[contains(@target, '_blank')]/text()"
-        },
         'www.bttwo.com': {
             'urlsXpath': "//h3[@class='dytit']/a/@href",
             'namesXpath': "//h3[@class='dytit']/a/text()"
@@ -267,11 +269,11 @@ class MoviesSpider(scrapy.Spider):
 
     custom_settings = {
         # 'LOG_LEVEL': "WARNING",
-        'CONCURRENT_REQUESTS': 100,
-        'CONCURRENT_REQUESTS_PER_DOMAIN': 100,
-        'CONCURRENT_REQUESTS_PER_IP': 100,
+        'CONCURRENT_REQUESTS': 5,
+        'CONCURRENT_REQUESTS_PER_DOMAIN': 1,
+        'CONCURRENT_REQUESTS_PER_IP': 2,
         'DOWNLOAD_DELAY': 1,
-        'DOWNLOAD_TIMEOUT': 5,
+        'DOWNLOAD_TIMEOUT': 10,
         'ITEM_PIPELINES': {pipeline: 300},
         'DEFAULT_REQUEST_HEADERS': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
@@ -283,7 +285,7 @@ class MoviesSpider(scrapy.Spider):
     def parse(self, response):
         domain = response.url.split('/', 3)[2]
         httpDomain = '/'.join(response.url.split('/', 3)[:3])
-        ic(response.url, domain, httpDomain)
+        # ic(response.url, domain, httpDomain)
         urls = response.xpath(self.xpath[domain]["urlsXpath"]).extract()
         names = response.xpath(self.xpath[domain]["namesXpath"]).extract()
         if not urls or len(urls) != len(names): return
@@ -298,10 +300,11 @@ class MoviesSpider(scrapy.Spider):
             t = response.xpath(self.xpath[domain]["descXpath"]).extract()
             if len(t) == len(urls):
                 descs = t
-
-        ic(urls[0], names[0], imgs[0], descs[0])
+        
+        descs = list(i.strip() for i in descs)
         complete(urls, httpDomain)
         complete(imgs, httpDomain)
+        ic(response.url, urls[0], names[0], imgs[0], descs[0])
         for i in range(len(urls)):
             item = MovieItem()
             item['url'] = urls[i]
@@ -309,7 +312,7 @@ class MoviesSpider(scrapy.Spider):
             if imgs[i]:
                 item['img'] = imgs[i]
             if descs[i]:
-                item['desc'] = descs[i].strip()
+                item['desc'] = descs[i]
             yield item
 
 
