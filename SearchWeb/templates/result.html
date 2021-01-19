@@ -296,15 +296,22 @@
     };
 
     //点击li标签后把输入框的信息填入到文本框
-    list.onclick = function (e) {
-        var e = e || window.event;
-        var target = e.target || e.srcElement;
-        if (target.nodeName == "LI") {
-            searchMsg.value = target.innerHTML;
-            $('#btn').click();
-        }
-        hide(list)
-    };
+    $("#suggestList").delegate('li','click', function (e) {
+          var target = e.target || e.srcElement;
+          searchMsg.value = target.innerHTML;
+          // console.log(target.innerHTML);
+          hide(list)
+          $('#btn').click();
+      });
+    // list.onclick = function (e) {
+    //     var e = e || window.event;
+    //     var target = e.target || e.srcElement;
+    //     if (target.nodeName == "LI") {
+    //         searchMsg.value = target.innerHTML;
+    //         $('#btn').click();
+    //     }
+    //     hide(list)
+    // };
 
     function fn(data) {
         var lihtml = "";
@@ -316,12 +323,12 @@
         show(list);
 
         // 获取到数据后，把脚本删除
-        // TODO：删除这样的脚本就好了
-        // <script src="https://s.video.qq.com/smartbox?callback=fn&amp;plat=2&amp;ver=0&amp;num=5&amp;otype=json&amp;query=t">
-        // var s = document.body.querySelectorAll('script');
-        // for (var i = 1, len = s.length; i < len; i++) {
-        //     document.body.removeChild(s[i]);
-        // }
+        var s = document.querySelectorAll('script');
+        for (var i = 1, len = s.length; i < len; i++) {
+            if(s[i].src.startsWith("https://s.video.qq.com")){
+                document.body.removeChild(s[i]);
+            }
+        }
     }
 
     function hide(obj) {
@@ -333,7 +340,7 @@
     }
 </script>
 
-{% load static %}
-<script src="{% static 'js/script.m.33322f.js' %}"></script>
+<!-- {% load static %}
+<script src="{% static 'js/script.m.33322f.js' %}"></script> -->
 </body>
 </html>
