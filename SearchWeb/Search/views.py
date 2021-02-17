@@ -3,7 +3,8 @@ import math
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
-# Create your views here.
+from ipware.ip import get_ip
+
 from utils import sonic_utils, douban, redis_utils
 
 
@@ -115,10 +116,13 @@ def search(request):
         movie_detail = douban.getMovieDetailByQuery(q)
         if movie_detail and "code" not in movie_detail:
             parseSuccess = True
+    
+    # 添加搜索记录
+    ip = get_ip(request)
     if parseSuccess:
-        redis_utils.search(movie_detail.get('title', q))
+        redis_utils.search(movie_detail.get('title', q), ip)
     else:
-        redis_utils.search(q)
+        redis_utils.search(q, ip)
 
     context = {
         'q': q,

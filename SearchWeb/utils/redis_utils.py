@@ -73,9 +73,15 @@ def get_hot_search_words():
     return res
 
 
-def search(w):
-    key = curTenDay()
-    r.zincrby(key, 1, w)
+def search(w, ip):
+    now = datetime.datetime.now()
+    year = now.year
+    month = now.month
+    day = now.day
+    if not r.sismember(f'movie-ip-search-{year}-{month}-{day}', f'{ip} {w}'):
+        r.sadd(f'movie-ip-search-{year}-{month}-{day}', f'{ip} {w}')
+        key = curTenDay()
+        r.zincrby(key, 1, w)
 
 
 def getMoviesByUrls(urls):
