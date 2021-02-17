@@ -78,7 +78,7 @@ def search(w, ip):
     year = now.year
     month = now.month
     day = now.day
-    if not r.sismember(f'movie-ip-search-{year}-{month}-{day}', f'{ip} {w}'):
+    if not ip or not r.sismember(f'movie-ip-search-{year}-{month}-{day}', f'{ip} {w}'):
         r.sadd(f'movie-ip-search-{year}-{month}-{day}', f'{ip} {w}')
         key = curTenDay()
         r.zincrby(key, 1, w)

@@ -3,7 +3,7 @@ import math
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
-from ipware.ip import get_ip
+from ipware import get_client_ip
 
 from utils import sonic_utils, douban, redis_utils
 
@@ -118,7 +118,7 @@ def search(request):
             parseSuccess = True
     
     # 添加搜索记录
-    ip = get_ip(request)
+    ip, is_routable = get_client_ip(request)
     if parseSuccess:
         redis_utils.search(movie_detail.get('title', q), ip)
     else:
