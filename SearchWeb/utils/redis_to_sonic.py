@@ -9,7 +9,7 @@ import redis_utils
 
 pretty_errors.activate()
 
-ingestcl = IngestClient("101.200.240.225", '1491', "SecretPassword")
+ingestcl = IngestClient("8.136.0.121", '1491', "SecretPassword")
 hash = redis_utils.r.hgetall('movies')
 
 

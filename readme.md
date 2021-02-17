@@ -6,7 +6,7 @@
 
 scrapy + [sonic🦔 ](https://github.com/valeriansaliou/sonic) + django 实现的简单的影视搜索系统
 
-演示地址：[101.200.240.225/search](http://101.200.240.225/search)  
+演示地址：[8.136.0.121/search](http://8.136.0.121/search)  
 
 sonic: 🦔 Fast, lightweight & schema-less search backend. An alternative to Elasticsearch that runs on a few MBs of RAM.(fuck es)
 

@@ -6,7 +6,7 @@ import pretty_errors
 
 pretty_errors.activate()
 
-querycl = SearchClient("101.200.240.225", 1491, "SecretPassword")
+querycl = SearchClient("8.136.0.121", 1491, "SecretPassword")
 
 
 def search(q, _from, doc_type):

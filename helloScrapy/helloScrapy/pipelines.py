@@ -13,7 +13,7 @@ class MoviesPipeline(object):
 
     def __init__(self):
         # self.file = open('movies.json', 'a', encoding='utf-8')
-        self.ingestcl = IngestClient("101.200.240.225", '1491', "SecretPassword")
+        self.ingestcl = IngestClient("8.136.0.121", '1491', "SecretPassword")
         self.r = redis.StrictRedis(host=host, port=port, password='redispassword')
 
     def process_item(self, item, spider):
