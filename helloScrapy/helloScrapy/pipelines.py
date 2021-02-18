@@ -4,9 +4,14 @@ import json
 
 import redis
 from sonic import IngestClient
+from environs import Env
 
 host = '127.0.0.1'
 port = 6379
+env = Env()
+env.read_env()
+
+InCrontab = env.bool("InCrontab", False)
 
 
 class MoviesPipeline(object):
@@ -20,12 +25,17 @@ class MoviesPipeline(object):
         # text = json.dumps(dict(item), ensure_ascii=False) + '\n'
         # self.file.write(text)
         url = item['url']
-        del item['url']
-        n = self.r.hset(name='movies', key=url, value=json.dumps(dict(item)))
+        # movieUpdate 中需要用到 url, 暂时不删除了
+        # del item['url']
+        itemjson = json.dumps(dict(item), ensure_ascii=False)
+        n = self.r.hset(name='movies', key=url, value=itemjson)
         if n > 0:
             self.ingestcl.push(collection="movies", bucket="default",
                                object=url, text=item['name'],
                                lang=None)
+            # 如果是定时爬取, 在资源更新后, 加入特定队列中
+            if InCrontab:
+                self.r.rpush('movieUpdate', itemjson)
         # 会将item打印到屏幕上，方便观察
         return item
 

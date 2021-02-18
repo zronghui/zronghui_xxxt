@@ -73,7 +73,7 @@ def getMovieDetail(movie_id):
         'directors': r['director'],
         'casts': r['actor']
     }
-    redis_utils.r.hset('movieDesc', movie_id, json.dumps(res))
+    redis_utils.r.hset('movieDesc', movie_id, json.dumps(res, ensure_ascii=False))
     return res
 
 

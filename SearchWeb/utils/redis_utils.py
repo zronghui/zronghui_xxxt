@@ -114,7 +114,6 @@ def subscribeKeywords(mail, keywords):
             t.append(w)
     keywords = t
     r.hset('movie_keywords_subscribe', mail, ' '.join(keywords))
-    
 
 
 if __name__ == '__main__':

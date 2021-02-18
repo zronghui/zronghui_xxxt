@@ -15,4 +15,5 @@ alive_progress
 tenacity
 funcy
 django-ipware
+click
 
