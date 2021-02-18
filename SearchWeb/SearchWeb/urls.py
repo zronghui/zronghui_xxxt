@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
     path('search', search),
+    path('keywordSubscription', keywordSubscription),
 ]
 
 handler404 = error_404

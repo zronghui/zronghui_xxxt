@@ -77,6 +77,27 @@
         <!--            {% if not hits %}-->
         <!--            未查询到数据-->
         <!--            {% endif %}-->
+        
+        <!-- nginx URL: '/search/keywordSubscription', -->
+        <!-- 没有使用 NGINX 的测试 URL: '/keywordSubscription', -->
+        <div class="rating-l">
+            <a
+              href="javascript:void(
+                window.open(
+                  '/search/keywordSubscription',
+                  'blank',
+                  'scrollbars=yes,
+                  toolbar=no,
+                  width=700,
+                  height=500'
+                )
+              )
+            ">
+              关键词订阅
+            </a>
+        </div>
+        
+        
         {% if parseSuccess %}
         <div class="movie border-shadow">
             <div class="title-wrapper">

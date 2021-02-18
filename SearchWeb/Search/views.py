@@ -2,6 +2,7 @@ import math
 
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
 from ipware import get_client_ip
 
@@ -163,6 +164,23 @@ def search(request):
     return render(request, 'result.html', context=context)
 
 
+@csrf_exempt
+def keywordSubscription(request):
+    if request.method == 'POST':
+        # 1. 打印 body, 判断是否合法
+        # 2. 修改 Redis
+        print(request.POST)
+        mail = request.POST.get('q3_input3')
+        keywords = request.POST.get('q4_input4')
+        print(mail, keywords)
+        if not mail or not keywords:
+            return HttpResponse('mail 或 keywords 为空')
+        redis_utils.subscribeKeywords(mail, keywords)
+        return HttpResponse('订阅成功')
+    elif request.method == 'GET':
+        return render(request, 'keywordSubscription.html')
+    
+    
 def error_404(request, exception):
     return render(request, 'error_404.html')
 

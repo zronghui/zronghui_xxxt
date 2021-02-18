@@ -100,6 +100,23 @@ def getMoviesByUrls(urls):
     return res
 
 
+def subscribeKeywords(mail, keywords):
+    keywords = keywords.split()[:50]
+    keywords.sort(key=lambda i: -len(i))
+    t = []
+    for w in keywords:
+        flag = False
+        for word in t:
+            if w in word:
+                flag = True
+                break
+        if not flag:
+            t.append(w)
+    keywords = t
+    r.hset('movie_keywords_subscribe', mail, ' '.join(keywords))
+    
+
+
 if __name__ == '__main__':
     getMoviesByUrls(['https://www.jpysvip.net/voddetail/63064.html'])
     res = r.hget('movies', 'https://hanmiys.com/voddetail/119280.html')
