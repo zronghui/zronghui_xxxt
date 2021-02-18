@@ -45,7 +45,7 @@ def takeUpdate():
             for mail, keywords in r.hgetall('movie_keywords_subscribe').items():
                 ic('3. 遍历所有的 keyword')
                 for keyword in keywords.split():
-                    ic('4. 如果更新资源中包括 keyword, 添加到邮件通知的队列中')
+                    # ic('4. 如果更新资源中包括 keyword, 添加到邮件通知的队列中')
                     if keyword in movie.get('name', ''):
                         # td = {'mail': mail, 'keyword': keyword}
                         # td.update(movie)
@@ -54,7 +54,7 @@ def takeUpdate():
                         url = movie.get('url')
                         name = movie.get('name')
                         desc = movie.get('desc')
-                        ic("5. 发送邮件提醒", url, name, desc, keyword)
+                        ic("4. 发送邮件提醒", url, name, desc, keyword)
                         sendQQMail.mail(MyName='xxxt', head=f'{keyword}更新了-xxxt',
                                         content=f'<a href="{url}" target="_blank">{name} - {desc}</a>',
                                         to=mail)
