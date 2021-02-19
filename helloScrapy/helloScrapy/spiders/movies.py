@@ -5,6 +5,7 @@ import scrapy
 from environs import Env
 from helloScrapy.items import MovieItem
 from icecream import ic
+import datetime
 
 env = Env()
 env.read_env()
@@ -27,7 +28,7 @@ class MoviesSpider(scrapy.Spider):
             *[f'https://www.jpysvip.net/vodtype/{i}-1.html' for i in range(1, 5)],
             *[f'https://hanmiys.com/vodtype/{i}-1.html' for i in range(1, 5)],
             *[f'https://www.zhenbuka.com/vodtype/{i}-1.html' for i in range(1, 5)],
-            *[f'https://www.mengmiandaxia.com/cate/{i}?sort=4' for i in range(1, 5)],
+            # *[f'https://www.mengmiandaxia.com/cate/{i}?sort=4' for i in range(1, 5)], # 网站去除了 web 端
             *[f'http://www.fenggoudy1.com/list-select-id-{i}-type--area--year--star--state--order-addtime.html'
               for i in range(1, 5)],
             # 美剧
@@ -125,8 +126,8 @@ class MoviesSpider(scrapy.Spider):
         'www.wanmeikk.me': {
             'urlsXpath': "//h4[@class='title text-overflow']/a/@href",
             'namesXpath': "//h4[@class='title text-overflow']/a/text()",
-            # 'imgXpath': "/@data-original",
-            # 'descXpath': "/text()",
+            'imgXpath': "//ul/li/div/a/@data-original",
+            'descXpath': "//ul/li/div/a/span[2]/text()",
         },
         # 下面这三个网站格式都一样
         'www.jpysvip.net': {
@@ -189,7 +190,7 @@ class MoviesSpider(scrapy.Spider):
             'urlsXpath': "//ul/li/p[1]//a/@href",
             'namesXpath': "//ul/li/p[1]//text()",
             'imgXpath': "//ul/li/p[1]/a/img/@src",
-            'descXpath': "//ul/li/p[4]/text()",
+            'descXpath': "//ul/li/p[4]//text()",
         },
         # 剧情、播放平台等
         'www.yue365.com': {
@@ -273,7 +274,7 @@ class MoviesSpider(scrapy.Spider):
         'CONCURRENT_REQUESTS_PER_DOMAIN': 1,
         'CONCURRENT_REQUESTS_PER_IP': 2,
         'DOWNLOAD_DELAY': 1,
-        'DOWNLOAD_TIMEOUT': 10,
+        'DOWNLOAD_TIMEOUT': 20,
         'ITEM_PIPELINES': {pipeline: 300},
         'DEFAULT_REQUEST_HEADERS': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
@@ -285,10 +286,12 @@ class MoviesSpider(scrapy.Spider):
     def parse(self, response):
         domain = response.url.split('/', 3)[2]
         httpDomain = '/'.join(response.url.split('/', 3)[:3])
-        # ic(response.url, domain, httpDomain)
+        ic(response.url)
         urls = response.xpath(self.xpath[domain]["urlsXpath"]).extract()
         names = response.xpath(self.xpath[domain]["namesXpath"]).extract()
-        if not urls or len(urls) != len(names): return
+        if not urls or len(urls) != len(names):
+            ic(urls, names)
+            return
 
         imgs = ['' for _ in range(len(urls))]
         descs = ['' for _ in range(len(urls))]
@@ -304,7 +307,7 @@ class MoviesSpider(scrapy.Spider):
         descs = list(i.strip() for i in descs)
         complete(urls, httpDomain)
         complete(imgs, httpDomain)
-        ic(response.url, urls[0], names[0], imgs[0], descs[0])
+        ic(urls[0], names[0], imgs[0], descs[0])
         for i in range(len(urls)):
             item = MovieItem()
             item['url'] = urls[i]

@@ -6,6 +6,7 @@ import pretty_errors
 import redis
 import click
 from icecream import ic
+import datetime
 
 import sendQQMail
 
@@ -32,6 +33,7 @@ def takeUpdate():
     print('takeUpdate')
     while True:
         try:
+            ic(datetime.datetime.now())
             ic('1. 从 movieUpdate blpop 取出更新的资源')
             # blpop 后形如 ('movieUpdate',
             #             '{name:"乌龙院之活宝传奇 第二季",url: '
