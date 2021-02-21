@@ -38,6 +38,8 @@ def search_sort(i):
         'www.yhdm.tv': 2,
         'www.duomimh.com': 2,
         'www.bimibimi.me': 2,
+        'www.zzzfun.com': 2,
+        'www.agefans.net': 2,
         # 高清
         'www.novipnoad.com': 1.3,
         'www.bubulai.com': 1.2,
@@ -84,6 +86,7 @@ domainSiteNameMap = {
     'www.novipnoad.com': "no vip no ad - 高清",
     'www.bimibimi.me': "哔咪哔咪 - 动漫",
     'www.dmdm2020.com': "哆咪动漫 - 动漫",
+    'www.agefans.net': "AGE动漫 - 动漫",
 }
 
 

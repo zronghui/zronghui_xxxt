@@ -11,13 +11,22 @@ env = Env()
 env.read_env()
 
 InCrontab = env.bool("InCrontab", False)
+InTest = env.bool("InTest", False)
 
 
 class MoviesSpider(scrapy.Spider):
     name = 'movies'
     allowed_domains = ['movies']
     pipeline = 'helloScrapy.pipelines.MoviesPipeline'
-    if InCrontab:
+    if InTest:
+        start_urls = [
+            'https://www.agefans.net/update?page=1',
+            # [ZzzFun 动漫视频网 - (￣﹃￣)~zZZ - 最新日本动漫 - 推荐日本动漫 - 第 65 页](http://www.zzzfun.com/vod_type_id_1_page_65.html)
+            # [ZzzFun 动漫视频网 - (￣﹃￣)~zZZ - 最新当季新番 - 推荐当季新番 - 第 7 页](http://www.zzzfun.com/vod_type_id_42_page_7.html)
+            # [ZzzFun动漫视频网 - (￣﹃￣)~zZZ-最新剧场版OVA-推荐剧场版OVA-第14页](http://www.zzzfun.com/vod_type_id_3_page_14.html)
+            *[f'http://www.zzzfun.com/vod-type-id-{i}-page-1.html' for i in (1, 3, 42)],
+        ]
+    elif InCrontab:
         start_urls = [
             # 超清
             # 'https://www.mdoutv.com/movie_bt/page/1',
@@ -36,13 +45,15 @@ class MoviesSpider(scrapy.Spider):
             'https://www.meijutt.tv/1_______.html',
 
             # 动漫
-            'http://agefans.org/catalog?page=1',
+            # 'http://agefans.org/catalog?page=1',
+            'https://www.agefans.net/update?page=1',
             *[f'http://www.bimibimi.me/type/{i}/' for i in ['juchang', 'fanzu', 'guoman', 'riman']],
             *[f'http://www.dmdm2020.com/dongmantype/{i}.html' for i in [20, 21]],
             *[f'http://www.yhdm.tv/{i}' for i in ('japan', 'china', 'american', 'movie')],
             'http://www.yxdm.me/resource/15-1.html',
+            *[f'http://www.zzzfun.com/vod-type-id-{i}-page-1.html' for i in (1, 3, 42)],
             # *[f'http://www.qimiqimi.co/type/{i}/page/1.html' for i in ('xinfan', 'riman', 'guoman', 'guoman', 'jcdm')],
-            # *[f'http://www.zzzfun.com/vod-type-id-{i}-page-1.html' for i in (1, 3)],
+            
 
             # 低质量
             # 'https://www.bttwo.com/new-movie/page/1',
@@ -63,7 +74,7 @@ class MoviesSpider(scrapy.Spider):
             'http://www.yue365.com/tv/neidi/',
         ]
     else:
-        start_urls = [
+        start_urls_v1 = [
             # 超清
             # *[f'https://www.mdoutv.com/movie_bt/page/{i}' for i in range(1, 188)],
             *[f'https://www.wanmeikk.me/category/{_type}-{pageNo}.html'
@@ -96,6 +107,17 @@ class MoviesSpider(scrapy.Spider):
             # 剧情
             *[f'https://www.juqingba.cn/dianshiju/list_25_{i}.html' for i in range(1, 100)],  # omg 总共 1739页
             *[f'http://www.yue365.com/tv/neidi/index_{i}.shtml' for i in range(1, 100)],
+        ]
+        start_urls = [
+            # 2021 02 19
+            # 动漫
+            *[f'https://www.agefans.net/update?page={i}' for i in range(1, 121)],
+            # [ZzzFun 动漫视频网 - (￣﹃￣)~zZZ - 最新日本动漫 - 推荐日本动漫 - 第 65 页](http://www.zzzfun.com/vod_type_id_1_page_65.html)
+            # [ZzzFun 动漫视频网 - (￣﹃￣)~zZZ - 最新当季新番 - 推荐当季新番 - 第 7 页](http://www.zzzfun.com/vod_type_id_42_page_7.html)
+            # [ZzzFun动漫视频网 - (￣﹃￣)~zZZ-最新剧场版OVA-推荐剧场版OVA-第14页](http://www.zzzfun.com/vod_type_id_3_page_14.html)
+            *[f'http://www.zzzfun.com/vod_type_id_{_type}_page_{i}.html'
+              for _type, n in [(1, 65), (3, 14), (42, 7)]
+              for i in range(n + 1)],
         ]
     ic(start_urls)
 
@@ -192,6 +214,19 @@ class MoviesSpider(scrapy.Spider):
             'imgXpath': "//ul/li/p[1]/a/img/@src",
             'descXpath': "//ul/li/p[4]//text()",
         },
+        # 2021 02 19
+        'www.agefans.net': {
+            'urlsXpath': '//ul/li/h4/a/@href',
+            'namesXpath': "//ul/li/h4/a/text()",
+            'imgXpath': "//ul/li/a/img/@src",
+            'descXpath': "//ul/li/a/span/text()",
+        },
+        'www.zzzfun.com': {
+            'urlsXpath': "//ul[@class='search-result']/a/@href",
+            'namesXpath': "//ul/a//div[@class='title-big']/text()",
+            'imgXpath': "//ul/a/div[@class='d-cover-big']/img/@src",
+            'descXpath': "//ul/a/div[@class='d-text-big']/div[@class='title-sub']/span[1]",
+        },
         # 剧情、播放平台等
         'www.yue365.com': {
             'urlsXpath': "//ul/li/div[@class='mv_name']/a/@href",
@@ -233,10 +268,6 @@ class MoviesSpider(scrapy.Spider):
                          "fed-text-sm-left fed-visible fed-part-eone']/@href",
             'namesXpath': "//a[@class='fed-list-title fed-font-xiv fed-text-center "
                           "fed-text-sm-left fed-visible fed-part-eone']/text()"
-        },
-        'www.zzzfun.com': {
-            'urlsXpath': "//ul[@class='search-result']/a/@href",
-            'namesXpath': "//ul/a//div[@class='title-big']/text()"
         },
         'www.qimiqimi.co': {
             'urlsXpath': "//ul[@class='img-list']/li/a/@href",
