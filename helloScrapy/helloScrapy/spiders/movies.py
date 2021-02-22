@@ -54,9 +54,9 @@ class MoviesSpider(scrapy.Spider):
             *[f'http://www.zzzfun.com/vod-type-id-{i}-page-1.html' for i in (1, 3, 42)],
             *[f'https://www.qiqidongman.com/vod-search-order-vod_addtime-area-{i}-p-1.html' for i in ('%E6%97%A5%E6%9C%AC', '%E5%9B%BD%E4%BA%A7')],
             # *[f'http://www.qimiqimi.co/type/{i}/page/1.html' for i in ('xinfan', 'riman', 'guoman', 'guoman', 'jcdm')],
-            'https://www.xskdm.com/vodshow/1--------3---.html', 
-            'https://www.xskdm.com/vodtype/2-2.html', 
-            'https://www.xskdm.com/vodtype/3-7.html',
+            'https://www.xskdm.com/vodshow/1--------1---.html', 
+            'https://www.xskdm.com/vodtype/2-1.html', 
+            'https://www.xskdm.com/vodtype/3-1.html',
             
 
             # 低质量
