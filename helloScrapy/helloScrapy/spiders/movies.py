@@ -20,14 +20,13 @@ class MoviesSpider(scrapy.Spider):
     pipeline = 'helloScrapy.pipelines.MoviesPipeline'
     if InTest:
         start_urls = [
-            *[f'https://www.ak1080.com/vodtype/{i}-1.html' for i in (1, 2, 3, 4)],
-            *[f'https://www.qiqidongman.com/vod-search-order-vod_addtime-area-{i}-p-1.html' for i in ('%E6%97%A5%E6%9C%AC', '%E5%9B%BD%E4%BA%A7')],
-            'https://www.xskdm.com/vodshow/1--------3---.html', 
-            'https://www.xskdm.com/vodtype/2-2.html', 
-            'https://www.xskdm.com/vodtype/3-7.html', 
+            # *[f'https://www.ak1080.com/vodtype/{i}-1.html' for i in (1, 2, 3, 4)],
+            *[f'https://4kya.com/index.php/vod/show/by/time/id/{i}/page/1.html' for i in (1, 2, 3, 4)],
         ]
     elif InCrontab:
         start_urls = [
+            # 4k
+            *[f'https://4kya.com/index.php/vod/show/by/time/id/{i}/page/1.html' for i in (1, 2, 3, 4)],
             # 超清
             # 'https://www.mdoutv.com/movie_bt/page/1',
             # 按照分类来，这样每一页要不全都有更新情况，要不全部没有，不会出现 len(desc)!=len(urls) 的情况
@@ -55,6 +54,9 @@ class MoviesSpider(scrapy.Spider):
             *[f'http://www.zzzfun.com/vod-type-id-{i}-page-1.html' for i in (1, 3, 42)],
             *[f'https://www.qiqidongman.com/vod-search-order-vod_addtime-area-{i}-p-1.html' for i in ('%E6%97%A5%E6%9C%AC', '%E5%9B%BD%E4%BA%A7')],
             # *[f'http://www.qimiqimi.co/type/{i}/page/1.html' for i in ('xinfan', 'riman', 'guoman', 'guoman', 'jcdm')],
+            'https://www.xskdm.com/vodshow/1--------3---.html', 
+            'https://www.xskdm.com/vodtype/2-2.html', 
+            'https://www.xskdm.com/vodtype/3-7.html',
             
 
             # 低质量
@@ -121,7 +123,7 @@ class MoviesSpider(scrapy.Spider):
               for _type, n in [(1, 65), (3, 14), (42, 7)]
               for i in range(n + 1)],
         ]
-        start_urls = [
+        start_urls_v3 = [
             # 2021 02 22
             # 超清
             # [1080 影视 - 超清电影 - 1080 影视 - 电影电视剧免费看](https://www.ak1080.com/vodtype/1-877.html)
@@ -144,6 +146,17 @@ class MoviesSpider(scrapy.Spider):
               for i in range(n + 1)],
             *[f'https://www.xskdm.com/vodtype/1--------{i}---.html' for i in range(1, 3+1)],
           ]
+        start_urls = [
+            # 2021 02 22
+            # 4k
+            # [最新电影 - 推荐电影 - 4K 鸭奈飞资源站 - 一个专做奈飞蓝光影视的资源站](https://4kya.com/index.php/vod/show/by/time/id/1/page/22.html)
+            # [最新连续剧 - 推荐连续剧 - 4K 鸭奈飞资源站 - 一个专做奈飞蓝光影视的资源站](https://4kya.com/index.php/vod/show/by/time/id/2/page/13.html)
+            # [最新综艺 - 推荐综艺 - 4K 鸭奈飞资源站 - 一个专做奈飞蓝光影视的资源站](https://4kya.com/index.php/vod/show/by/time/id/3.html)
+            # [最新动漫 - 推荐动漫 - 4K 鸭奈飞资源站 - 一个专做奈飞蓝光影视的资源站](https://4kya.com/index.php/vod/show/by/time/id/4.html)
+            *[f'https://4kya.com/index.php/vod/show/by/time/id/{_type}/page/{i}.html'
+            for _type, n in [(1, 22), (2, 13), (3, 1), (4, 1)]
+            for i in range(n + 1)],
+        ]
     ic(start_urls)
 
     xpath = {
@@ -151,6 +164,13 @@ class MoviesSpider(scrapy.Spider):
         #     'urlsXpath': "/@href",
         #     'namesXpath': "/text()"
         # },
+        # 4k
+        '4kya.com': {
+            'urlsXpath': "//ul/li//h4[@class='title text-overflow']/a/@href",
+            'namesXpath': "//ul/li//h4[@class='title text-overflow']/a/text()",
+            'imgXpath': "//ul/li/div/a/@data-original",
+            'descXpath': "//ul/li//span[@class='pic-text text-right']/text()",
+        },
         # 超清
         'www.mengmiandaxia.com': {
             'urlsXpath': "//ul/li//h4[@class='title text-overflow']/a/@href",

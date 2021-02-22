@@ -16,6 +16,8 @@ def index(request):
 def search_sort(i):
     # 值越大，越靠前
     m = {
+        # 4k
+        '4kya.com': 11,
         # 剧情
         'www.yue365.com': 10.1,
         'www.juqingba.cn': 10,
@@ -59,6 +61,7 @@ def search_sort(i):
 
 
 domainSiteNameMap = {
+    '4kya.com': '4k鸭'
     'www.jpysvip.net': '极品影视 - 超清|快速',
     'hanmiys.com': '孤单影院 - 超清|快速',
     'www.mdoutv.com': '麦豆TV - 超清|快速',
