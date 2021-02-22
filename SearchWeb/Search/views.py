@@ -61,7 +61,7 @@ def search_sort(i):
 
 
 domainSiteNameMap = {
-    '4kya.com': '4k鸭'
+    '4kya.com': '4k鸭',
     'www.jpysvip.net': '极品影视 - 超清|快速',
     'hanmiys.com': '孤单影院 - 超清|快速',
     'www.mdoutv.com': '麦豆TV - 超清|快速',
