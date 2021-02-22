@@ -20,13 +20,14 @@ def search_sort(i):
         'www.yue365.com': 10.1,
         'www.juqingba.cn': 10,
         # 超清快速
-        'www.wanmeikk.me': 8.9,
         'www.mengmiandaxia.com': 9,
         'www.fenggoudy1.com': 9,
         'www.mdoutv.com': 9,
         'www.jpysvip.net': 9,
         'hanmiys.com': 9,
+        'www.ak1080.com': 9,
         'zhenbuka': 8.9,
+        'www.wanmeikk.me': 8.9,
         # 美剧
         'www.meijumi.net': 5,
         'www.meijutt.tv': 5,
@@ -37,9 +38,11 @@ def search_sort(i):
         'www.qimiqimi.co': 2,
         'www.yhdm.tv': 2,
         'www.duomimh.com': 2,
-        'www.bimibimi.me': 2,
+        'www.bimiacg.com': 2,
         'www.zzzfun.com': 2,
         'www.agefans.net': 2,
+        'www.qiqidongman.com': 2,
+        'www.xskdm.com': 2,
         # 高清
         'www.novipnoad.com': 1.3,
         'www.bubulai.com': 1.2,
@@ -62,6 +65,7 @@ domainSiteNameMap = {
     'www.wanmeikk.me': "完美看看 - 超清|快速|经常闭站",
     'www.mengmiandaxia.com': "蒙面大侠 - 超清|快速",
     'www.fenggoudy1.com': "疯狗电影 - 超清|快速",
+    'www.ak1080.com': "1080 影视 - 超清|快速",
     'www.bttwo.com': "两个BT",
     'ddrk.me': "低端影视",
     'dvdhd.me': "碟影世界",
@@ -84,9 +88,11 @@ domainSiteNameMap = {
     'www.66zhibo.net': "66直播网 - 直播",
     'www.bubulai.com': "部部来 - 高清",
     'www.novipnoad.com': "no vip no ad - 高清",
-    'www.bimibimi.me': "哔咪哔咪 - 动漫",
+    'www.bimiacg.com': "哔咪哔咪 - 动漫",
     'www.dmdm2020.com': "哆咪动漫 - 动漫",
     'www.agefans.net': "AGE动漫 - 动漫",
+    'www.qiqidongman.com': "奇奇动漫 - 动漫",
+    'www.xskdm.com': "新时空动漫 - 动漫",
 }
 
 
