@@ -6,6 +6,7 @@ from environs import Env
 from helloScrapy.items import MovieItem
 from icecream import ic
 import datetime
+import random
 
 env = Env()
 env.read_env()
@@ -68,7 +69,7 @@ class MoviesSpider(scrapy.Spider):
             # 部分网站爬取失败
             # hanmiys 访问可能有重定向
             *[f'https://hanmiys.com/vodtype/{_type}-{i}.html'
-              for _type, n in [(1, 76), (2, 33), (3, 77), (4, 18)]
+              for _type, n in [(3, 77), (4, 18)]
               for i in range(n + 1)],
             *[f'http://www.yhdm.io/{_type}/{i}.html'
               for _type, n in [('japan', 50), ('china', 22), ('american', 7), ('movie', 12)]
@@ -81,6 +82,7 @@ class MoviesSpider(scrapy.Spider):
               for _type, n in [(1, 97), (2, 45), (3, 38), (4, 61)]
               for i in range(n + 1)],
         ]
+    random.shuffle(start_urls)
     ic(start_urls)
 
     xpath = {
