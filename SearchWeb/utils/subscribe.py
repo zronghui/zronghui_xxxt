@@ -7,6 +7,7 @@ import redis
 import click
 from icecream import ic
 import datetime
+import time
 
 import sendQQMail
 
@@ -33,8 +34,9 @@ def takeUpdate():
     print('takeUpdate')
     while True:
         try:
-            ic(datetime.datetime.now())
-            ic('1. 从 movieUpdate blpop 取出更新的资源')
+            now = datetime.datetime.now().isoformat()
+            ic(now)
+            # ic('1. 从 movieUpdate blpop 取出更新的资源')
             # blpop 后形如 ('movieUpdate',
             #             '{name:"乌龙院之活宝传奇 第二季",url: '
             #             '"https://hanmiys.com/voddetail/126877.html",desc:"52集全"}')
@@ -43,9 +45,9 @@ def takeUpdate():
             movie = r.blpop('movieUpdate')[1]
             movie = json.loads(movie)
             ic(movie)
-            ic('2. 遍历所有 movie_keywords_subscribe 中的 mail -> keywords')
+            # ic('2. 遍历所有 movie_keywords_subscribe 中的 mail -> keywords')
             for mail, keywords in r.hgetall('movie_keywords_subscribe').items():
-                ic('3. 遍历所有的 keyword')
+                # ic('3. 遍历所有的 keyword')
                 for keyword in keywords.split():
                     # ic('4. 如果更新资源中包括 keyword, 添加到邮件通知的队列中')
                     if keyword in movie.get('name', ''):
@@ -56,10 +58,11 @@ def takeUpdate():
                         url = movie.get('url')
                         name = movie.get('name')
                         desc = movie.get('desc')
-                        ic("4. 发送邮件提醒", url, name, desc, keyword)
+                        ic("4. 发送邮件提醒", mail, url, name, desc, keyword)
                         sendQQMail.mail(MyName='xxxt', head=f'{keyword}更新了-xxxt',
                                         content=f'<a href="{url}" target="_blank">{name} - {desc}</a>',
                                         to=mail)
+                        time.sleep(10)
         except Exception as e:
             print(e)
 
