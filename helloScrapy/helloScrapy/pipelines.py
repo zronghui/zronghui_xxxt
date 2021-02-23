@@ -28,13 +28,12 @@ class MoviesPipeline(object):
         # movieUpdate 中需要用到 url, 暂时不删除了
         # del item['url']
         itemjson = json.dumps(dict(item), ensure_ascii=False)
-        # 清除 sonic, 重新爬取数据
-        # n = self.r.hset(name='movies', key=url, value=itemjson)
-        # if n > 0:
-        if True:
-            self.ingestcl.push(collection="movies", bucket="default",
-                               object=url, text=item['name'],
-                               lang=None)
+        n = self.r.hset(name='movies', key=url, value=itemjson)
+        # 放在外面, 确保 sonic 中有最新的数据
+        self.ingestcl.push(collection="movies", bucket="default",
+                           object=url, text=item['name'],
+                           lang=None)
+        if n > 0:
             # 如果是定时爬取, 在资源更新后, 加入特定队列中
             if InCrontab:
                 self.r.rpush('movieUpdate', itemjson)
