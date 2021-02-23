@@ -104,7 +104,7 @@ RETRY_ENABLED = False
 # 减小下载超时,有些网站就是慢
 # DOWNLOAD_TIMEOUT = 15
 # 禁止重定向
-REDIRECT_ENABLED = False
+REDIRECT_ENABLED = True
 
 # 增加并发
 DOWNLOAD_DELAY = 0

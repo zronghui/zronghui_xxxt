@@ -20,8 +20,8 @@ class MoviesSpider(scrapy.Spider):
     pipeline = 'helloScrapy.pipelines.MoviesPipeline'
     if InTest:
         start_urls = [
-            # *[f'https://www.ak1080.com/vodtype/{i}-1.html' for i in (1, 2, 3, 4)],
-            *[f'https://4kya.com/index.php/vod/show/by/time/id/{i}/page/1.html' for i in (1, 2, 3, 4)],
+            *[f'https://hanmiys.com/vodtype/{i}-1.html' for i in range(1, 5)],
+            *[f'http://www.yhdm.io/{i}' for i in ('japan', 'china', 'american', 'movie')],
         ]
     elif InCrontab:
         start_urls = [
@@ -49,7 +49,7 @@ class MoviesSpider(scrapy.Spider):
             'https://www.agefans.net/update?page=1',
             *[f'http://www.bimiacg.com/type/{i}/' for i in ['juchang', 'fanzu', 'guoman', 'riman']],
             *[f'http://www.dmdm2020.com/dongmantype/{i}.html' for i in [20, 21]],
-            *[f'http://www.yhdm.tv/{i}' for i in ('japan', 'china', 'american', 'movie')],
+            *[f'http://www.yhdm.io/{i}' for i in ('japan', 'china', 'american', 'movie')],
             'http://www.yxdm.me/resource/15-1.html',
             *[f'http://www.zzzfun.com/vod-type-id-{i}-page-1.html' for i in (1, 3, 42)],
             *[f'https://www.qiqidongman.com/vod-search-order-vod_addtime-area-{i}-p-1.html' for i in ('%E6%97%A5%E6%9C%AC', '%E5%9B%BD%E4%BA%A7')],
@@ -57,175 +57,29 @@ class MoviesSpider(scrapy.Spider):
             'https://www.xskdm.com/vodshow/1--------1---.html', 
             'https://www.xskdm.com/vodtype/2-1.html', 
             'https://www.xskdm.com/vodtype/3-1.html',
-            
-
-            # 低质量
-            # 'https://www.bttwo.com/new-movie/page/1',
-            # 'https://ddrk.me/page/1',
-            # *[f'https://www.itsck.com/type/{i}.html' for i in ['dianying', 'lianxuju', 'zongyi', 'dongman']],
-            # *[f'https://www.zhenbuka.com/vodtype/{i}' for i in range(1, 5)],
-            # *[f'https://www.tcmove.com/list/{i}.html' for i in ["dianying", 'lianxuju', 'zongyi', 'dongman']],
-            # *[f'https://kkmovie.cf/index.php/vod/type/id/{i}/page/1.html' for i in range(1, 5)],
-            # 'https://miao101.com/page/1',
-            # *[f'https://www.kpkuang.com/vodshow/{i}-------------.html' for i in range(1, 5)],
-            # *[f'http://www.bubulai.com/zv/{i}.html' for i in [10, 11]],
-            # *[f'https://www.novipnoad.com/tv/{i}/' for i in
-            #   ['hongkong', 'taiwan', 'western', 'japan', 'korea',
-            #    'other', 'anime', 'shows', 'life', 'movie']],
 
             # 剧情、播放平台等
             'https://www.juqingba.cn/dianshiju/list_25_1.html',
             'http://www.yue365.com/tv/neidi/',
         ]
     else:
-        start_urls_v1 = [
-            # 超清
-            # *[f'https://www.mdoutv.com/movie_bt/page/{i}' for i in range(1, 188)],
-            *[f'https://www.wanmeikk.me/category/{_type}-{pageNo}.html'
-              for _type, n in [(1, 30), (2, 10), (3, 3), (4, 3), (5, 12), (6, 8), (7, 1), (8, 1), (9, 1), (10, 1)]
-              for pageNo in range(n + 1)],
-            *[f'https://www.jpysvip.net/vodtype/{_type}-{i}.html'
-              for _type, n in [(1, 676), (2, 217), (3, 30), (4, 102)]
-              for i in range(n + 1)],
-            *[f'https://hanmiys.com/vodtype/{_type}-{i}.html'
-              for _type, n in [(1, 764), (2, 333), (3, 77), (4, 183)]
-              for i in range(n + 1)],
-            *[f'https://www.zhenbuka.com/vodtype/{_type}-{i}.html'
-              for _type, n in [(1, 774), (2, 363), (3, 46), (4, 100)]
-              for i in range(n + 1)],
-            # 动漫
-            *[f'http://agefans.org/catalog?page={i}' for i in range(1, 208)],
-            *[f'http://www.bimiacg.com/type/{_type}-{i}/'
-              for _type, n in [('juchang', 15), ('fanzu', 65), ('guoman', 6), ('riman', 6)]
-              for i in range(n + 1)],
-            *[f'http://www.dmdm2020.com/dongmantype/{_type}/page/{i}.html'
-              for _type, n in [(20, 31), (21, 3)]
-              for i in range(n + 1)],
-            *[f'http://www.yhdm.io/{_type}/{i}.html'
-              for _type, n in [('japan', 108), ('china', 22), ('american', 7), ('movie', 12)]
-              for i in range(n + 1)],
-            *[f'http://www.yxdm.me/resource/15-{i}.html' for i in range(1, 134)],
-            # 美剧
-            # *[f'https://www.meijumi.net/usa/page/{i}' for i in range(1, 259)],
-            # *[f'https://www.meijutt.tv/{i}_______.html' for i in range(1, 360)],
-            # 剧情
-            *[f'https://www.juqingba.cn/dianshiju/list_25_{i}.html' for i in range(1, 100)],  # omg 总共 1739页
-            *[f'http://www.yue365.com/tv/neidi/index_{i}.shtml' for i in range(1, 100)],
-        ]
-        start_urls_v2 = [
-            # 2021 02 19
-            # 动漫
-            *[f'https://www.agefans.net/update?page={i}' for i in range(1, 121)],
-            # [ZzzFun 动漫视频网 - (￣﹃￣)~zZZ - 最新日本动漫 - 推荐日本动漫 - 第 65 页](http://www.zzzfun.com/vod_type_id_1_page_65.html)
-            # [ZzzFun 动漫视频网 - (￣﹃￣)~zZZ - 最新当季新番 - 推荐当季新番 - 第 7 页](http://www.zzzfun.com/vod_type_id_42_page_7.html)
-            # [ZzzFun动漫视频网 - (￣﹃￣)~zZZ-最新剧场版OVA-推荐剧场版OVA-第14页](http://www.zzzfun.com/vod_type_id_3_page_14.html)
-            *[f'http://www.zzzfun.com/vod_type_id_{_type}_page_{i}.html'
-              for _type, n in [(1, 65), (3, 14), (42, 7)]
-              for i in range(n + 1)],
-        ]
-        start_urls_v3 = [
-            # 2021 02 22
-            # 超清
-            # [1080 影视 - 超清电影 - 1080 影视 - 电影电视剧免费看](https://www.ak1080.com/vodtype/1-877.html)
-            # [1080 影视 - 超清电影 - 1080 影视 - 电影电视剧免费看](https://www.ak1080.com/vodtype/2-412.html)
-            # [1080 影视 - 超清电影 - 1080 影视 - 电影电视剧免费看](https://www.ak1080.com/vodtype/3-36.html)
-            # [1080 影视 - 超清电影 - 1080 影视 - 电影电视剧免费看](https://www.ak1080.com/vodtype/4-109.html)
-            *[f'https://www.ak1080.com/vodtype/{_type}-{i}.html'
-              for _type, n in [(1, 877), (2, 412), (3, 36), (42, 109)]
-              for i in range(n + 1)],
-            # [【日本动漫】- 奇奇动漫 第 532 页](https://www.qiqidongman.com/vod-search-order-vod_addtime-area-%E6%97%A5%E6%9C%AC-p-532.html)
-            # [【国产动漫】- 奇奇动漫 第 149 页](https://www.qiqidongman.com/vod-search-order-vod_addtime-area-%E5%9B%BD%E4%BA%A7-p-149.html)
-            *[f'https://www.qiqidongman.com/vod-search-order-vod_addtime-area-{_type}-p-{i}.html'
-                for _type, n in [('%E6%97%A5%E6%9C%AC', 532), ('%E5%9B%BD%E4%BA%A7', 149)]
-                for i in range(n + 1)],
-            # [最新连载 - 推荐连载 - 新时空动漫](https://www.xskdm.com/vodshow/1--------3---.html)
-            # [最新动漫电影 - 新时空动漫](https://www.xskdm.com/vodtype/2-2.html)
-            # [完结动漫 - 新时空动漫](https://www.xskdm.com/vodtype/3-7.html)
-            *[f'https://www.xskdm.com/vodtype/{_type}-{i}.html'
-              for _type, n in [(2, 2), (3, 7)]
-              for i in range(n + 1)],
-            *[f'https://www.xskdm.com/vodtype/1--------{i}---.html' for i in range(1, 3+1)],
-          ]
-        start_urls_v4 = [
-            # 2021 02 22
-            # 4k
-            # [最新电影 - 推荐电影 - 4K 鸭奈飞资源站 - 一个专做奈飞蓝光影视的资源站](https://4kya.com/index.php/vod/show/by/time/id/1/page/22.html)
-            # [最新连续剧 - 推荐连续剧 - 4K 鸭奈飞资源站 - 一个专做奈飞蓝光影视的资源站](https://4kya.com/index.php/vod/show/by/time/id/2/page/13.html)
-            # [最新综艺 - 推荐综艺 - 4K 鸭奈飞资源站 - 一个专做奈飞蓝光影视的资源站](https://4kya.com/index.php/vod/show/by/time/id/3.html)
-            # [最新动漫 - 推荐动漫 - 4K 鸭奈飞资源站 - 一个专做奈飞蓝光影视的资源站](https://4kya.com/index.php/vod/show/by/time/id/4.html)
-            *[f'https://4kya.com/index.php/vod/show/by/time/id/{_type}/page/{i}.html'
-            for _type, n in [(1, 22), (2, 13), (3, 1), (4, 1)]
-            for i in range(n + 1)],
-        ]
         start_urls = [
             # 2021 02 23
-            # sonic 数据过多检索异常, 重新爬取
-            # 某网站如果页数过多, 所有分类的页数都/10
-            # 超清
-            # *[f'https://www.mdoutv.com/movie_bt/page/{i}' for i in range(1, 188)],
-            *[f'https://www.wanmeikk.me/category/{_type}-{pageNo}.html'
-              for _type, n in [(1, 30), (2, 10), (3, 3), (4, 3), (5, 12), (6, 8), (7, 1), (8, 1), (9, 1), (10, 1)]
-              for pageNo in range(n + 1)],
-            *[f'https://www.jpysvip.net/vodtype/{_type}-{i}.html'
-              for _type, n in [(1, 67), (2, 21), (3, 30), (4, 10)]
-              for i in range(n + 1)],
+            # 部分网站爬取失败
+            # hanmiys 访问可能有重定向
             *[f'https://hanmiys.com/vodtype/{_type}-{i}.html'
               for _type, n in [(1, 76), (2, 33), (3, 77), (4, 18)]
-              for i in range(n + 1)],
-            *[f'https://www.zhenbuka.com/vodtype/{_type}-{i}.html'
-              for _type, n in [(1, 77), (2, 36), (3, 20), (4, 10)]
-              for i in range(n + 1)],
-            # 动漫
-            *[f'http://agefans.org/catalog?page={i}' for i in range(1, 208)],
-            *[f'http://www.bimiacg.com/type/{_type}-{i}/'
-              for _type, n in [('juchang', 15), ('fanzu', 65), ('guoman', 6), ('riman', 6)]
-              for i in range(n + 1)],
-            *[f'http://www.dmdm2020.com/dongmantype/{_type}/page/{i}.html'
-              for _type, n in [(20, 31), (21, 3)]
               for i in range(n + 1)],
             *[f'http://www.yhdm.io/{_type}/{i}.html'
               for _type, n in [('japan', 50), ('china', 22), ('american', 7), ('movie', 12)]
               for i in range(n + 1)],
-            *[f'http://www.yxdm.me/resource/15-{i}.html' for i in range(1, 60)],
-            # 2021 02 19
-            # 动漫
-            *[f'https://www.agefans.net/update?page={i}' for i in range(1, 60)],
-            # [ZzzFun 动漫视频网 - (￣﹃￣)~zZZ - 最新日本动漫 - 推荐日本动漫 - 第 65 页](http://www.zzzfun.com/vod_type_id_1_page_65.html)
-            # [ZzzFun 动漫视频网 - (￣﹃￣)~zZZ - 最新当季新番 - 推荐当季新番 - 第 7 页](http://www.zzzfun.com/vod_type_id_42_page_7.html)
-            # [ZzzFun动漫视频网 - (￣﹃￣)~zZZ-最新剧场版OVA-推荐剧场版OVA-第14页](http://www.zzzfun.com/vod_type_id_3_page_14.html)
-            *[f'http://www.zzzfun.com/vod_type_id_{_type}_page_{i}.html'
-              for _type, n in [(1, 65), (3, 14), (42, 7)]
+            # [电影大全 - 疯狗电影](http://www.fenggoudy1.com/list-select-id-1-type--area--year--star--state--order-addtime-p-973.html)
+            # [电视剧大全 - 疯狗电影](http://www.fenggoudy1.com/list-select-id-2-type--area--year--star--state--order-addtime-p-459.html)
+            # [动漫大全 - 疯狗电影](http://www.fenggoudy1.com/list-select-id-3-type--area--year--star--state--order-addtime-p-382.html)
+            # [综艺大全 - 疯狗电影](http://www.fenggoudy1.com/list-select-id-4-type--area--year--star--state--order-addtime-p-612.html)
+            *[f'http://www.fenggoudy1.com/list-select-id-{_type}-type--area--year--star--state--order-addtime-p-{i}.html'
+              for _type, n in [(1, 97), (2, 45), (3, 38), (4, 61)]
               for i in range(n + 1)],
-            # 2021 02 22
-            # 超清
-            # [1080 影视 - 超清电影 - 1080 影视 - 电影电视剧免费看](https://www.ak1080.com/vodtype/1-877.html)
-            # [1080 影视 - 超清电影 - 1080 影视 - 电影电视剧免费看](https://www.ak1080.com/vodtype/2-412.html)
-            # [1080 影视 - 超清电影 - 1080 影视 - 电影电视剧免费看](https://www.ak1080.com/vodtype/3-36.html)
-            # [1080 影视 - 超清电影 - 1080 影视 - 电影电视剧免费看](https://www.ak1080.com/vodtype/4-109.html)
-            *[f'https://www.ak1080.com/vodtype/{_type}-{i}.html'
-              for _type, n in [(1, 87), (2, 41), (3, 3), (42, 10)]
-              for i in range(n + 1)],
-            # [【日本动漫】- 奇奇动漫 第 532 页](https://www.qiqidongman.com/vod-search-order-vod_addtime-area-%E6%97%A5%E6%9C%AC-p-532.html)
-            # [【国产动漫】- 奇奇动漫 第 149 页](https://www.qiqidongman.com/vod-search-order-vod_addtime-area-%E5%9B%BD%E4%BA%A7-p-149.html)
-            *[f'https://www.qiqidongman.com/vod-search-order-vod_addtime-area-{_type}-p-{i}.html'
-                for _type, n in [('%E6%97%A5%E6%9C%AC', 53), ('%E5%9B%BD%E4%BA%A7', 14)]
-                for i in range(n + 1)],
-            # [最新连载 - 推荐连载 - 新时空动漫](https://www.xskdm.com/vodshow/1--------3---.html)
-            # [最新动漫电影 - 新时空动漫](https://www.xskdm.com/vodtype/2-2.html)
-            # [完结动漫 - 新时空动漫](https://www.xskdm.com/vodtype/3-7.html)
-            *[f'https://www.xskdm.com/vodtype/{_type}-{i}.html'
-              for _type, n in [(2, 2), (3, 7)]
-              for i in range(n + 1)],
-            *[f'https://www.xskdm.com/vodtype/1--------{i}---.html' for i in range(1, 3+1)],
-            # 2021 02 22
-            # 4k
-            # [最新电影 - 推荐电影 - 4K 鸭奈飞资源站 - 一个专做奈飞蓝光影视的资源站](https://4kya.com/index.php/vod/show/by/time/id/1/page/22.html)
-            # [最新连续剧 - 推荐连续剧 - 4K 鸭奈飞资源站 - 一个专做奈飞蓝光影视的资源站](https://4kya.com/index.php/vod/show/by/time/id/2/page/13.html)
-            # [最新综艺 - 推荐综艺 - 4K 鸭奈飞资源站 - 一个专做奈飞蓝光影视的资源站](https://4kya.com/index.php/vod/show/by/time/id/3.html)
-            # [最新动漫 - 推荐动漫 - 4K 鸭奈飞资源站 - 一个专做奈飞蓝光影视的资源站](https://4kya.com/index.php/vod/show/by/time/id/4.html)
-            *[f'https://4kya.com/index.php/vod/show/by/time/id/{_type}/page/{i}.html'
-            for _type, n in [(1, 22), (2, 13), (3, 1), (4, 1)]
-            for i in range(n + 1)],
         ]
     ic(start_urls)
 
@@ -323,7 +177,7 @@ class MoviesSpider(scrapy.Spider):
             'imgXpath': "//ul/li/div/a/@data-original",
             'descXpath': "//ul/li//span[@class='pic-text text-right']/text()",
         },
-        'www.yhdm.tv': {
+        'www.yhdm.io': {
             'urlsXpath': "//ul/li/h2/a/@href | //p[@class='tname']/a/@href",
             'namesXpath': "//ul/li/h2/a/text() | //p[@class='tname']/a/text()",
             'imgXpath': "//ul/li/a/img/@src",
