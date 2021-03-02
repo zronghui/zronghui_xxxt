@@ -23,13 +23,10 @@ def search_sort(i):
         'www.juqingba.cn': 10,
         # 超清快速
         'www.mengmiandaxia.com': 9,
-        'www.fenggoudy1.com': 9,
-        'www.mdoutv.com': 9,
         'www.jpysvip.net': 9,
         'hanmiys.com': 9,
         'www.ak1080.com': 9,
         'zhenbuka': 8.9,
-        'www.wanmeikk.me': 8.9,
         # 美剧
         'www.meijumi.net': 5,
         'www.meijutt.tv': 5,
@@ -53,6 +50,10 @@ def search_sort(i):
         'miao101.com': 1,
         # 广告(不给屏蔽的那种)
         'nfmovies.com': -1,
+        'www.mdoutv.com': -1,
+        # 闭站
+        'www.fenggoudy1.com': -1,
+        'www.wanmeikk.me': -1,
     }
     for key, value in m.items():
         if key in i['url']:
@@ -64,7 +65,7 @@ domainSiteNameMap = {
     '4kya.com': '4k鸭',
     'www.jpysvip.net': '极品影视 - 超清 | 快速',
     'hanmiys.com': '孤单影院 - 超清 | 快速',
-    'www.mdoutv.com': '麦豆TV - 超清 | 快速',
+    'www.mdoutv.com': '麦豆TV - 超清 | 快速 | 广告',
     'www.wanmeikk.me': "完美看看 - 超清 | 快速 | 经常闭站",
     'www.mengmiandaxia.com': "蒙面大侠 - 超清 | 快速",
     'www.fenggoudy1.com': "疯狗电影 - 超清 | 快速",
