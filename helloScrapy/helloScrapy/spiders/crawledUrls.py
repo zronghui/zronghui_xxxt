@@ -148,6 +148,24 @@ start_urls_v5 = [
 	for i in range(n + 1)],
 ]
 
+start_urls_v6 = [
+	# 2021 02 23
+	# 部分网站爬取失败
+	# hanmiys 访问可能有重定向
+	*[f'https://hanmiys.com/vodtype/{_type}-{i}.html'
+	  for _type, n in [(3, 77), (4, 18)]
+	  for i in range(n + 1)],
+	*[f'http://www.yhdm.io/{_type}/{i}.html'
+	  for _type, n in [('japan', 50), ('china', 22), ('american', 7), ('movie', 12)]
+	  for i in range(n + 1)],
+	# [电影大全 - 疯狗电影](http://www.fenggoudy1.com/list-select-id-1-type--area--year--star--state--order-addtime-p-973.html)
+	# [电视剧大全 - 疯狗电影](http://www.fenggoudy1.com/list-select-id-2-type--area--year--star--state--order-addtime-p-459.html)
+	# [动漫大全 - 疯狗电影](http://www.fenggoudy1.com/list-select-id-3-type--area--year--star--state--order-addtime-p-382.html)
+	# [综艺大全 - 疯狗电影](http://www.fenggoudy1.com/list-select-id-4-type--area--year--star--state--order-addtime-p-612.html)
+	*[f'http://www.fenggoudy1.com/list-select-id-{_type}-type--area--year--star--state--order-addtime-p-{i}.html'
+	  for _type, n in [(1, 97), (2, 45), (3, 38), (4, 61)]
+	  for i in range(n + 1)],
+]
 
 
 # 低质量

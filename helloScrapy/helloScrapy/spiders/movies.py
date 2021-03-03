@@ -21,8 +21,7 @@ class MoviesSpider(scrapy.Spider):
     pipeline = 'helloScrapy.pipelines.MoviesPipeline'
     if InTest:
         start_urls = [
-            *[f'https://hanmiys.com/vodtype/{i}-1.html' for i in range(1, 5)],
-            *[f'http://www.yhdm.io/{i}' for i in ('japan', 'china', 'american', 'movie')],
+            *[f'https://nfstar.net/vodshow/{i}--time------1---/' for i in (20, 21, 22, 23)],
         ]
     elif InCrontab:
         start_urls = [
@@ -41,6 +40,7 @@ class MoviesSpider(scrapy.Spider):
             *[f'http://www.fenggoudy1.com/list-select-id-{i}-type--area--year--star--state--order-addtime.html'
               for i in range(1, 5)],
             *[f'https://www.ak1080.com/vodtype/{i}-1.html' for i in (1, 2, 3, 4)],
+            *[f'https://nfstar.net/vodshow/{i}--time------1---/' for i in (20, 21, 22, 23)],
             # 美剧
             # 'https://www.meijumi.net/usa/page/1',
             'https://www.meijutt.tv/1_______.html',
@@ -65,21 +65,14 @@ class MoviesSpider(scrapy.Spider):
         ]
     else:
         start_urls = [
-            # 2021 02 23
-            # 部分网站爬取失败
-            # hanmiys 访问可能有重定向
-            *[f'https://hanmiys.com/vodtype/{_type}-{i}.html'
-              for _type, n in [(3, 77), (4, 18)]
-              for i in range(n + 1)],
-            *[f'http://www.yhdm.io/{_type}/{i}.html'
-              for _type, n in [('japan', 50), ('china', 22), ('american', 7), ('movie', 12)]
-              for i in range(n + 1)],
-            # [电影大全 - 疯狗电影](http://www.fenggoudy1.com/list-select-id-1-type--area--year--star--state--order-addtime-p-973.html)
-            # [电视剧大全 - 疯狗电影](http://www.fenggoudy1.com/list-select-id-2-type--area--year--star--state--order-addtime-p-459.html)
-            # [动漫大全 - 疯狗电影](http://www.fenggoudy1.com/list-select-id-3-type--area--year--star--state--order-addtime-p-382.html)
-            # [综艺大全 - 疯狗电影](http://www.fenggoudy1.com/list-select-id-4-type--area--year--star--state--order-addtime-p-612.html)
-            *[f'http://www.fenggoudy1.com/list-select-id-{_type}-type--area--year--star--state--order-addtime-p-{i}.html'
-              for _type, n in [(1, 97), (2, 45), (3, 38), (4, 61)]
+            # 2020 03 03
+            # 奈飞星影视
+            # [最新电影 - 推荐电影 - 奈飞星影视](https://nfstar.net/vodshow/20--time------119---/)
+            # [最新美剧 - 推荐美剧 - 奈飞星影视](https://nfstar.net/vodshow/21--time------79---/)
+            # [最新国语 - 推荐国语 - 奈飞星影视](https://nfstar.net/vodshow/22--time------16---/)
+            # [最新日韩 - 推荐日韩 - 奈飞星影视](https://nfstar.net/vodshow/23--time------15---/)
+            *[f'https://nfstar.net/vodshow/{_type}--time------{i}---/'
+              for _type, n in [(20, 40), (21, 30), (22, 16), (23, 15)]
               for i in range(n + 1)],
         ]
     random.shuffle(start_urls)
@@ -123,6 +116,12 @@ class MoviesSpider(scrapy.Spider):
             'descXpath': "//ul/li/div/a/span[2]/text()",
         },
         'www.ak1080.com': {
+            'urlsXpath': "//ul/li//h4[@class='title text-overflow']/a/@href",
+            'namesXpath': "//ul/li//h4[@class='title text-overflow']/a/text()",
+            'imgXpath': "//ul/li/div/a/@data-original",
+            'descXpath': "//ul/li//span[@class='pic-text text-left']/text()",
+        },
+        'nfstar.net': {
             'urlsXpath': "//ul/li//h4[@class='title text-overflow']/a/@href",
             'namesXpath': "//ul/li//h4[@class='title text-overflow']/a/text()",
             'imgXpath': "//ul/li/div/a/@data-original",

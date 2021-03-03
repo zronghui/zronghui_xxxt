@@ -94,3 +94,7 @@ def getMovieDetailByQuery(q):
 if __name__ == '__main__':
     print(getMovieDetail(getMovieId('摩天大楼')))
     print(getMovieDetailByQuery("斗罗大陆"))
+    # https://frodo.douban.com/api/v2/search?apikey=054022eaeae0b00e0fc068c0c0a2102a&q=%E6%88%91%E4%BB%AC%20%E6%81%B6%20%E8%B7%9D%E7%A6%BB
+    # todo: 根据 api 获取最新数据
+    # https://frodo.douban.com/api/v2/tv/30181230/recommendations?apikey=054022eaeae0b00e0fc068c0c0a2102a&callback=jsonp_1614766102420_49704
+    # todo: 豆瓣推荐影片

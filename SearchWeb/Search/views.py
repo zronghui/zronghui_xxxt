@@ -22,7 +22,7 @@ def search_sort(i):
         'www.yue365.com': 10.1,
         'www.juqingba.cn': 10,
         # 超清快速
-        'www.mengmiandaxia.com': 9,
+        'nfstar.net': 9.1, 
         'www.jpysvip.net': 9,
         'hanmiys.com': 9,
         'www.ak1080.com': 9,
@@ -54,6 +54,7 @@ def search_sort(i):
         # 闭站
         'www.fenggoudy1.com': -1,
         'www.wanmeikk.me': -1,
+        'www.mengmiandaxia.com': -1,
     }
     for key, value in m.items():
         if key in i['url']:
@@ -63,6 +64,7 @@ def search_sort(i):
 
 domainSiteNameMap = {
     '4kya.com': '4k鸭',
+    'nfstar.net': '奈飞星', 
     'www.jpysvip.net': '极品影视 - 超清 | 快速',
     'hanmiys.com': '孤单影院 - 超清 | 快速',
     'www.mdoutv.com': '麦豆TV - 超清 | 快速 | 广告',
