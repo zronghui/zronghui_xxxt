@@ -34,7 +34,7 @@ class MoviesSpider(scrapy.Spider):
               ['en', 'guocanju', 'gangtai', 'hanju', 'riju', 'movie', 'ac']],
             *[f'https://www.wanmeikk.me/category/{i}.html' for i in range(1, 11)],
             *[f'https://www.jpysvip.net/vodtype/{i}-1.html' for i in range(1, 5)],
-            *[f'https://hanmiys.com/vodtype/{i}-1.html' for i in range(1, 5)],
+            *[f'https://gudanys.com/vodtype/{i}-1.html' for i in range(1, 5)],
             *[f'https://www.zhenbuka.com/vodtype/{i}-1.html' for i in range(1, 5)],
             # *[f'https://www.mengmiandaxia.com/cate/{i}?sort=4' for i in range(1, 5)], # 网站去除了 web 端
             *[f'http://www.fenggoudy1.com/list-select-id-{i}-type--area--year--star--state--order-addtime.html'
@@ -134,7 +134,7 @@ class MoviesSpider(scrapy.Spider):
             'imgXpath': "//ul/li/div/a/@data-original",
             'descXpath': "//ul/li//span[@class='pic-text text-right']/text()",
         },
-        'hanmiys.com': {
+        'gudanys.com': {
             'urlsXpath': "//ul/li//h4[@class='title text-overflow']/a/@href",
             'namesXpath': "//ul/li//h4[@class='title text-overflow']/a/text()",
             'imgXpath': "//ul/li/div/a/@data-original",

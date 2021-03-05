@@ -24,7 +24,7 @@ def search_sort(i):
         # 超清快速
         'nfstar.net': 9.1, 
         'www.jpysvip.net': 9,
-        'hanmiys.com': 9,
+        'gudanys.com': 9,
         'www.ak1080.com': 9,
         'zhenbuka': 8.9,
         # 美剧
@@ -66,7 +66,7 @@ domainSiteNameMap = {
     '4kya.com': '4k鸭',
     'nfstar.net': '奈飞星', 
     'www.jpysvip.net': '极品影视 - 超清 | 快速',
-    'hanmiys.com': '孤单影院 - 超清 | 快速',
+    'gudanys.com': '孤单影院 - 超清 | 快速',
     'www.mdoutv.com': '麦豆TV - 超清 | 快速 | 广告',
     'www.wanmeikk.me': "完美看看 - 超清 | 快速 | 经常闭站",
     'www.mengmiandaxia.com': "蒙面大侠 - 超清 | 快速",
