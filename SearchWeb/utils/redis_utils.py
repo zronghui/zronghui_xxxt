@@ -12,6 +12,9 @@ host = '127.0.0.1'
 port = 6379
 r = redis.StrictRedis(host=host, port=port, password='redispassword', decode_responses=True, charset='utf-8')
 
+oneDay = 24 * 60 * 60
+oneMonth = oneDay * 31
+
 
 def lastMonthTenDays():
     # return 上个月的 3 个十天
@@ -79,11 +82,13 @@ def search(w, ip):
     month = now.month
     day = now.day
     if not (
-        ip and r.sismember(f'movie-ip-search-{year}-{month}-{day}', f'{ip} {w}')
+            ip and r.sismember(f'movie-ip-search-{year}-{month}-{day}', f'{ip} {w}')
     ):
         r.sadd(f'movie-ip-search-{year}-{month}-{day}', f'{ip} {w}')
+        r.expire(f'movie-ip-search-{year}-{month}-{day}', oneDay)
         key = curTenDay()
         r.zincrby(key, 1, w)
+        r.expire(key, oneMonth)
 
 
 def getMoviesByUrls(urls):
