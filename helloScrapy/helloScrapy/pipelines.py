@@ -32,7 +32,7 @@ class MoviesPipeline(object):
         if not oldValue.startswith('{'):
             return True
         d = json.loads(oldValue)
-        return item.get('desc', '') == d.get('desc', '')
+        return item.get('desc', '') != d.get('desc', '')
 
     def process_item(self, item, spider):
         # text = json.dumps(dict(item), ensure_ascii=False) + '\n'
