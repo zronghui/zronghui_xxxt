@@ -5,6 +5,7 @@ import json
 import redis
 from sonic import IngestClient
 from environs import Env
+from icecream import ic
 
 host = '127.0.0.1'
 port = 6379
@@ -19,7 +20,8 @@ class MoviesPipeline(object):
     def __init__(self):
         # self.file = open('movies.json', 'a', encoding='utf-8')
         self.ingestcl = IngestClient("8.136.0.121", '1491', "SecretPassword")
-        self.r = redis.StrictRedis(host=host, port=port, password='redispassword')
+        self.r = redis.StrictRedis(host=host, port=port, password='redispassword',
+                                   decode_responses=True, charset='utf-8')
 
     def isupdate(self, key, item):
         if not self.r.hexists(name='movies', key=key):
