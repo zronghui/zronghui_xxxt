@@ -78,7 +78,9 @@ def search(w, ip):
     year = now.year
     month = now.month
     day = now.day
-    if not ip or not r.sismember(f'movie-ip-search-{year}-{month}-{day}', f'{ip} {w}'):
+    if not (
+        ip and r.sismember(f'movie-ip-search-{year}-{month}-{day}', f'{ip} {w}')
+    ):
         r.sadd(f'movie-ip-search-{year}-{month}-{day}', f'{ip} {w}')
         key = curTenDay()
         r.zincrby(key, 1, w)
@@ -105,12 +107,7 @@ def subscribeKeywords(mail, keywords):
     keywords.sort(key=lambda i: -len(i))
     t = []
     for w in keywords:
-        flag = False
-        for word in t:
-            if w in word:
-                flag = True
-                break
-        if not flag:
+        if all(w not in word for word in t):
             t.append(w)
     keywords = t
     r.hset('movie_keywords_subscribe', mail, ' '.join(keywords))
