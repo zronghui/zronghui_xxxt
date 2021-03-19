@@ -6,7 +6,7 @@ loguru==0.3.2
 pretty_errors==1.2.7
 #jieba==0.42.1
 icecream==2.0.0
-Django==3.0.5
+Django==3.1.6
 # elasticsearch==5.5.3
 wget==3.2
 Scrapy==2.0.0
