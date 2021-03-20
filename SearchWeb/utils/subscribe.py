@@ -16,6 +16,9 @@ pretty_errors.activate()
 host = '127.0.0.1'
 port = 6379
 r = redis.StrictRedis(host=host, port=port, password='redispassword', decode_responses=True, charset='utf-8')
+block_domain = [
+    'gudanys.com'
+]
 
 
 @click.group()
@@ -45,6 +48,8 @@ def takeUpdate():
             movie = r.blpop('movieUpdate')[1]
             movie = json.loads(movie)
             ic(movie)
+            domain = movie.get('url').split("/")[2]
+            if domain in block_domain: continue
             # ic('2. 遍历所有 movie_keywords_subscribe 中的 mail -> keywords')
             for mail, keywords in r.hgetall('movie_keywords_subscribe').items():
                 # ic('3. 遍历所有的 keyword')
@@ -59,7 +64,6 @@ def takeUpdate():
                         name = movie.get('name')
                         desc = movie.get('desc')
                         ic("4. 发送邮件提醒", mail, url, name, desc, keyword)
-                        domain = url.split("/")[2]
                         sendQQMail.mail(MyName='xxxt', head=f'{keyword}更新了-{domain}-xxxt',
                                         content=f'{url}<br/><a href="{url}" target="_blank">{name} - {desc}</a>',
                                         to=mail)
