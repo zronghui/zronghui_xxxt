@@ -18,9 +18,10 @@ my_sender = '825503975@qq.com'
 to_reciver = ['825503975@qq.com']
 # my_pass = ''
 
-def mail(MyName, head, content, to=to_reciver):
+def mail(MyName, head, content, to=to_reciver, _type = 'html'):
+    assert _type in ['plain', 'html']
     try:
-        msg = MIMEText(content, 'plain', 'utf-8')
+        msg = MIMEText(content, _type, 'utf-8')
         msg['From'] = formataddr((MyName, my_sender))
         # msg['To'] = formataddr(("", my_user))
         if isinstance(to_reciver, list):

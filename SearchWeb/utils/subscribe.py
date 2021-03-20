@@ -59,8 +59,9 @@ def takeUpdate():
                         name = movie.get('name')
                         desc = movie.get('desc')
                         ic("4. 发送邮件提醒", mail, url, name, desc, keyword)
-                        sendQQMail.mail(MyName='xxxt', head=f'{keyword}更新了-xxxt',
-                                        content=f'<a href="{url}" target="_blank">{name} - {desc}</a>',
+                        domain = url.split("/")[2]
+                        sendQQMail.mail(MyName='xxxt', head=f'{keyword}更新了-{domain}-xxxt',
+                                        content=f'{url}<br/><a href="{url}" target="_blank">{name} - {desc}</a>',
                                         to=mail)
                         time.sleep(10)
         except Exception as e:
