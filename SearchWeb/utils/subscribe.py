@@ -16,6 +16,9 @@ pretty_errors.activate()
 host = '127.0.0.1'
 port = 6379
 r = redis.StrictRedis(host=host, port=port, password='redispassword', decode_responses=True, charset='utf-8')
+allow_domain = [
+    'www.jpysvip.net'
+]
 block_domain = [
     'gudanys.com'
 ]
@@ -49,7 +52,7 @@ def takeUpdate():
             movie = json.loads(movie)
             ic(movie)
             domain = movie.get('url').split("/")[2]
-            if domain in block_domain: continue
+            if domain not in allow_domain: continue
             # ic('2. 遍历所有 movie_keywords_subscribe 中的 mail -> keywords')
             for mail, keywords in r.hgetall('movie_keywords_subscribe').items():
                 # ic('3. 遍历所有的 keyword')
