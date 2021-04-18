@@ -21,6 +21,11 @@ class MoviesSpider(scrapy.Spider):
     pipeline = 'helloScrapy.pipelines.MoviesPipeline'
     if InTest:
         start_urls = [
+            # www.ak1080.com Connection to the other side was lost in a non-clean fashion: Connection lost
+            # https://www.wanmeikk.me/category/9.htm urls: [], names: []
+            # https://www.zhenbuka.com/vodtype/1-1.html
+            # https://yanetflix.com//index.php/vod/show/by/time/id/3/page/1.html
+            # KeyError: 'www.yxdm.org'
             *[f'https://nfstar.net/vodshow/{i}--time------1---/' for i in (20, 21, 22, 23)],
         ]
     elif InCrontab:
